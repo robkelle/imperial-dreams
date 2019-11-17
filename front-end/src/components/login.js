@@ -56,7 +56,7 @@ class Login extends Component {
 
 Login.propTypes = {
 	formStyle: PropTypes.object.isRequired,
-	hr: PropTypes.object.isRequired
+	hrStyle: PropTypes.object.isRequired
 };
 
 export default Login;
