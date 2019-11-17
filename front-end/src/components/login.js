@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+
 import GoogleLogin from 'react-google-login';
 import buttonBackground from '../images/buttonBackground.jpg';
 
@@ -12,7 +13,18 @@ class Login extends Component {
 			backgroundRepeat: 'no-repeat',
 			color: '#BEBEBE',
 			width: 160
-		}
+		},
+		username: null,
+		password: null
+	};
+
+	handleSubmit = (e) => {
+		// Prevents page from reloading
+		e.preventDefault();
+
+		this.setState({
+			validate: true
+		});
 	};
 
 	render() {
@@ -23,11 +35,38 @@ class Login extends Component {
 				<hr style={props.hrStyle} />
 				<div className="form-group">
 					<label htmlFor="username">Username</label>
-					<input className="form-control" type="text" />
+					<input
+						className="form-control"
+						type="text"
+						onChange={(e) => {
+							this.setState({ username: e.target.value });
+						}}
+					/>
+					{!this.state.username && this.state.validate ? (
+						<div className="animated fadeInUp">
+							<p className="text-danger">Please choose a username.</p>
+						</div>
+					) : (
+						''
+					)}
 				</div>
 				<div className="form-group">
 					<label htmlFor="password">Password</label>
-					<input className="form-control" type="password" />
+					<input
+						className="form-control"
+						type="password"
+						onChange={(e) => {
+							this.setState({ password: e.target.value });
+						}}
+					/>
+
+					{!this.state.password && this.state.validate ? (
+						<div className="animated fadeInUp">
+							<p className="text-danger">Please provide a password.</p>
+						</div>
+					) : (
+						''
+					)}
 				</div>
 				<div className="form-check">
 					<input type="checkbox" className="form-check-input" id="rememberMe" />
@@ -35,7 +74,12 @@ class Login extends Component {
 						Remember Username
 					</label>
 				</div>
-				<button type="submit" className="btn btn-default float-right" style={this.state.buttonStyle}>
+				<button
+					type="submit"
+					className="btn btn-default float-right"
+					style={this.state.buttonStyle}
+					onClick={(e) => this.handleSubmit(e)}
+				>
 					Log in
 				</button>
 				<br />
