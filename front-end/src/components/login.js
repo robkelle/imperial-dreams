@@ -1,6 +1,6 @@
+// @flow
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
 import GoogleLogin from 'react-google-login';
 import buttonBackground from '../images/buttonBackground.jpg';
 
