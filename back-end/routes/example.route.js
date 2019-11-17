@@ -1,7 +1,7 @@
-const express = require('express');
+import express from 'express';
+import example from '../controllers/example.controller';
 const router = express.Router();
-const example = require('../controllers/example.controller');
 
-router.get('blah', example.postExample);
+router.get('/blah', example.postExample);
 
 module.exports = router;
