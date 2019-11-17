@@ -1,8 +1,20 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import GoogleLogin from 'react-google-login';
 import buttonBackground from '../images/buttonBackground.jpg';
 
 class Login extends Component {
+	state = {
+		buttonStyle: {
+			backgroundImage: `url(${buttonBackground})`,
+			backgroundPosition: 'center',
+			backgroundSize: 'cover',
+			backgroundRepeat: 'no-repeat',
+			color: '#BEBEBE',
+			width: 160
+		}
+	};
+
 	render() {
 		const props = this.props;
 		return (
@@ -23,18 +35,7 @@ class Login extends Component {
 						Remember Username
 					</label>
 				</div>
-				<button
-					type="submit"
-					className="btn btn-default float-right"
-					style={{
-						backgroundImage: `url(${buttonBackground})`,
-						backgroundPosition: 'center',
-						backgroundSize: 'cover',
-						backgroundRepeat: 'no-repeat',
-						color: '#BEBEBE',
-						width: 160
-					}}
-				>
+				<button type="submit" className="btn btn-default float-right" style={this.state.buttonStyle}>
 					Log in
 				</button>
 				<br />
@@ -49,6 +50,11 @@ class Login extends Component {
 				<p>
 					Forgot your <a href="/">password?</a>
 				</p>
+
+				<div align="right">
+					{/* https://www.npmjs.com/package/react-google-login */}
+					<GoogleLogin />
+				</div>
 			</form>
 		);
 	}
