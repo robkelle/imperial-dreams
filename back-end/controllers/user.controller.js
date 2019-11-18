@@ -49,9 +49,9 @@ exports.signin = (req, res, next) => {
 			} else {
 				const token = jwt.sign(
 					{ username: user.username, domain: req.body.domain, created: new Date() },
-					config.secret,
+					config.SECRET,
 					{
-						expiresIn: 86400
+						expiresIn: config.JWT_EXPIRATION
 					}
 				);
 				res.json({ token: token, username: user.username, decode: jwt.decode(token) });
