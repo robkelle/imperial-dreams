@@ -1,16 +1,33 @@
-// API Web App Framework
+// Import API Web Application Framework
 import express from 'express';
 
-// Middleware
+// Import middleware
 import cors from 'cors';
 import bodyParser from 'body-parser';
+import mongoose from 'mongoose';
 
-// Configuration file
+// Import configuration file
 import config from './config.json';
 
-// Routes
+// Import routes
 import testRoute from './routes/test.route';
 import userRoute from './routes/user.route';
+
+// Connect to mongodb server
+mongoose.connect(
+	config.DB_SERVER,
+	{
+		useUnifiedTopology: true,
+		useNewUrlParser: true
+	},
+	(err, db) => {
+		if (!err) {
+			console.log(`Connected successfully to mongodb server.`);
+		} else {
+			console.log(`Error connecting to mongodb database server.`);
+		}
+	}
+);
 
 // Initialize web application framework
 const app = express();
