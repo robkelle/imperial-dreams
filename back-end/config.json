@@ -1,6 +1,13 @@
 {
-	"DB_SERVER": "mongodb://localhost:27017/primary",
-	"PORT": 4000,
+	"DATABASE": {
+		"DB": "mongodb://localhost:27017/primary",
+		"DB_HOST": "mongodb://localhost",
+		"DB_PORT": 27017,
+		"DB_NAME": "primary"
+	},
+	"EXPRESS": {
+		"PORT": 4000
+	},
 	"SECRET": "15822f7f7515197bae615e5fba77a234ba9a7eaa9a18372d2a09f9bc57eb675b",
-	"JWT_EXPIRATION": 60
+	"JWT_EXPIRATION": 60000
 }
