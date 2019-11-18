@@ -1,16 +1,31 @@
+// API Web App Framework
 import express from 'express';
+
+// Middleware
 import cors from 'cors';
 import bodyParser from 'body-parser';
-import example from './routes/example.route';
 
+// Configuration file
+import config from './config.json';
+
+// Routes
+import testRoute from './routes/test.route';
+import userRoute from './routes/user.route';
+
+// Initialize web application framework
 const app = express();
+const port = config.PORT;
 
+// Bind application-level middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
-app.use('/api/example', example);
+// API routes
+app.use('/api/', testRoute);
+app.use('/api/user/', userRoute);
 
-app.listen(4000, () => {
-	console.log('Server is running on port 4000');
+// Start express server
+app.listen(port, () => {
+	console.log(`Server is running on port ${port}`);
 });
