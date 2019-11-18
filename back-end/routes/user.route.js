@@ -4,6 +4,6 @@ const router = express.Router();
 
 // All routes associated to their corresponding controller
 router.post('/signup', userController.signup);
-router.get('/signin', userController.signin);
+router.post('/signin', userController.signin);
 
 module.exports = router;

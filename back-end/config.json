@@ -1,4 +1,5 @@
 {
 	"DB_SERVER": "mongodb://localhost:27017/primary",
-	"PORT": 4000
+	"PORT": 4000,
+	"secret": "15822f7f7515197bae615e5fba77a234ba9a7eaa9a18372d2a09f9bc57eb675b"
 }
