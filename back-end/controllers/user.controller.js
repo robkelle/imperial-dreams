@@ -79,7 +79,7 @@ exports.signin = (req, res, next) => {
 				);
 
 				const cookieOptions = {
-					secure: false, // 	Marks the cookie to be used with HTTPS only.
+					secure: false, // Marks the cookie to be used with HTTPS only.
 					httpOnly: true // Flags the cookie to be accessible only by the web server.
 				};
 
@@ -88,7 +88,8 @@ exports.signin = (req, res, next) => {
 				res.json({
 					token: token,
 					username: user.username,
-					decode: jwt.decode(token)
+					decode: jwt.decode(token),
+					isLoggedIn: true
 				});
 			}
 		}
