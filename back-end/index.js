@@ -24,7 +24,8 @@ mongoose.connect(
 	(err) => {
 		if (!err) {
 			console.log({
-				message: `Successfully connected to ${config.DATABASE.DB}.`,
+				message: 'MongoDB is running.',
+				port: config.DATABASE.DB_PORT,
 				httpStatus: 200
 			});
 		} else {
@@ -52,5 +53,5 @@ app.use('/api/user/', userRoute);
 
 // Start express server
 app.listen(port, () => {
-	console.log({ message: `Express is running on port ${port}`, httpStatus: 200 });
+	console.log({ message: 'Express is running.', port: port, httpStatus: 200 });
 });
