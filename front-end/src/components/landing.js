@@ -1,6 +1,8 @@
 import "../App.css";
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import Box from "./box";
+import Login from "./login";
 
 const textArray = [
   "A Merchant",
@@ -9,20 +11,36 @@ const textArray = [
   "A King ",
   "An Empress",
   "A Priest",
+  "A Tailor",
+  "A Pirate",
+  "A Captain",
+  "A Mayor",
+  "A Duchess",
   "A god"
 ];
 
 class Landing extends Component {
   constructor() {
     super();
-    this.state = { textIdx: 0 };
+    this.state = {
+      textIdx: 0,
+      buttonCss: classes.playNowWhite
+    };
   }
+
+  hoverOn = buttonCss => {
+    this.setState(buttonCss);
+  };
+
+  hoverOff = buttonCss => {
+    this.setState(buttonCss);
+  };
 
   componentDidMount() {
     this.timeout = setInterval(() => {
       let currentIdx = this.state.textIdx;
       this.setState({ textIdx: currentIdx + 1 });
-    }, 2500);
+    }, 2000);
   }
 
   componentWillUnmount() {
@@ -30,20 +48,22 @@ class Landing extends Component {
   }
 
   render() {
-    let textThatChanges = textArray[this.state.textIdx % textArray.length];
+    let roles = textArray[this.state.textIdx % textArray.length];
 
     return (
-      <div style={classes.summaryStyle}>
-        <h1 style={classes.labelStyle}>IMPERIAL DREAMS</h1>
-        <div style={classes.centered}>
-          <div style={classes.box}>
-            <p style={classes.paragraph}>{summary}</p>
-            <p style={classes.paragraph}>
-              You will start as nothing, but what will you become?
-            </p>
-            <p style={classes.role}>{textThatChanges} ?</p>
-          </div>
-        </div>
+      <div>
+        <p style={classes.paragraph}>{summary}</p>
+        <p style={classes.paragraph}>
+          You will start as nothing, but what will you become?
+        </p>
+        <p style={classes.role}>{roles} ?</p>
+        <button
+          style={this.state.buttonCss}
+          onMouseEnter={e => this.hoverOn({ buttonCss: classes.playNowBlack })}
+          onMouseLeave={e => this.hoverOff({ buttonCss: classes.playNowWhite })}
+        >
+          Join Acar!
+        </button>
       </div>
     );
   }
@@ -87,10 +107,36 @@ const classes = {
   role: {
     fontFamily: "Trade Winds",
     color: "black",
-    fontSize: "33px"
+    fontSize: "33px",
+    padding: "20px 0px 30px 0px"
+  },
+  playNowBlack: {
+    outline: "none",
+    display: "inline-block",
+    textDecoration: "none",
+    backgroundColor: "black",
+    border: "0.1em solid #FFFFFF",
+    borderRadius: "0.4em",
+    fontWeight: "500",
+    color: "white",
+    fontSize: "28px",
+    padding: "0px 5px 0px 5px"
+  },
+
+  playNowWhite: {
+    outline: "none",
+    display: "inline-block",
+    textDecoration: "none",
+    backgroundColor: "white",
+    border: "0.1em solid black",
+    borderRadius: "0.4em",
+    fontWeight: "500",
+    color: "black",
+    fontSize: "28px",
+    padding: "0px 5px 0px 5px"
   }
 };
 
 const summary =
-  "The continent of Acar is in tatters. A multi-generational war to exterminate the gods broke the world asunder. Society, Culture and Knowledge faded in the centuries following the apocalypse, with the world reverting back to its primeval origins.The land of Acar is a blank slate. Its history, culture, religion and institutions will be formed at the hands of the characters that inhabit it.";
+  "The continent of Acar is in tatters. A multi-generational war to exterminate the gods broke the world asunder. Society, culture and knowledge faded in the centuries following the apocalypse, with the world reverting back to its primeval origins. The land of Acar is a blank slate. Its history, culture, religion and institutions will be formed by the hands of the characters that inhabit it.";
 export default Landing;
