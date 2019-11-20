@@ -1,7 +1,7 @@
 import React from "react";
 import Login from "./components/login";
 import Landing from "./components/landing";
-import Box from "./components/box";
+
 import "./App.css";
 
 const classes = {
@@ -31,7 +31,7 @@ const classes = {
 function App() {
   return (
     <div style={classes.centered}>
-      <Box />
+      <Landing />
     </div>
   );
 }
