@@ -110,7 +110,7 @@ const Landing = () => {
           <p style={classes.role}>
             <ChangingText textTimeout={2500} /> ?
           </p>
-          <Link style={classes.loginText} to="/Login">
+          <Link style={classes.loginText} to="/register">
             <button style={classes.buttonStyle}>Play Now!</button>{" "}
           </Link>{" "}
         </div>
