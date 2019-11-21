@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import GoogleLogin from 'react-google-login';
 import buttonBackground from '../images/buttonBackground.jpg';
+import { Link } from 'react-router-dom';
 
 const classes = {
 	formStyle: {
@@ -104,13 +105,13 @@ class Login extends Component {
 					<br />
 					<hr style={classes.hrStyle} />
 					<p>
-						Don't have an account? <a href="/">Sign up now!</a>
+						Don't have an account? <Link to="/register">Sign up now!</Link>
 					</p>
 					<p>
-						Forgot your <a href="/">username?</a>
+						Forgot your <Link to="/forgot_username">username?</Link>
 					</p>
 					<p>
-						Forgot your <a href="/">password?</a>
+						Forgot your <Link to="/forgot_password">password?</Link>
 					</p>
 
 					<div align="right">
