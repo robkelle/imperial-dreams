@@ -1,39 +1,39 @@
-import React from "react";
-import Login from "./components/login";
-import Landing from "./components/landing";
+import React from 'react';
+import Login from './components/login';
+import Landing from './components/landing';
+import { HashRouter, Route, Link } from 'react-router-dom';
+import favicon from './images/favicon.ico';
 
-import "./App.css";
-
-const classes = {
-  formStyle: {
-    backgroundColor: "rgba(0, 51, 102, .55)",
-    padding: "10px 35px 60px 35px",
-    color: "#BEBEBE",
-    marginTop: 10,
-    width: "65%",
-    fontSize: 16
-  },
-  hrStyle: {
-    borderTop: "1px solid #fff",
-    color: "#fff"
-  },
-  liStyle: {
-    listStyleType: "none",
-    color: "red"
-  },
-  centered: {
-    display: "block",
-    textAlign: "center",
-    padding: "55px 0px 0px 0px"
-  }
-};
+import './App.css';
 
 function App() {
-  return (
-    <div style={classes.centered}>
-      <Landing />
-    </div>
-  );
+	return (
+		<div>
+			<HashRouter>
+				<nav className="navbar navbar-expand-lg" id="custom-nav" style={{ backgroundColor: 'rgb(0, 51, 102)' }}>
+					<a className="navbar-brand" href="/">
+						<img src={favicon} height={35} alt="" />
+					</a>
+					<ul className="navbar-nav">
+						<li className="nav-item active">
+							<div className="nav-link" href="/">
+								<Link to="/">Home</Link>
+							</div>
+						</li>
+						<li className="nav-item">
+							<div className="nav-link" href="/login">
+								<Link to="/login">Login</Link>
+							</div>
+						</li>
+					</ul>
+				</nav>
+				<div align="center">
+					<Route exact path="/" component={Landing} />
+					<Route exact path="/login" component={Login} />
+				</div>
+			</HashRouter>
+		</div>
+	);
 }
 
 export default App;
