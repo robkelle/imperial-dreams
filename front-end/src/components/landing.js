@@ -1,11 +1,13 @@
 import "../App.css";
 import React, { Component } from "react";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import buttonBackground from "../images/buttonBackground.jpg";
 
 const classes = {
   summaryStyle: {
     display: "inline-block",
     borderRadius: "25px",
-    backgroundColor: "rgb(229, 229, 229, .75)",
+    backgroundColor: "rgb(0, 51, 102, .75)",
     padding: "25px 35px 60px 35px",
     color: "#BEBEBE",
     marginTop: 10,
@@ -14,13 +16,15 @@ const classes = {
   },
   labelStyle: {
     fontFamily: "Trade Winds",
-    color: "black",
+    color: "rgb(255, 180, 59)",
     fontSize: "44px"
   },
   box: {
-    backgroundColor: "lightgrey",
+    backgroundColor: "rgb(0, 51, 102",
     width: "650px",
-    border: "15px solid black",
+    borderStyle: "solid",
+    borderColor: "rgb(255, 180, 59)",
+    borderWidth: "15px",
     height: "640px",
     borderRadius: "25px"
   },
@@ -30,16 +34,31 @@ const classes = {
     padding: "0px 0px 0px 0px"
   },
   paragraph: {
-    color: "black",
-    fontFamily: "'Alatsi', sans-serif",
+    color: "white",
+    fontFamily: "Cinzel, sans-serif",
     fontSize: "20px",
     padding: "40px 7px 7px 7px"
   },
   role: {
     fontFamily: "Trade Winds",
-    color: "black",
+    color: "rgb(255, 180, 59)",
     fontSize: "33px",
-    padding: "30px 0px 0px 0px"
+    padding: "30px 0px 30px 0px"
+  },
+
+  buttonStyle: {
+    backgroundImage: `url(${buttonBackground})`,
+    backgroundPosition: "center",
+    backgroundSize: "cover",
+    backgroundRepeat: "no-repeat",
+    color: "#BEBEBE",
+    width: 160,
+    borderRadius: "5px",
+    padding: "4px 0px 4px 0px"
+  },
+  loginText: {
+    color: "white",
+    textDecoration: "none"
   }
 };
 class ChangingText extends Component {
@@ -91,6 +110,9 @@ const Landing = () => {
           <p style={classes.role}>
             <ChangingText textTimeout={2500} /> ?
           </p>
+          <Link style={classes.loginText} to="/Login">
+            <button style={classes.buttonStyle}>Play Now!</button>{" "}
+          </Link>{" "}
         </div>
       </div>
     </div>
