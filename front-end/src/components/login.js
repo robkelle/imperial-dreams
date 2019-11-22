@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import GoogleLogin from 'react-google-login';
 import buttonBackground from '../images/buttonBackground.jpg';
 import { Link } from 'react-router-dom';
+import config from '../config.json';
 
 const classes = {
 	formStyle: {
@@ -24,31 +25,73 @@ const classes = {
 };
 
 class Login extends Component {
-	state = {
-		buttonStyle: {
-			backgroundImage: `url(${buttonBackground})`,
-			backgroundPosition: 'center',
-			backgroundSize: 'cover',
-			backgroundRepeat: 'no-repeat',
-			color: '#BEBEBE',
-			width: 160
-		},
-		username: null,
-		password: null
+	constructor() {
+		super();
+		this.state = {
+			buttonStyle: {
+				backgroundImage: `url(${buttonBackground})`,
+				backgroundPosition: 'center',
+				backgroundSize: 'cover',
+				backgroundRepeat: 'no-repeat',
+				color: '#BEBEBE',
+				width: 160
+			},
+			username: null,
+			password: null,
+			isValid: true
+		};
+	}
+
+	handleLogin = () => {
+		fetch(`${config.API.DOMAIN}:${config.API.PORT}/api/user/signin`, {
+			method: 'POST',
+			mode: 'cors',
+			credentials: 'same-origin',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				username: this.state.username,
+				password: this.state.password,
+				domain: ''
+			})
+		})
+			.then((res) => {
+				return res.json();
+			})
+			.then((res) => {
+				this.setState({
+					isAuthorized: res.isLoggedIn,
+					username: res.username
+				});
+			})
+			.catch((err) => {
+				return new Error('Logging in from the client failed');
+			});
+	};
+
+	validate = () => {
+		if (this.state.username == null || this.state.password == null) {
+			this.setState({
+				isValid: false
+			});
+		} else {
+			this.handleLogin();
+		}
 	};
 
 	handleSubmit = (e) => {
 		// Prevents page from reloading
 		e.preventDefault();
 
-		this.setState({
-			validate: true
-		});
+		// Validate fields
+		this.validate();
 	};
 
 	render() {
 		return (
 			<div align="center">
+				{this.state.isAuthorized ? <h1 style={{ color: '#fff' }}>Welcome {this.state.username}!!</h1> : ''}
 				<form style={classes.formStyle} align="left">
 					<p className="h5">Account Login</p>
 					<hr style={classes.hrStyle} />
@@ -61,7 +104,7 @@ class Login extends Component {
 								this.setState({ username: e.target.value });
 							}}
 						/>
-						{!this.state.username && this.state.validate ? (
+						{!this.state.username && !this.state.isValid ? (
 							<div className="animated fadeInUp">
 								<p className="text-danger">Please choose a username.</p>
 							</div>
@@ -79,7 +122,7 @@ class Login extends Component {
 							}}
 						/>
 
-						{!this.state.password && this.state.validate ? (
+						{!this.state.password && !this.state.isValid ? (
 							<div className="animated fadeInUp">
 								<p className="text-danger">Please provide a password.</p>
 							</div>
