@@ -1,6 +1,6 @@
-import config from './config.json';
+import config from '../config.json';
 import jwt from 'jsonwebtoken';
-import User from './models/user.model';
+import User from '../models/user.model';
 
 const checkAuthorization = function(req, res, next) {
 	const accessToken = req.cookies.accessToken;

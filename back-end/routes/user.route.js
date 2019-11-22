@@ -1,6 +1,6 @@
 import express from 'express';
 import userController from '../controllers/user.controller';
-import checkAuthorization from '../checkAuthorization';
+import checkAuthorization from '../middleware/checkAuthorization';
 const router = express.Router();
 
 // All routes associated to their corresponding controller
