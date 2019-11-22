@@ -47,11 +47,21 @@ exports.signin = (req, res, next) => {
 			if (!passwordIsValid) {
 				res.status(401).send({ message: 'Password is invalid.' });
 			} else {
+				// Sign JWT token
 				const token = jwt.sign(
-					{ username: user.username, domain: req.body.domain, created: new Date() },
-					config.SECRET,
+					{ username: user.username, password: user.password, domain: req.body.domain },
+					config.ACCESS_TOKEN.SECRET,
 					{
-						expiresIn: config.JWT_EXPIRATION
+						expiresIn: config.ACCESS_TOKEN.EXPIRATION
+					}
+				);
+
+				// Sign JWT refresh token
+				const refreshToken = jwt.sign(
+					{ username: user.username, password: user.password, domain: req.body.domain },
+					config.REFRESH_TOKEN.SECRET,
+					{
+						expiresIn: config.REFRESH_TOKEN.EXPIRATION
 					}
 				);
 
@@ -59,10 +69,11 @@ exports.signin = (req, res, next) => {
 				User.findOneAndUpdate(
 					{ username: req.body.username },
 					{
-						accessToken: token
+						accessToken: token,
+						refreshToken: refreshToken
 					},
 					{ upsert: 'true' },
-					function(err, user) {
+					function(err) {
 						if (err) {
 							console.log({
 								message: 'There has been an error updating the user token.',
@@ -86,14 +97,13 @@ exports.signin = (req, res, next) => {
 				// Sends client response
 				res.cookie('accessToken', token, cookieOptions);
 				res.json({
-					token: token,
+					refreshToken: refreshToken,
 					username: user.username,
-					decode: jwt.decode(token),
 					isLoggedIn: true
 				});
 			}
 		}
-	).then((err) => {
+	).catch((err) => {
 		res.status(400).send({ message: 'Failed to sign in.', httpStatus: 400 });
 	});
 };

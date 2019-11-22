@@ -10,6 +10,7 @@ module.exports = mongoose.model(
 		username: String,
 		created: Date,
 		accessToken: String,
+		refreshToken: String,
 		password: String
 	})
 );
