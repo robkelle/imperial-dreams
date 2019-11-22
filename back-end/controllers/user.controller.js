@@ -64,16 +64,16 @@ exports.signin = (req, res, next) => {
 					{ upsert: 'true' },
 					function(err, user) {
 						if (err) {
-							const refreshToken = {};
-							refreshToken.message = 'There has been an error updating the user token.';
-							refreshToken.httpStatus = 500;
-							refreshToken.errorMessage = err;
-							console.log(refreshToken);
+							console.log({
+								message: 'There has been an error updating the user token.',
+								httpStatus: 500,
+								errorMessage: err
+							});
 						} else {
-							const refreshToken = {};
-							refreshToken.message = 'The token has been updated on login.';
-							refreshToken.httpStatus = 200;
-							console.log(refreshToken);
+							console.log({
+								message: 'The token has been updated on login.',
+								httpStatus: 200
+							});
 						}
 					}
 				);
