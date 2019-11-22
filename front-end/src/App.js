@@ -7,8 +7,9 @@ import ForgotUsername from './components/forgotUsername';
 import Login from './components/login';
 import Landing from './components/landing';
 import Register from './components/register';
+import { withCookies } from 'react-cookie';
 
-function App() {
+function App(props) {
 	return (
 		<div>
 			<Router basename="imperial">
@@ -31,7 +32,16 @@ function App() {
 				</nav>
 				<div align="center">
 					{/* Specify all routes in the client-side */}
-					<Route exact path="/" component={Landing} />
+					<Route
+						exact
+						path="/"
+						component={() => (
+							<Landing
+								isAuthorized={props.cookies.get('isAuthorized')}
+								loggedInUser={props.cookies.get('loggedInUser')}
+							/>
+						)}
+					/>
 					<Route exact path="/login" component={Login} />
 					<Route exact path="/register" component={Register} />
 					<Route exact path="/forgot_username" component={ForgotUsername} />
@@ -42,4 +52,4 @@ function App() {
 	);
 }
 
-export default App;
+export default withCookies(App);
