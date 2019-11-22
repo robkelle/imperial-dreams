@@ -62,7 +62,7 @@ class Login extends Component {
 			.then((res) => {
 				this.setState({
 					isAuthorized: res.isLoggedIn,
-					username: res.username
+					loggedInUser: res.username
 				});
 			})
 			.catch((err) => {
