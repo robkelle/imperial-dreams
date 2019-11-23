@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import config from '../config.json';
 import { withCookies } from 'react-cookie';
+import buttonBackground from '../images/buttonBackground.jpg';
 
 class Logout extends Component {
 	handleClick = () => {
@@ -26,7 +27,21 @@ class Logout extends Component {
 	};
 
 	render() {
-		return <button onClick={this.handleClick}>Logout</button>;
+		return (
+			<button
+				onClick={this.handleClick}
+				style={{
+					backgroundImage: `url(${buttonBackground})`,
+					backgroundPosition: 'center',
+					backgroundSize: 'cover',
+					backgroundRepeat: 'no-repeat',
+					color: '#BEBEBE',
+					width: 160
+				}}
+			>
+				Logout
+			</button>
+		);
 	}
 }
 
