@@ -34,17 +34,12 @@ class Register extends Component {
     },
     username: null,
     password: null,
-    repeatPassword: null
+    repeatPassword: null,
+    isValid: true,
+    userNameExists: false
   };
 
-  handleSubmit = e => {
-    // Prevents page from reloading
-    e.preventDefault();
-
-    this.setState({
-      validate: true
-    });
-
+  handleSignUp = () => {
     fetch("http://localhost:4000/api/user/signup", {
       method: "POST",
       headers: {
@@ -55,9 +50,57 @@ class Register extends Component {
         username: this.state.username,
         password: this.state.password
       })
-    });
+    })
+      .then(res => {
+        return res.json();
+      })
+      .then(res => {
+        console.log("Check console for " + res);
+      })
+      .catch(err => {
+        console.log("something went wrong " + err);
+      });
   };
 
+  validate = () => {
+    fetch("http://localhost:4000/api/user/userValidate", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        username: this.state.username,
+        password: this.state.password
+      })
+    })
+      .then(res => {
+        return res.json();
+      })
+      .then(res => {
+        this.setState({ userNameExists: res.userExists });
+        console.log("username already exists =" + this.state.userNameExists);
+      });
+    if (
+      this.state.username == null ||
+      this.state.password == null ||
+      this.state.repeatSame == false ||
+      this.state.password != this.state.repeatPassword ||
+      this.state.userNameExists == true
+    ) {
+      this.setState({
+        isValid: false
+      });
+    } else {
+      this.handleSignUp();
+    }
+  };
+
+  handleSubmit = e => {
+    e.preventDefault();
+
+    this.validate();
+  };
   render() {
     return (
       <div align="center">
@@ -73,7 +116,7 @@ class Register extends Component {
                 this.setState({ username: e.target.value });
               }}
             />
-            {!this.state.username && this.state.validate ? (
+            {!this.state.username && !this.state.isValid ? (
               <div className="animated fadeInUp">
                 <p className="text-danger">Please provide a username</p>
               </div>
@@ -91,7 +134,7 @@ class Register extends Component {
               }}
             />
 
-            {!this.state.password && this.state.validate ? (
+            {!this.state.password && !this.state.isValid ? (
               <div className="animated fadeInUp">
                 <p className="text-danger">Please provide a password.</p>
               </div>
@@ -109,8 +152,15 @@ class Register extends Component {
                   this.setState({ repeatPassword: e.target.value });
                 }}
               />
-
-              {!this.state.repeatPassword && this.state.validate ? (
+              {this.state.repeatPassword != this.state.password &&
+              !this.state.isValid ? (
+                <div className="animated fadeInUp">
+                  <p className="text-danger">Your passwords must match.</p>
+                </div>
+              ) : (
+                ""
+              )}
+              {!this.state.repeatPassword && !this.state.isValid ? (
                 <div className="animated fadeInUp">
                   <p className="text-danger">Please repeat your password.</p>
                 </div>
