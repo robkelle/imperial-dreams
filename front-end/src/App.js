@@ -7,6 +7,7 @@ import ForgotUsername from './components/forgotUsername';
 import Login from './components/login';
 import Landing from './components/landing';
 import Register from './components/register';
+import Logout from './components/logout';
 import { withCookies } from 'react-cookie';
 
 function App(props) {
@@ -26,6 +27,11 @@ function App(props) {
 						<li className="nav-item">
 							<div className="nav-link" href="/login">
 								<Link to="/login">Login</Link>
+							</div>
+						</li>
+						<li className="nav-item">
+							<div className="nav-link" href="/login">
+								<Logout />
 							</div>
 						</li>
 					</ul>

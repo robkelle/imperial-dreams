@@ -48,7 +48,7 @@ class Login extends Component {
 		fetch(`${config.API.DOMAIN}:${config.API.PORT}/api/user/signin`, {
 			method: 'POST',
 			mode: 'cors',
-			credentials: 'same-origin',
+			credentials: 'include',
 			headers: {
 				'Content-Type': 'application/json'
 			},
@@ -89,7 +89,6 @@ class Login extends Component {
 	};
 
 	render() {
-		console.log(this.props);
 		return (
 			<div align="center">
 				{this.props.cookies.cookies.isAuthorized ? (
