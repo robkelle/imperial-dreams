@@ -6,12 +6,13 @@ const checkAuthorization = function(req, res, next) {
 	const accessToken = req.cookies.accessToken;
 
 	if (!accessToken) {
+		res.clearCookie('accessToken');
 		res.status(401).send({ message: 'Invalid or missing authorization token.', httpStatus: 401 });
-		return;
 	} else {
 		// Verify Access Token
 		const userJWTPayload = jwt.verify(accessToken, config.ACCESS_TOKEN.SECRET, (error, decoded) => {
 			if (error) {
+				res.clearCookie('accessToken');
 			} else {
 				return decoded;
 			}

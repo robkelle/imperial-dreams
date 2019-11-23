@@ -4,6 +4,7 @@ import GoogleLogin from "react-google-login";
 import buttonBackground from "../images/buttonBackground.jpg";
 import { Link } from "react-router-dom";
 import config from "../config.json";
+import { withCookies } from "react-cookie";
 
 const classes = {
   formStyle: {
@@ -43,10 +44,11 @@ class Login extends Component {
   }
 
   handleLogin = () => {
+    const { cookies } = this.props;
     fetch(`${config.API.DOMAIN}:${config.API.PORT}/api/user/signin`, {
       method: "POST",
       mode: "cors",
-      credentials: "same-origin",
+      credentials: "include",
       headers: {
         "Content-Type": "application/json"
       },
@@ -60,10 +62,8 @@ class Login extends Component {
         return res.json();
       })
       .then(res => {
-        this.setState({
-          isAuthorized: res.isLoggedIn,
-          username: res.username
-        });
+        cookies.set("isAuthorized", res.isLoggedIn, { path: "/" });
+        cookies.set("loggedInUser", res.username, { path: "/" });
       })
       .catch(err => {
         return new Error("Logging in from the client failed");
@@ -91,8 +91,10 @@ class Login extends Component {
   render() {
     return (
       <div align="center">
-        {this.state.isAuthorized ? (
-          <h1 style={{ color: "#fff" }}>Welcome {this.state.username}!!</h1>
+        {this.props.cookies.cookies.isAuthorized ? (
+          <h1 style={{ color: "#fff" }}>
+            Welcome {this.props.cookies.cookies.loggedInUser}!!
+          </h1>
         ) : (
           ""
         )}
@@ -180,4 +182,4 @@ class Login extends Component {
 // 	hrStyle: PropTypes.object.isRequired
 // };
 
-export default Login;
+export default withCookies(Login);

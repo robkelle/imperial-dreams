@@ -11,6 +11,7 @@ router.get(
   "/verifyAuth",
   checkAuthorization,
   userController.verifyAuthorization
-);
+); // Test Authorization
+router.get("/logout", checkAuthorization, userController.logout);
 
 module.exports = router;

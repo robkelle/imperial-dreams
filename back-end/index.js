@@ -45,7 +45,13 @@ const port = config.EXPRESS.PORT;
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors());
+
+const corsOptions = {
+	credentials: true,
+	origin: 'http://localhost:3000'
+};
+
+app.use(cors(corsOptions));
 
 // API routes
 app.use('/api/', testRoute);

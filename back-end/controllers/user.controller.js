@@ -117,13 +117,16 @@ exports.signin = (req, res, next) => {
 
         const cookieOptions = {
           secure: false, // Marks the cookie to be used with HTTPS only.
-          httpOnly: true // Flags the cookie to be accessible only by the web server.
+          httpOnly: true, // Flags the cookie to be accessible only by the web server.
+          expires: 0, // Makes this a session-only cookie
+          path: "/"
         };
 
         // Sends client response
         res.cookie("accessToken", token, cookieOptions);
         res.json({
           refreshToken: refreshToken,
+          accessToken: token,
           username: user.username,
           isLoggedIn: true
         });
@@ -136,4 +139,29 @@ exports.signin = (req, res, next) => {
 
 exports.verifyAuthorization = (req, res) => {
   res.json({ message: "User is authorized!", httpStatus: 200 });
+};
+
+exports.logout = (req, res) => {
+  const accessToken = req.cookies.accessToken;
+  const userJWTPayload = jwt.verify(accessToken, config.ACCESS_TOKEN.SECRET);
+  if (!userJWTPayload) {
+  } else {
+    User.findOneAndUpdate(
+      { accessToken: accessToken },
+      {
+        accessToken: null
+      },
+      function(err, result) {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log("Deleted access token for", result.username);
+        }
+        res.clearCookie("accessToken");
+        res.json({
+          isLoggedIn: false
+        });
+      }
+    );
+  }
 };
