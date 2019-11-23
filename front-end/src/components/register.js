@@ -3,6 +3,7 @@ import GoogleLogin from "react-google-login";
 import buttonBackground from "../images/buttonBackground.jpg";
 import { Link } from "react-router-dom";
 
+// Set styling
 const classes = {
   formStyle: {
     backgroundColor: "rgba(0, 51, 102, .75)",
@@ -36,7 +37,7 @@ class Register extends Component {
     password: null,
     repeatPassword: null,
     isValid: true,
-    userNameExists: false
+    userNameExists: true
   };
 
   handleSignUp = () => {
@@ -62,6 +63,9 @@ class Register extends Component {
       });
   };
 
+  // Calls userValidate method defined in user controller. Method checks whether the username already exists.
+  // Sets 'userNameExists' state based on return from userValidate method (true or false)
+
   validate = () => {
     fetch("http://localhost:4000/api/user/userValidate", {
       method: "POST",
@@ -79,8 +83,8 @@ class Register extends Component {
       })
       .then(res => {
         this.setState({ userNameExists: res.userExists });
-        console.log("username already exists =" + this.state.userNameExists);
       });
+    // If none of the conditions are met we run the handleSingUp function, otherwise we set isValid state to false.
     if (
       this.state.username == null ||
       this.state.password == null ||
@@ -119,6 +123,15 @@ class Register extends Component {
             {!this.state.username && !this.state.isValid ? (
               <div className="animated fadeInUp">
                 <p className="text-danger">Please provide a username</p>
+              </div>
+            ) : (
+              ""
+            )}
+            {!this.state.userNameExists == false && !this.state.isValid ? (
+              <div className="animated fadeInUp">
+                <p className="text-danger">
+                  This username already exists please try another
+                </p>
               </div>
             ) : (
               ""
