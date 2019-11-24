@@ -40,6 +40,13 @@ class Register extends Component {
     userNameExists: false
   };
 
+  alphaOnly(e) {
+    const re = /[a-zA-Z0-9]+/g;
+    if (!re.test(e.key)) {
+      e.preventDefault();
+    }
+  }
+
   handleSignUp = () => {
     fetch("http://localhost:4000/api/user/signup", {
       method: "POST",
@@ -86,9 +93,9 @@ class Register extends Component {
         if (
           this.state.username == null ||
           this.state.password == null ||
-          this.state.repeatSame == false ||
-          this.state.password != this.state.repeatPassword ||
-          this.state.userNameExists == true
+          this.state.repeatSame === false ||
+          this.state.password !== this.state.repeatPassword ||
+          this.state.userNameExists === true
         ) {
           this.setState({
             isValid: false
@@ -98,8 +105,8 @@ class Register extends Component {
         }
       });
   };
-  // If none of the conditions are met we run the handleSingUp function, otherwise we set isValid state to false.
 
+  // prevent page from reloading and run function to validate fields
   handleSubmit = e => {
     e.preventDefault();
 
@@ -116,6 +123,7 @@ class Register extends Component {
             <input
               className="form-control"
               type="text"
+              onKeyPress={e => this.alphaOnly(e)}
               onChange={e => {
                 this.setState({ username: e.target.value });
               }}
@@ -127,7 +135,7 @@ class Register extends Component {
             ) : (
               ""
             )}
-            {!this.state.userNameExists == false && !this.state.isValid ? (
+            {!this.state.userNameExists === false && !this.state.isValid ? (
               <div className="animated fadeInUp">
                 <p className="text-danger">
                   This username already exists please try another
@@ -165,7 +173,7 @@ class Register extends Component {
                   this.setState({ repeatPassword: e.target.value });
                 }}
               />
-              {this.state.repeatPassword != this.state.password &&
+              {this.state.repeatPassword !== this.state.password &&
               !this.state.isValid ? (
                 <div className="animated fadeInUp">
                   <p className="text-danger">Your passwords must match.</p>
