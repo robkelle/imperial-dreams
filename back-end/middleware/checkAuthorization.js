@@ -1,16 +1,22 @@
-import config from './config.json';
+import config from '../config.json';
 import jwt from 'jsonwebtoken';
-import User from './models/user.model';
+import User from '../models/user.model';
 
 const checkAuthorization = function(req, res, next) {
 	const accessToken = req.cookies.accessToken;
 
 	if (!accessToken) {
+		res.clearCookie('accessToken');
 		res.status(401).send({ message: 'Invalid or missing authorization token.', httpStatus: 401 });
-		return;
 	} else {
 		// Verify Access Token
-		const userJWTPayload = jwt.verify(accessToken, config.SECRET);
+		const userJWTPayload = jwt.verify(accessToken, config.ACCESS_TOKEN.SECRET, (error, decoded) => {
+			if (error) {
+				res.clearCookie('accessToken');
+			} else {
+				return decoded;
+			}
+		});
 
 		if (!userJWTPayload) {
 			res.clearCookie('accessToken');
@@ -22,7 +28,7 @@ const checkAuthorization = function(req, res, next) {
 						.status(401)
 						.send({ message: 'User needs to login before accessing this API.', httpStatus: 401 });
 				} else {
-					console.log({ message: 'Valid user:' + user.username, httpStatus: 200 });
+					console.log({ message: `${user.username} has logged in.`, httpStatus: 200 });
 					// Executes the middleware succeeding this middleware function
 					next();
 				}

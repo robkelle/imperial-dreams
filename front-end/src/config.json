@@ -1,0 +1,6 @@
+{
+	"API": {
+		"DOMAIN": "http://localhost",
+		"PORT": 4000
+	}
+}
