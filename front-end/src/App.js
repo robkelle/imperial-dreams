@@ -8,9 +8,13 @@ import Login from './components/login';
 import Landing from './components/landing';
 import Register from './components/register';
 import Logout from './components/logout';
+import UserDashboard from './components/userDashboard';
 import { withCookies } from 'react-cookie';
 
 function App(props) {
+	const isAuthorized = props.cookies.get('isAuthorized');
+	const loggedInUser = props.cookies.get('loggedInUser');
+
 	return (
 		<div>
 			<Router basename="imperial">
@@ -24,34 +28,44 @@ function App(props) {
 								<Link to="/">Home</Link>
 							</div>
 						</li>
-						<li className="nav-item">
-							<div className="nav-link" href="/login">
-								<Link to="/login">Login</Link>
-							</div>
-						</li>
-						<li className="nav-item">
-							<div className="nav-link" href="/login">
-								<Logout />
-							</div>
-						</li>
+						{!isAuthorized ? (
+							<li className="nav-item">
+								<div className="nav-link" href="/login">
+									<Link to="/login">Login</Link>
+								</div>
+							</li>
+						) : (
+							<li className="nav-item">
+								<div className="nav-link" href="/login">
+									<Link to="/user_dashboard">Dashboard</Link>
+								</div>
+							</li>
+						)}
 					</ul>
+					{isAuthorized ? (
+						<ul className="nav navbar-nav ml-auto">
+							<li className="nav-item">
+								<div className="nav-link" href="/login">
+									<Logout />
+								</div>
+							</li>
+						</ul>
+					) : (
+						''
+					)}
 				</nav>
 				<div align="center">
 					{/* Specify all routes in the client-side */}
 					<Route
 						exact
 						path="/"
-						component={() => (
-							<Landing
-								isAuthorized={props.cookies.get('isAuthorized')}
-								loggedInUser={props.cookies.get('loggedInUser')}
-							/>
-						)}
+						component={() => <Landing isAuthorized={isAuthorized} loggedInUser={loggedInUser} />}
 					/>
 					<Route exact path="/login" component={Login} />
 					<Route exact path="/register" component={Register} />
 					<Route exact path="/forgot_username" component={ForgotUsername} />
 					<Route exact path="/forgot_password" component={ForgotPassword} />
+					<Route path="/user_dashboard" render={() => (isAuthorized ? <UserDashboard /> : <Login />)} />
 				</div>
 			</Router>
 		</div>
