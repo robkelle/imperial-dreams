@@ -98,7 +98,6 @@ const Landing = (props) => {
 		'The continent of Acar is in tatters. A multi-generational war to exterminate the gods broke the world asunder. Society, culture and knowledge faded in the centuries following the apocalypse, with the world reverting back to its primeval origins. The land of Acar is a blank slate. Its history, cultures, religions and institutions will be formed at the hands of the characters that inhabit it.';
 	return (
 		<div>
-			{props.isAuthorized ? <h1 style={{ color: '#fff' }}>Welcome {props.loggedInUser}!!</h1> : ''}
 			<div style={classes.summaryStyle}>
 				<h1 style={classes.labelStyle}>IMPERIAL DREAMS</h1>
 				<div style={classes.centered}>
