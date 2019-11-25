@@ -169,18 +169,14 @@ exports.logout = (req, res) => {
 };
 
 exports.submitForgotPasswordUser = (req, res) => {
-	const sendPasswordResetEmail = () => {
-		const _token = 'asdfasdfasdf';
+	const sendPasswordResetEmail = (token) => {
 		const mailOptions = {
 			from: config.MAIL_SERVER.USER,
-			to: 'robkelle.indiana@gmail.com',
-			subject: 'Reset your Imperial Dream Password',
-			// TODO draft a better email
-			html:
-				'<p>Please click <a href="http://localhost:3000/#/reset/' +
-				_token +
-				'">HERE</a> ' +
-				'to verify your Thumb Account </p>'
+			to: req.body.email,
+			subject: 'Password Reset',
+			html: `<span>Hello,</span><div style="padding: 10px 10px 10px 10px;">
+      <p>Please click <a href="http://localhost:3000/#/reset/${token}'">HERE</a>
+      to verify your <strong>Imperial Dreams</strong> Account.</p>`
 		};
 
 		transporter.sendMail(mailOptions, function(err, info) {
@@ -192,6 +188,22 @@ exports.submitForgotPasswordUser = (req, res) => {
 		});
 	};
 
-	sendPasswordResetEmail();
-	res.send('Email sent ... need to build out the validation piece next');
+	// Find a valid user
+	User.findOne(
+		{
+			email: req.body.email
+		},
+		(err, user) => {
+			if (err || !user) {
+				res.status(500).send({ message: 'Incorrect or unverified email. Please try again.' });
+			}
+		}
+	).then((user) => {
+		const payload = { userId: user._id };
+		const token = jwt.sign(payload, config.ACCESS_TOKEN.SECRET, {
+			expiresIn: 300
+		});
+
+		sendPasswordResetEmail(token);
+	});
 };
