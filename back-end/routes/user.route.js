@@ -7,7 +7,8 @@ const router = express.Router();
 router.post('/userValidate', userController.userValidate);
 router.post('/signup', userController.signup);
 router.post('/signin', userController.signin);
-router.post('/forgot', userController.submitForgotPasswordUser);
+router.post('/forgot', userController.forgotPassword);
+router.post('/reset', userController.resetPassword);
 router.get('/logout', checkAuthorization, userController.logout);
 
 module.exports = router;
