@@ -168,14 +168,14 @@ exports.logout = (req, res) => {
 	}
 };
 
-exports.submitForgotPasswordUser = (req, res) => {
+exports.forgotPassword = (req, res) => {
 	const sendPasswordResetEmail = (token) => {
 		const mailOptions = {
 			from: config.MAIL_SERVER.USER,
 			to: req.body.email,
 			subject: 'Password Reset',
 			html: `<span>Hello,</span><div style="padding: 10px 10px 10px 10px;">
-      <p>Please click <a href="http://localhost:3000/#/reset/${token}'">HERE</a>
+      <p>Please click <a href="http://localhost:3000/#/reset/reset_token=${token}">HERE</a>
       to verify your <strong>Imperial Dreams</strong> Account.</p>`
 		};
 
@@ -195,15 +195,26 @@ exports.submitForgotPasswordUser = (req, res) => {
 		},
 		(err, user) => {
 			if (err || !user) {
-				res.status(500).send({ message: 'Incorrect or unverified email. Please try again.' });
+				res.status(500).send({ message: 'Incorrect or unverified email. Please try again.', httpStatus: 500 });
 			}
 		}
 	).then((user) => {
 		const payload = { userId: user._id };
-		const token = jwt.sign(payload, config.ACCESS_TOKEN.SECRET, {
-			expiresIn: 300
+		const token = jwt.sign(payload, config.RESET_TOKEN.SECRET, {
+			expiresIn: config.RESET_TOKEN.EXPIRATION
 		});
 
 		sendPasswordResetEmail(token);
+		res.status(200).send({ message: 'Email has been sent.', httpStatus: 200 });
 	});
+};
+
+exports.resetPassword = (req, res) => {
+	if (!req.decoded.userId) {
+		res.status(400).send({ message: 'A userId not decoded.' });
+	}
+
+	if (!req.body.password) {
+		res.status(400).send({ message: 'Password should be present.' });
+	}
 };
