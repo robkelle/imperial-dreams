@@ -1,6 +1,7 @@
 import User from '../models/user.model';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
+import transporter from '../middleware/mail';
 import config from '../config.json';
 
 exports.userValidate = (req, res) => {
@@ -18,6 +19,9 @@ exports.userValidate = (req, res) => {
 	);
 };
 
+/*
+    Creates a new user account
+*/
 exports.signup = (req, res) => {
 	var hashedPassword = bcrypt.hashSync(req.body.password, 10);
 
@@ -39,6 +43,9 @@ exports.signup = (req, res) => {
 	});
 };
 
+/*
+    Logs a valid user in
+*/
 exports.signin = (req, res, next) => {
 	User.findOne(
 		{
@@ -133,10 +140,9 @@ exports.signin = (req, res, next) => {
 	});
 };
 
-exports.verifyAuthorization = (req, res) => {
-	res.json({ message: 'User is authorized!', httpStatus: 200 });
-};
-
+/*
+    Logs a user out when called by clearing cookies
+*/
 exports.logout = (req, res) => {
 	const accessToken = req.cookies.accessToken;
 	const userJWTPayload = jwt.verify(accessToken, config.ACCESS_TOKEN.SECRET);
@@ -151,7 +157,7 @@ exports.logout = (req, res) => {
 				if (err) {
 					console.log(err);
 				} else {
-					console.log('Deleted access token for', result.username);
+					console.log({ message: `Deleted access token for ${result.username}`, httpStatus: 200 });
 				}
 				res.clearCookie('accessToken');
 				res.json({
@@ -160,4 +166,32 @@ exports.logout = (req, res) => {
 			}
 		);
 	}
+};
+
+exports.submitForgotPasswordUser = (req, res) => {
+	const sendPasswordResetEmail = () => {
+		const _token = 'asdfasdfasdf';
+		const mailOptions = {
+			from: config.MAIL_SERVER.USER,
+			to: 'robkelle.indiana@gmail.com',
+			subject: 'Reset your Imperial Dream Password',
+			// TODO draft a better email
+			html:
+				'<p>Please click <a href="http://localhost:3000/#/reset/' +
+				_token +
+				'">HERE</a> ' +
+				'to verify your Thumb Account </p>'
+		};
+
+		transporter.sendMail(mailOptions, function(err, info) {
+			if (err) {
+				console.log(err);
+			} else {
+				console.log(info);
+			}
+		});
+	};
+
+	sendPasswordResetEmail();
+	res.send('Email sent ... need to build out the validation piece next');
 };

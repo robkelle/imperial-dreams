@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import GoogleLogin from 'react-google-login';
 import buttonBackground from '../images/buttonBackground.jpg';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import config from '../config.json';
 import { withCookies } from 'react-cookie';
 

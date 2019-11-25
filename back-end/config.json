@@ -15,5 +15,10 @@
 	"REFRESH_TOKEN": {
 		"SECRET": "REFRESHTOKENSECRET",
 		"EXPIRATION": 86400
+	},
+	"MAIL_SERVER": {
+		"SERVICE": "gmail",
+		"USER": "",
+		"PASSWORD": ""
 	}
 }
