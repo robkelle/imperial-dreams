@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import GoogleLogin from "react-google-login";
+
 import buttonBackground from "../images/buttonBackground.jpg";
 import { Link } from "react-router-dom";
 
@@ -64,6 +64,11 @@ class Register extends Component {
         this.setState({ passwordValid: res.passwordValid });
         this.setState({ repeatPasswordValid: res.repeatPasswordValid });
         this.setState({ userCreated: res.userCreated });
+      })
+      .then(res => {
+        if (this.state.userCreated === true) {
+          this.props.history.push("/login");
+        }
       });
   };
 
@@ -87,7 +92,7 @@ class Register extends Component {
               onChange={e => {
                 this.setState({ username: e.target.value });
               }}
-            />
+            />{" "}
             {!this.state.usernameValid ? (
               <div className="animated fadeInUp">
                 <p className="text-danger">
@@ -145,25 +150,9 @@ class Register extends Component {
               ) : (
                 ""
               )}
-              {!this.state.repeatPasswordValid ? (
-                <div className="animated fadeInUp">
-                  <p className="text-danger">Please repeat your password.</p>
-                </div>
-              ) : (
-                ""
-              )}
             </div>
           )}
-          <div className="form-check">
-            <input
-              type="checkbox"
-              className="form-check-input"
-              id="rememberMe"
-            />
-            <label className="form-check-label" htmlFor="rememberMe">
-              Remember Username
-            </label>
-          </div>
+
           <button
             type="submit"
             className="btn btn-default float-right"

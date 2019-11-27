@@ -56,12 +56,15 @@ exports.signup = (req, res) => {
           res.status(500).send({
             message: "Something went wrong!"
           });
+          //Nest the Send Object function here otherwise it won't pick up the user created validation.
         } else {
           userValidate.userCreated = true;
+          sendObject();
         }
       });
+    } else {
+      sendObject();
     }
-    res.status(500).send(userValidate);
   }
 
   // Checks if user already exists
@@ -77,6 +80,10 @@ exports.signup = (req, res) => {
         userValidations(newUser);
       }
     );
+  }
+
+  function sendObject() {
+    res.status(200).send(userValidate);
   }
 
   userCheck(user);
