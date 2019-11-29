@@ -108,7 +108,9 @@ const Landing = (props) => {
 							<ChangingText textTimeout={2500} /> ?
 						</p>
 						<Link style={classes.loginText} to="/register">
-							<button style={classes.buttonStyle}>Play Now!</button>{' '}
+							<button className="btn btn-default" style={classes.buttonStyle}>
+								Play Now!
+							</button>{' '}
 						</Link>{' '}
 					</div>
 				</div>
