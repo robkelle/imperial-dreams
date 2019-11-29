@@ -109,7 +109,7 @@ exports.signin = (req, res, next) => {
 			}
 
 			if (!passwordIsValid) {
-				res.status(401).send({ message: 'Password is invalid.' });
+				res.status(401).send({ message: 'Password is invalid.', , passwordInvalid: true });
 			} else {
 				// Sign JWT token
 				const token = jwt.sign(
