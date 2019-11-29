@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import GoogleLogin from "react-google-login";
+
 import buttonBackground from "../images/buttonBackground.jpg";
 import { Link } from "react-router-dom";
 
@@ -35,19 +35,14 @@ class Register extends Component {
     },
     username: null,
     password: null,
-    repeatPassword: null,
-    isValid: true,
-    userNameExists: false
+    userExists: false,
+    usernameValid: true,
+    passwordValid: true,
+    repeatPasswordValid: true,
+    userCreated: null
   };
 
-  alphaOnly(e) {
-    const re = /[a-zA-Z0-9]+/g;
-    if (!re.test(e.key)) {
-      e.preventDefault();
-    }
-  }
-
-  handleSignUp = () => {
+  userSignup = () => {
     fetch("http://localhost:4000/api/user/signup", {
       method: "POST",
       headers: {
@@ -56,52 +51,23 @@ class Register extends Component {
       },
       body: JSON.stringify({
         username: this.state.username,
-        password: this.state.password
+        password: this.state.password,
+        repeatPassword: this.state.repeatPassword
       })
     })
       .then(res => {
         return res.json();
       })
       .then(res => {
-        console.log("Check console for " + res);
-      })
-      .catch(err => {
-        console.log("something went wrong " + err);
-      });
-  };
-
-  // Calls userValidate method defined in user controller. Method checks whether the username already exists.
-  // State validation moved in to last problem to deal with timing issues
-
-  validate = () => {
-    fetch("http://localhost:4000/api/user/userValidate", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        username: this.state.username,
-        password: this.state.password
-      })
-    })
-      .then(res => {
-        return res.json();
+        this.setState({ userExists: res.userExists });
+        this.setState({ usernameValid: res.usernameValid });
+        this.setState({ passwordValid: res.passwordValid });
+        this.setState({ repeatPasswordValid: res.repeatPasswordValid });
+        this.setState({ userCreated: res.userCreated });
       })
       .then(res => {
-        this.setState({ userNameExists: res.userExists });
-        if (
-          this.state.username == null ||
-          this.state.password == null ||
-          this.state.repeatSame === false ||
-          this.state.password !== this.state.repeatPassword ||
-          this.state.userNameExists === true
-        ) {
-          this.setState({
-            isValid: false
-          });
-        } else {
-          this.handleSignUp();
+        if (this.state.userCreated === true) {
+          this.props.history.push("/login");
         }
       });
   };
@@ -110,7 +76,7 @@ class Register extends Component {
   handleSubmit = e => {
     e.preventDefault();
 
-    this.validate();
+    this.userSignup();
   };
   render() {
     return (
@@ -123,19 +89,20 @@ class Register extends Component {
             <input
               className="form-control"
               type="text"
-              onKeyPress={e => this.alphaOnly(e)}
               onChange={e => {
                 this.setState({ username: e.target.value });
               }}
-            />
-            {!this.state.username && !this.state.isValid ? (
+            />{" "}
+            {!this.state.usernameValid ? (
               <div className="animated fadeInUp">
-                <p className="text-danger">Please provide a username</p>
+                <p className="text-danger">
+                  Username must be Alpha-numeric and over 8 characters long
+                </p>
               </div>
             ) : (
               ""
             )}
-            {!this.state.userNameExists === false && !this.state.isValid ? (
+            {this.state.userExists ? (
               <div className="animated fadeInUp">
                 <p className="text-danger">
                   This username already exists please try another
@@ -155,9 +122,12 @@ class Register extends Component {
               }}
             />
 
-            {!this.state.password && !this.state.isValid ? (
+            {!this.state.passwordValid ? (
               <div className="animated fadeInUp">
-                <p className="text-danger">Please provide a password.</p>
+                <p className="text-danger">
+                  Password must be over 8 characters and contain a symbol,
+                  number and letter
+                </p>
               </div>
             ) : (
               ""
@@ -173,33 +143,16 @@ class Register extends Component {
                   this.setState({ repeatPassword: e.target.value });
                 }}
               />
-              {this.state.repeatPassword !== this.state.password &&
-              !this.state.isValid ? (
+              {!this.state.repeatPasswordValid ? (
                 <div className="animated fadeInUp">
                   <p className="text-danger">Your passwords must match.</p>
                 </div>
               ) : (
                 ""
               )}
-              {!this.state.repeatPassword && !this.state.isValid ? (
-                <div className="animated fadeInUp">
-                  <p className="text-danger">Please repeat your password.</p>
-                </div>
-              ) : (
-                ""
-              )}
             </div>
           )}
-          <div className="form-check">
-            <input
-              type="checkbox"
-              className="form-check-input"
-              id="rememberMe"
-            />
-            <label className="form-check-label" htmlFor="rememberMe">
-              Remember Username
-            </label>
-          </div>
+
           <button
             type="submit"
             className="btn btn-default float-right"
@@ -219,10 +172,7 @@ class Register extends Component {
             Forgot your <Link to="/forgot_password">password?</Link>
           </p>
 
-          <div align="right">
-            {/* https://www.npmjs.com/package/react-google-login */}
-            <GoogleLogin />
-          </div>
+          <div align="right"></div>
         </form>
       </div>
     );
