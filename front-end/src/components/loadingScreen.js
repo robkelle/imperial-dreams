@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import favicon from '../images/favicon.ico';
 
 class LoadingScreen extends Component {
 	state = {
@@ -49,6 +50,7 @@ class LoadingScreen extends Component {
 								transform: 'translate(-50%, -50%)'
 							}}
 						>
+							<img src={favicon} />
 							<h5 style={{ color: '#fff' }}>Loading...</h5>
 							<div className="row">
 								<div
@@ -76,6 +78,7 @@ class LoadingScreen extends Component {
 								transform: 'translate(-50%, -50%)'
 							}}
 						>
+							<img src={favicon} />
 							<h5 style={{ color: '#fff' }}>Loading...</h5>
 							<div className="row">
 								<div
