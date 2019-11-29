@@ -39,7 +39,8 @@ class Login extends Component {
 			},
 			username: null,
 			password: null,
-			isValid: true
+			isValid: true,
+			isPasswordValid: true
 		};
 	}
 
@@ -66,6 +67,10 @@ class Login extends Component {
 					cookies.set('isAuthorized', res.isLoggedIn, { path: '/' });
 					cookies.set('loggedInUser', res.username, { path: '/' });
 					this.props.history.push('/user_dashboard');
+				} else {
+					this.setState({
+						isPasswordValid: false
+					});
 				}
 			})
 			.catch((err) => {
@@ -108,7 +113,9 @@ class Login extends Component {
 						/>
 						{!this.state.username && !this.state.isValid ? (
 							<div className="animated fadeInUp">
-								<p className="text-danger">Please choose a username.</p>
+								<p className="text-danger">
+									<strong>Please enter a valid username.</strong>
+								</p>
 							</div>
 						) : (
 							''
@@ -124,9 +131,21 @@ class Login extends Component {
 							}}
 						/>
 
+						{!this.state.isPasswordValid ? (
+							<div className="animated fadeInUp">
+								<p className="text-danger">
+									<strong>The username or password you entered is incorrect.</strong>
+								</p>
+							</div>
+						) : (
+							''
+						)}
+
 						{!this.state.password && !this.state.isValid ? (
 							<div className="animated fadeInUp">
-								<p className="text-danger">Please provide a password.</p>
+								<p className="text-danger">
+									<strong>Please enter a valid password.</strong>
+								</p>
 							</div>
 						) : (
 							''
