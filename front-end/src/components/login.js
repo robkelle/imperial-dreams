@@ -66,7 +66,7 @@ class Login extends Component {
 				if (res.isLoggedIn === true) {
 					cookies.set('isAuthorized', res.isLoggedIn, { path: '/' });
 					cookies.set('loggedInUser', res.username, { path: '/' });
-					this.props.history.push('/user_dashboard');
+					this.props.history.push('/loading');
 				} else {
 					this.setState({
 						isPasswordValid: false
