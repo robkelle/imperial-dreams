@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import buttonBackground from '../images/buttonBackground.jpg';
 import config from '../config.json';
 
 const classes = {
 	formStyle: {
-		backgroundColor: 'rgba(0, 51, 102, .75)',
+		backgroundColor: 'rgba(0, 51, 102, .85)',
 		padding: '10px 35px 60px 35px',
 		color: '#BEBEBE',
 		marginTop: 10,
@@ -55,7 +56,11 @@ const ForgotPassword = () => {
 	return (
 		<div align="center">
 			<form style={classes.formStyle} align="left">
+				<p>
+					<Link to="/login">Back to Login</Link>
+				</p>
 				<p className="h5">Forgot Password</p>
+				<small>Send a link to your email to reset your password</small>
 				<hr style={classes.hrStyle} />
 				<div className="form-group">
 					<label htmlFor="email">Email</label>
@@ -68,7 +73,7 @@ const ForgotPassword = () => {
 					style={classes.buttonStyle}
 					onClick={(e) => handleSubmit(e)}
 				>
-					Reset Password
+					Send Reset Link
 				</button>
 			</form>
 		</div>

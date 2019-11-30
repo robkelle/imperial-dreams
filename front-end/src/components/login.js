@@ -8,7 +8,7 @@ import { withCookies } from 'react-cookie';
 
 const classes = {
 	formStyle: {
-		backgroundColor: 'rgba(0, 51, 102, .75)',
+		backgroundColor: 'rgba(0, 51, 102, .85)',
 		padding: '10px 35px 60px 35px',
 		color: '#BEBEBE',
 		marginTop: 10,

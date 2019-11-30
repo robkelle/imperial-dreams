@@ -52,9 +52,7 @@ const classes = {
 		backgroundSize: 'cover',
 		backgroundRepeat: 'no-repeat',
 		color: '#BEBEBE',
-		width: 160,
-		borderRadius: '5px',
-		padding: '4px 0px 4px 0px'
+		width: 160
 	},
 	loginText: {
 		color: 'white',
