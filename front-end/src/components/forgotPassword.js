@@ -26,7 +26,7 @@ const classes = {
 		backgroundSize: 'cover',
 		backgroundRepeat: 'no-repeat',
 		color: '#BEBEBE',
-		width: 200
+		width: 100
 	}
 };
 
@@ -49,7 +49,7 @@ const ForgotPassword = () => {
 				return res.json();
 			})
 			.then((res) => {
-				console.log(res);
+				setEmail('');
 			});
 	};
 
@@ -64,7 +64,12 @@ const ForgotPassword = () => {
 				<hr style={classes.hrStyle} />
 				<div className="form-group">
 					<label htmlFor="email">Email</label>
-					<input className="form-control" type="email" onChange={(e) => setEmail(e.target.value)} />
+					<input
+						className="form-control"
+						type="email"
+						value={email}
+						onChange={(e) => setEmail(e.target.value)}
+					/>
 				</div>
 
 				<button
@@ -73,7 +78,7 @@ const ForgotPassword = () => {
 					style={classes.buttonStyle}
 					onClick={(e) => handleSubmit(e)}
 				>
-					Send Reset Link
+					Send
 				</button>
 			</form>
 		</div>
