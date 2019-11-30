@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 import User from '../models/user.model';
 
 const checkAuthorization = function(req, res, next) {
-	const accessToken = req.cookies.accessToken;
+	const accessToken = req.cookies.accessToken || req.body.token;
 
 	if (!accessToken) {
 		res.clearCookie('accessToken');
