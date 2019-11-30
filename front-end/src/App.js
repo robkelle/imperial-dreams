@@ -11,6 +11,7 @@ import Logout from './components/logout';
 import UserDashboard from './components/userDashboard';
 import LoadingScreen from './components/loadingScreen';
 import { withCookies } from 'react-cookie';
+import ResetPassword from './components/resetPassword';
 
 function App(props) {
 	const isAuthorized = props.cookies.get('isAuthorized');
@@ -62,6 +63,7 @@ function App(props) {
 					<Route exact path="/register" component={Register} />
 					<Route exact path="/forgot_username" component={ForgotUsername} />
 					<Route exact path="/forgot_password" component={ForgotPassword} />
+					<Route exact path="/reset_password" component={ResetPassword} />
 					<Route exact path="/loading" component={LoadingScreen} />
 					<Route path="/user_dashboard" render={() => (isAuthorized ? <UserDashboard /> : <Login />)} />
 				</div>
