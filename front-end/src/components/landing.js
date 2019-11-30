@@ -110,8 +110,8 @@ const Landing = (props) => {
 						<Link style={classes.loginText} to="/register">
 							<button className="btn btn-default" style={classes.buttonStyle}>
 								Play Now!
-							</button>{' '}
-						</Link>{' '}
+							</button>
+						</Link>
 					</div>
 				</div>
 			</div>

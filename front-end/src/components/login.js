@@ -171,9 +171,9 @@ class Login extends Component {
 					<p>
 						Don't have an account? <Link to="/register">Sign up now!</Link>
 					</p>
-					<p>
+					{/* <p>
 						Forgot your <Link to="/forgot_username">username?</Link>
-					</p>
+					</p> */}
 					<p>
 						Forgot your <Link to="/forgot_password">password?</Link>
 					</p>

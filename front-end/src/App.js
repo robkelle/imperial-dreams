@@ -57,11 +57,7 @@ function App(props) {
 				</nav>
 				<div align="center">
 					{/* Specify all routes in the client-side */}
-					<Route
-						exact
-						path="/"
-						component={() => <Landing isAuthorized={isAuthorized} loggedInUser={loggedInUser} />}
-					/>
+					<Route exact path="/" component={() => <Landing isAuthorized={isAuthorized} />} />
 					<Route exact path="/login" component={Login} />
 					<Route exact path="/register" component={Register} />
 					<Route exact path="/forgot_username" component={ForgotUsername} />
