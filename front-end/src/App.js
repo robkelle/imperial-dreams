@@ -15,7 +15,7 @@ import ResetPassword from './components/resetPassword';
 
 function App(props) {
 	const isAuthorized = props.cookies.get('isAuthorized');
-	const loggedInUser = props.cookies.get('loggedInUser');
+	//const loggedInUser = props.cookies.get('loggedInUser');
 
 	return (
 		<div>

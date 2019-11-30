@@ -51,7 +51,7 @@ class LoadingScreen extends Component {
 						transform: 'translate(-50%, -50%)'
 					}}
 				>
-					<img src={favicon} />
+					<img src={favicon} alt="" />
 					<h5 style={{ color: '#fff' }}>Loading...</h5>
 					<div className="row">
 						<div
