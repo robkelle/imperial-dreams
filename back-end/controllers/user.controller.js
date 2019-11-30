@@ -252,17 +252,58 @@ exports.forgotPassword = (req, res) => {
 			expiresIn: config.RESET_TOKEN.EXPIRATION
 		});
 
+		// Updates the users reset token in the database when the forgot password API is hit
+		User.findOneAndUpdate(
+			{ email: req.body.email },
+			{
+				resetToken: token
+			},
+			{ upsert: 'true' },
+			function(err) {
+				if (err) {
+					console.log({
+						message: 'There has been an error updating the user reset token.',
+						httpStatus: 500,
+						errorMessage: err
+					});
+				} else {
+					console.log({
+						message: 'The reset token has been updated.',
+						httpStatus: 200
+					});
+				}
+			}
+		);
+
 		sendPasswordResetEmail(token);
 		res.status(200).send({ message: 'Email has been sent.', httpStatus: 200 });
 	});
 };
 
 exports.resetPassword = (req, res) => {
-	if (!req.decoded.userId) {
+	const resetTokenDecoded = jwt.decode(req.body.resetToken);
+	let hashedPassword = bcrypt.hashSync(req.body.password, 10);
+
+	if (!resetTokenDecoded.userId) {
 		res.status(400).send({ message: 'A userId not decoded.' });
 	}
 
 	if (!req.body.password) {
 		res.status(400).send({ message: 'Password should be present.' });
 	}
+
+	User.findById(resetTokenDecoded.userId, (err, user) => {
+		if (!user) {
+			console.log('Unable to find user');
+		} else {
+			user.password = hashedPassword;
+			user.save((err) => {
+				if (err) {
+					console.log('Error saving user change');
+				} else {
+					res.status(200).send({ message: 'Successfully updated password.', httpStatus: 200 });
+				}
+			});
+		}
+	});
 };

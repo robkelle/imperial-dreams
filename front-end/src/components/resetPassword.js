@@ -37,23 +37,24 @@ class ResetPassword extends Component {
 
 		const resetToken = queryString.parse(this.props.location.search).reset_token;
 
-		console.log(resetToken);
-
-		// fetch(`${config.API.DOMAIN}:${config.API.PORT}/api/user/reset`, {
-		// 	method: 'POST',
-		// 	headers: {
-		// 		'Content-Type': 'application/json'
-		// 	},
-		// 	body: JSON.stringify({
-		// 		email: email
-		// 	})
-		// })
-		// 	.then((res) => {
-		// 		return res.json();
-		// 	})
-		// 	.then((res) => {
-		// 		console.log(res);
-		// 	});
+		fetch(`${config.API.DOMAIN}:${config.API.PORT}/api/user/reset`, {
+			method: 'POST',
+			mode: 'cors',
+			credentials: 'include',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				password: this.state.password,
+				resetToken: resetToken
+			})
+		})
+			.then((res) => {
+				return res.json();
+			})
+			.then((res) => {
+				console.log(res);
+			});
 	};
 
 	render() {
@@ -68,11 +69,23 @@ class ResetPassword extends Component {
 					<hr style={classes.hrStyle} />
 					<div className="form-group">
 						<label htmlFor="password">New Password</label>
-						<input className="form-control" type="password" />
+						<input
+							className="form-control"
+							type="password"
+							onChange={(e) => {
+								this.setState({ password: e.target.value });
+							}}
+						/>
 					</div>
 					<div className="form-group">
 						<label htmlFor="password">Confirm Password</label>
-						<input className="form-control" type="password" />
+						<input
+							className="form-control"
+							type="password"
+							onChange={(e) => {
+								this.setState({ confirmPassword: e.target.value });
+							}}
+						/>
 					</div>
 
 					<button
