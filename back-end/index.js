@@ -1,44 +1,39 @@
 // Import API Web Application Framework
-import express from "express";
+import express from 'express';
 
 // Import middleware
-import cors from "cors";
-import bodyParser from "body-parser";
-import mongoose from "mongoose";
-import cookieParser from "cookie-parser";
+import cors from 'cors';
+import bodyParser from 'body-parser';
+import mongoose from 'mongoose';
+import cookieParser from 'cookie-parser';
 
 // Import configuration file
-import config from "./config.json";
+import config from './config.json';
 
 // Import routes
-import testRoute from "./routes/test.route";
-import userRoute from "./routes/user.route";
+import userRoute from './routes/user.route';
 
 // Connect to mongodb server
 mongoose.connect(
-  config.DATABASE.DB_HOST +
-    ":" +
-    config.DATABASE.DB_PORT +
-    "/" +
-    config.DATABASE.DB_NAME,
-  {
-    useUnifiedTopology: true,
-    useNewUrlParser: true
-  },
-  err => {
-    if (!err) {
-      console.log({
-        message: "MongoDB is running.",
-        port: config.DATABASE.DB_PORT,
-        httpStatus: 200
-      });
-    } else {
-      console.log({
-        message: `Failed to connect to ${config.DATABASE.DB}.`,
-        httpStatus: 500
-      });
-    }
-  }
+	config.DATABASE.DB_HOST + ':' + config.DATABASE.DB_PORT + '/' + config.DATABASE.DB_NAME,
+	{
+		useUnifiedTopology: true,
+		useNewUrlParser: true
+	},
+	(err) => {
+		if (!err) {
+			console.log({
+				message: 'MongoDB is running.',
+				port: config.DATABASE.DB_PORT,
+				httpStatus: 200
+			});
+		} else {
+			console.log({
+				message: `Failed to connect to ${config.DATABASE.DB}.`,
+				httpStatus: 500
+			});
+		}
+	}
 );
 
 // Initialize web application framework
@@ -51,19 +46,18 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 const corsOptions = {
-  credentials: true,
-  origin: "http://localhost:3000"
+	credentials: true,
+	origin: 'http://localhost:3000'
 };
 
 app.use(cors(corsOptions));
 
 // API routes
-app.use("/api/", testRoute);
-app.use("/api/user/", userRoute);
+app.use('/api/user/', userRoute);
 
 // Start express server
 app.listen(port, () => {
-  console.log({ message: "Express is running.", port: port, httpStatus: 200 });
+	console.log({ message: 'Express is running.', port: port, httpStatus: 200 });
 });
 
-require("dotenv").config();
+require('dotenv').config();

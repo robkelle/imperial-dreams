@@ -52,9 +52,7 @@ const classes = {
 		backgroundSize: 'cover',
 		backgroundRepeat: 'no-repeat',
 		color: '#BEBEBE',
-		width: 160,
-		borderRadius: '5px',
-		padding: '4px 0px 4px 0px'
+		width: 160
 	},
 	loginText: {
 		color: 'white',
@@ -98,7 +96,6 @@ const Landing = (props) => {
 		'The continent of Acar is in tatters. A multi-generational war to exterminate the gods broke the world asunder. Society, culture and knowledge faded in the centuries following the apocalypse, with the world reverting back to its primeval origins. The land of Acar is a blank slate. Its history, cultures, religions and institutions will be formed at the hands of the characters that inhabit it.';
 	return (
 		<div>
-			{props.isAuthorized ? <h1 style={{ color: '#fff' }}>Welcome {props.loggedInUser}!!</h1> : ''}
 			<div style={classes.summaryStyle}>
 				<h1 style={classes.labelStyle}>IMPERIAL DREAMS</h1>
 				<div style={classes.centered}>
@@ -109,8 +106,10 @@ const Landing = (props) => {
 							<ChangingText textTimeout={2500} /> ?
 						</p>
 						<Link style={classes.loginText} to="/register">
-							<button style={classes.buttonStyle}>Play Now!</button>{' '}
-						</Link>{' '}
+							<button className="btn btn-default" style={classes.buttonStyle}>
+								Play Now!
+							</button>
+						</Link>
 					</div>
 				</div>
 			</div>

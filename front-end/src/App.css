@@ -1,7 +1,15 @@
 @import url("https://fonts.googleapis.com/css?family=Trade+Winds&display=swap");
 @import url("https://fonts.googleapis.com/css?family=Alatsi&display=swap");
 @import url("https://fonts.googleapis.com/css?family=Cinzel&display=swap");
+
 #custom-nav a {
-  color: rgb(255, 180, 59);
-  text-decoration: none;
+	color: rgb(255, 180, 59);
+	text-decoration: none;
+	font-weight: normal;
+}
+
+a,
+a:hover {
+	color: #e6e8ea;
+	font-weight: bold;
 }
