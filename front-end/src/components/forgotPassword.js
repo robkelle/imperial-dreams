@@ -26,7 +26,7 @@ const classes = {
 		backgroundSize: 'cover',
 		backgroundRepeat: 'no-repeat',
 		color: '#BEBEBE',
-		width: 200
+		width: 100
 	}
 };
 
@@ -78,7 +78,7 @@ const ForgotPassword = () => {
 					style={classes.buttonStyle}
 					onClick={(e) => handleSubmit(e)}
 				>
-					Send Reset Link
+					Send
 				</button>
 			</form>
 		</div>
