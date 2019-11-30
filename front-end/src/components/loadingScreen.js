@@ -3,20 +3,20 @@ import favicon from '../images/favicon.ico';
 
 class LoadingScreen extends Component {
 	state = {
-		count: 0,
+		percent: 0,
 		complete: false
 	};
 
 	componentDidUpdate(prevProps, prevState) {
-		if (prevState.count < 100) {
+		if (prevState.percent < 100) {
 			setTimeout(() => {
 				this.setState({
-					count: this.state.count + 1
+					percent: this.state.percent + 1
 				});
 			}, 10);
 		}
 
-		if (prevState.count === 100) {
+		if (prevState.percent === 100) {
 			setTimeout(() => {
 				this.props.history.push('/user_dashboard');
 			}, 700);
@@ -28,9 +28,9 @@ class LoadingScreen extends Component {
 	}
 
 	componentDidMount() {
-		if (this.state.count < 100) {
+		if (this.state.percent < 100) {
 			this.setState({
-				count: this.state.count + 1
+				percent: this.state.percent + 1
 			});
 		}
 	}
@@ -55,7 +55,7 @@ class LoadingScreen extends Component {
 							<div className="row">
 								<div
 									style={{
-										width: `${this.state.count}%`,
+										width: `${this.state.percent}%`,
 										backgroundColor: 'rgb(0, 51, 102)',
 										height: 50
 									}}
@@ -83,7 +83,7 @@ class LoadingScreen extends Component {
 							<div className="row">
 								<div
 									style={{
-										width: `${this.state.count}%`,
+										width: `${this.state.percent}%`,
 										backgroundColor: 'rgb(0, 51, 102)',
 										height: 50
 									}}
