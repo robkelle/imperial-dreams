@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+
 import favicon from '../images/favicon.ico';
 
 class LoadingScreen extends Component {
@@ -68,4 +69,4 @@ class LoadingScreen extends Component {
 	}
 }
 
-export default LoadingScreen;
+export { LoadingScreen };

@@ -1,42 +1,16 @@
 // @flow
-import React, { Component } from 'react';
-import GoogleLogin from 'react-google-login';
-import buttonBackground from '../images/buttonBackground.jpg';
-import { Link } from 'react-router-dom';
-import config from '../config.json';
-import { withCookies } from 'react-cookie';
 
-const classes = {
-	formStyle: {
-		backgroundColor: 'rgba(0, 51, 102, .85)',
-		padding: '10px 35px 60px 35px',
-		color: '#BEBEBE',
-		marginTop: 10,
-		width: 500,
-		fontSize: 16
-	},
-	hrStyle: {
-		borderTop: '1px solid #fff',
-		color: '#fff'
-	},
-	liStyle: {
-		listStyleType: 'none',
-		color: 'red'
-	}
-};
+import React, { Component } from 'react';
+
+import GoogleLogin from 'react-google-login';
+import { Link } from 'react-router-dom';
+import config from '../../config.json';
+import { withCookies } from 'react-cookie';
 
 class Login extends Component {
 	constructor() {
 		super();
 		this.state = {
-			buttonStyle: {
-				backgroundImage: `url(${buttonBackground})`,
-				backgroundPosition: 'center',
-				backgroundSize: 'cover',
-				backgroundRepeat: 'no-repeat',
-				color: '#BEBEBE',
-				width: 160
-			},
 			username: null,
 			password: null,
 			isValid: true,
@@ -74,7 +48,9 @@ class Login extends Component {
 				}
 			})
 			.catch((err) => {
-				return new Error('Logging in from the client failed.');
+				if (err) {
+					return new Error('Logging in from the client failed.');
+				}
 			});
 	};
 
@@ -97,11 +73,12 @@ class Login extends Component {
 	};
 
 	render() {
+		const { style } = this.props;
 		return (
 			<div align="center">
-				<form style={classes.formStyle} align="left">
+				<form style={style.formStyle} align="left">
 					<p className="h5">Account Login</p>
-					<hr style={classes.hrStyle} />
+					<hr style={style.hrStyle} />
 					<div className="form-group">
 						<label htmlFor="username">Username</label>
 						<input
@@ -160,14 +137,14 @@ class Login extends Component {
 					<button
 						type="submit"
 						className="btn btn-default float-right"
-						style={this.state.buttonStyle}
+						style={style.buttonStyle}
 						onClick={(e) => this.handleSubmit(e)}
 					>
 						Log in
 					</button>
 					<br />
 					<br />
-					<hr style={classes.hrStyle} />
+					<hr style={style.hrStyle} />
 					<p>
 						Don't have an account? <Link to="/register">Sign up now!</Link>
 					</p>
