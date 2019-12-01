@@ -1,8 +1,8 @@
 import User from '../models/user.model';
-import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
-import transporter from '../middleware/mail';
 import config from '../config.json';
+import jwt from 'jsonwebtoken';
+import transporter from '../middleware/mail';
 
 exports.signup = (req, res) => {
 	//Declare regex used to validate username and passwords

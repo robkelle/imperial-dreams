@@ -1,5 +1,7 @@
 import '../App.css';
+
 import React, { Component } from 'react';
+
 import { Link } from 'react-router-dom';
 import buttonBackground from '../images/buttonBackground.jpg';
 
@@ -94,8 +96,9 @@ class ChangingText extends Component {
 const Landing = (props) => {
 	let summary =
 		'The continent of Acar is in tatters. A multi-generational war to exterminate the gods broke the world asunder. Society, culture and knowledge faded in the centuries following the apocalypse, with the world reverting back to its primeval origins. The land of Acar is a blank slate. Its history, cultures, religions and institutions will be formed at the hands of the characters that inhabit it.';
+	const { isAuthorized } = props;
 	return (
-		<div>
+		<div align="center">
 			<div style={classes.summaryStyle}>
 				<h1 style={classes.labelStyle}>IMPERIAL DREAMS</h1>
 				<div style={classes.centered}>
@@ -105,15 +108,19 @@ const Landing = (props) => {
 						<p style={classes.role}>
 							<ChangingText textTimeout={2500} /> ?
 						</p>
-						<Link style={classes.loginText} to="/register">
-							<button className="btn btn-default" style={classes.buttonStyle}>
-								Play Now!
-							</button>
-						</Link>
+						{isAuthorized ? (
+							''
+						) : (
+							<Link style={classes.loginText} to="/register">
+								<button className="btn btn-default" style={classes.buttonStyle}>
+									Play Now!
+								</button>
+							</Link>
+						)}
 					</div>
 				</div>
 			</div>
 		</div>
 	);
 };
-export default Landing;
+export { Landing };

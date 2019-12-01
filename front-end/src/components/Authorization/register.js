@@ -1,38 +1,8 @@
 import React, { Component } from 'react';
-
-import buttonBackground from '../images/buttonBackground.jpg';
 import { Link } from 'react-router-dom';
-
-// Set styling
-const classes = {
-	formStyle: {
-		backgroundColor: 'rgba(0, 51, 102, .85)',
-		padding: '10px 35px 60px 35px',
-		color: '#BEBEBE',
-		marginTop: 10,
-		width: 500,
-		fontSize: 16
-	},
-	hrStyle: {
-		borderTop: '1px solid #fff',
-		color: '#fff'
-	},
-	liStyle: {
-		listStyleType: 'none',
-		color: 'red'
-	}
-};
 
 class Register extends Component {
 	state = {
-		buttonStyle: {
-			backgroundImage: `url(${buttonBackground})`,
-			backgroundPosition: 'center',
-			backgroundSize: 'cover',
-			backgroundRepeat: 'no-repeat',
-			color: '#BEBEBE',
-			width: 160
-		},
 		username: null,
 		password: null,
 		userExists: false,
@@ -79,11 +49,12 @@ class Register extends Component {
 		this.userSignup();
 	};
 	render() {
+		const { style } = this.props;
 		return (
 			<div align="center">
-				<form style={classes.formStyle} align="left">
+				<form style={style.formStyle} align="left">
 					<p className="h5">Register Account</p>
-					<hr style={classes.hrStyle} />
+					<hr style={style.hrStyle} />
 					<div className="form-group">
 						<label htmlFor="username">Username</label>
 						<input
@@ -151,14 +122,14 @@ class Register extends Component {
 					<button
 						type="submit"
 						className="btn btn-default float-right"
-						style={this.state.buttonStyle}
+						style={style.buttonStyle}
 						onClick={(e) => this.handleSubmit(e)}
 					>
 						Register
 					</button>
 					<br />
 					<br />
-					<hr style={classes.hrStyle} />
+					<hr style={style.hrStyle} />
 					<p>
 						Have an account? <Link to="/login">Log in here!</Link>
 					</p>
@@ -179,4 +150,4 @@ class Register extends Component {
 // 	hrStyle: PropTypes.object.isRequired
 // };
 
-export default Register;
+export { Register };

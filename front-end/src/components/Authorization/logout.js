@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import config from '../config.json';
-import { withCookies } from 'react-cookie';
+
 import { Link } from 'react-router-dom';
+import config from '../../config.json';
+import { withCookies } from 'react-cookie';
 
 class Logout extends Component {
 	handleClick = () => {

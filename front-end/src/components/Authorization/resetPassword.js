@@ -1,35 +1,8 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import buttonBackground from '../images/buttonBackground.jpg';
-import queryString from 'query-string';
-import config from '../config.json';
 
-const classes = {
-	formStyle: {
-		backgroundColor: 'rgba(0, 51, 102, .85)',
-		padding: '10px 35px 60px 35px',
-		color: '#BEBEBE',
-		marginTop: 10,
-		width: 500,
-		fontSize: 16
-	},
-	hrStyle: {
-		borderTop: '1px solid #fff',
-		color: '#fff'
-	},
-	liStyle: {
-		listStyleType: 'none',
-		color: 'red'
-	},
-	buttonStyle: {
-		backgroundImage: `url(${buttonBackground})`,
-		backgroundPosition: 'center',
-		backgroundSize: 'cover',
-		backgroundRepeat: 'no-repeat',
-		color: '#BEBEBE',
-		width: 100
-	}
-};
+import { Link } from 'react-router-dom';
+import config from '../../config.json';
+import queryString from 'query-string';
 
 class ResetPassword extends Component {
 	handleSubmit = (e) => {
@@ -58,15 +31,16 @@ class ResetPassword extends Component {
 	};
 
 	render() {
+		const { style } = this.props;
 		return (
 			<div align="center">
-				<form style={classes.formStyle} align="left">
+				<form style={style.formStyle} align="left">
 					<p>
 						<Link to="/login">Back to Login</Link>
 					</p>
 					<p className="h5">Reset Password</p>
 					<small>Please choose your new password</small>
-					<hr style={classes.hrStyle} />
+					<hr style={style.hrStyle} />
 					<div className="form-group">
 						<label htmlFor="password">New Password</label>
 						<input
@@ -91,7 +65,7 @@ class ResetPassword extends Component {
 					<button
 						type="submit"
 						className="btn btn-default float-right"
-						style={classes.buttonStyle}
+						style={style.buttonStyle}
 						onClick={(e) => this.handleSubmit(e)}
 					>
 						Save
@@ -102,4 +76,4 @@ class ResetPassword extends Component {
 	}
 }
 
-export default ResetPassword;
+export { ResetPassword };
