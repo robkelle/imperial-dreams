@@ -2,6 +2,7 @@
 
 import { Route, BrowserRouter as Router } from 'react-router-dom';
 
+import BorderBackground from '../images/borderBackground.jpg';
 import ButtonBackground from '../images/buttonBackground.jpg';
 import { ForgotPassword } from './Authorization/forgotPassword';
 import { Landing } from './landing';
@@ -27,5 +28,6 @@ export {
 	LoadingScreen,
 	withCookies,
 	ResetPassword,
-	ButtonBackground
+	ButtonBackground,
+	BorderBackground
 };

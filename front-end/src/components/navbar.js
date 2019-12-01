@@ -7,7 +7,7 @@ const Navbar = (props) => {
 	const { isAuthorized } = props;
 	return (
 		<nav className="navbar navbar-expand-lg" id="custom-nav" style={{ backgroundColor: 'rgb(0, 51, 102)' }}>
-			<a className="navbar-brand" href="/">
+			<a className="navbar-brand" href="/imperial">
 				<img src={Favicon} height={35} alt="" />
 			</a>
 			<ul className="navbar-nav">

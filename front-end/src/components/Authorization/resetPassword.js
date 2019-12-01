@@ -34,43 +34,45 @@ class ResetPassword extends Component {
 		const { style } = this.props;
 		return (
 			<div align="center">
-				<form style={style.formStyle} align="left">
-					<p>
-						<Link to="/login">Back to Login</Link>
-					</p>
-					<p className="h5">Reset Password</p>
-					<small>Please choose your new password</small>
-					<hr style={style.hrStyle} />
-					<div className="form-group">
-						<label htmlFor="password">New Password</label>
-						<input
-							className="form-control"
-							type="password"
-							onChange={(e) => {
-								this.setState({ password: e.target.value });
-							}}
-						/>
-					</div>
-					<div className="form-group">
-						<label htmlFor="password">Confirm Password</label>
-						<input
-							className="form-control"
-							type="password"
-							onChange={(e) => {
-								this.setState({ confirmPassword: e.target.value });
-							}}
-						/>
-					</div>
+				<div style={style.main}>
+					<form style={style.formStyle} align="left">
+						<p>
+							<Link to="/login">Back to Login</Link>
+						</p>
+						<h1 style={style.labelStyle}>Reset Password</h1>
+						<small>Please choose your new password</small>
+						<hr style={style.hrStyle} />
+						<div className="form-group">
+							<label htmlFor="password">New Password</label>
+							<input
+								className="form-control"
+								type="password"
+								onChange={(e) => {
+									this.setState({ password: e.target.value });
+								}}
+							/>
+						</div>
+						<div className="form-group">
+							<label htmlFor="password">Confirm Password</label>
+							<input
+								className="form-control"
+								type="password"
+								onChange={(e) => {
+									this.setState({ confirmPassword: e.target.value });
+								}}
+							/>
+						</div>
 
-					<button
-						type="submit"
-						className="btn btn-default float-right"
-						style={style.buttonStyle}
-						onClick={(e) => this.handleSubmit(e)}
-					>
-						Save
-					</button>
-				</form>
+						<button
+							type="submit"
+							className="btn btn-default float-right"
+							style={style.buttonStyle}
+							onClick={(e) => this.handleSubmit(e)}
+						>
+							Save
+						</button>
+					</form>
+				</div>
 			</div>
 		);
 	}

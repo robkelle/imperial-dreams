@@ -2,14 +2,15 @@ import '../App.css';
 
 import React, { Component } from 'react';
 
+import BorderBackground from '../images/borderBackground.jpg';
+import ButtonBackground from '../images/buttonBackground.jpg';
 import { Link } from 'react-router-dom';
-import buttonBackground from '../images/buttonBackground.jpg';
 
 const classes = {
 	summaryStyle: {
 		display: 'inline-block',
 		borderRadius: '25px',
-		backgroundColor: 'rgb(0, 51, 102, .75)',
+		backgroundImage: `url(${BorderBackground})`,
 		padding: '25px 35px 60px 35px',
 		color: '#BEBEBE',
 		marginTop: 10,
@@ -49,11 +50,11 @@ const classes = {
 	},
 
 	buttonStyle: {
-		backgroundImage: `url(${buttonBackground})`,
+		backgroundImage: `url(${ButtonBackground})`,
 		backgroundPosition: 'center',
 		backgroundSize: 'cover',
 		backgroundRepeat: 'no-repeat',
-		color: '#BEBEBE',
+		color: '#fff',
 		width: 160
 	},
 	loginText: {

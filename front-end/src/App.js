@@ -1,6 +1,7 @@
 // Exported by the imports.js file
 
 import {
+	BorderBackground,
 	ButtonBackground,
 	ForgotPassword,
 	Landing,
@@ -17,13 +18,29 @@ import {
 } from './components/imports';
 
 const classes = {
+	main: {
+		borderRadius: '25px',
+		backgroundImage: `url(${BorderBackground})`,
+		width: 600,
+		padding: '25px 35px 60px 35px',
+		marginTop: 10
+	},
 	formStyle: {
 		backgroundColor: 'rgba(0, 51, 102, .85)',
 		padding: '10px 35px 60px 35px',
 		color: '#BEBEBE',
 		marginTop: 10,
 		width: 500,
-		fontSize: 16
+		fontSize: 16,
+		borderStyle: 'solid',
+		borderColor: 'rgb(255, 180, 59)',
+		borderWidth: '15px',
+		borderRadius: '25px'
+	},
+	labelStyle: {
+		fontFamily: 'Trade Winds',
+		color: 'rgb(255, 180, 59)',
+		fontSize: '44px'
 	},
 	hrStyle: {
 		borderTop: '1px solid #fff',
@@ -38,7 +55,7 @@ const classes = {
 		backgroundPosition: 'center',
 		backgroundSize: 'cover',
 		backgroundRepeat: 'no-repeat',
-		color: '#BEBEBE',
+		color: '#fff',
 		width: 160
 	}
 };

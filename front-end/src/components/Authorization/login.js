@@ -2,7 +2,6 @@
 
 import React, { Component } from 'react';
 
-import GoogleLogin from 'react-google-login';
 import { Link } from 'react-router-dom';
 import config from '../../config.json';
 import { withCookies } from 'react-cookie';
@@ -76,90 +75,87 @@ class Login extends Component {
 		const { style } = this.props;
 		return (
 			<div align="center">
-				<form style={style.formStyle} align="left">
-					<p className="h5">Account Login</p>
-					<hr style={style.hrStyle} />
-					<div className="form-group">
-						<label htmlFor="username">Username</label>
-						<input
-							className="form-control"
-							type="text"
-							onChange={(e) => {
-								this.setState({ username: e.target.value });
-							}}
-						/>
-						{!this.state.username && !this.state.isValid ? (
-							<div className="animated fadeInUp">
-								<p className="text-danger">
-									<strong>Please enter a valid username.</strong>
-								</p>
-							</div>
-						) : (
-							''
-						)}
-					</div>
-					<div className="form-group">
-						<label htmlFor="password">Password</label>
-						<input
-							className="form-control"
-							type="password"
-							onChange={(e) => {
-								this.setState({ password: e.target.value });
-							}}
-						/>
+				<div style={style.main}>
+					<form style={style.formStyle} align="left">
+						<h1 style={style.labelStyle}>Account Login</h1>
+						<hr style={style.hrStyle} />
+						<div className="form-group">
+							<label htmlFor="username">Username</label>
+							<input
+								className="form-control"
+								type="text"
+								onChange={(e) => {
+									this.setState({ username: e.target.value });
+								}}
+							/>
+							{!this.state.username && !this.state.isValid ? (
+								<div className="animated fadeInUp">
+									<p className="text-danger">
+										<strong>Please enter a valid username.</strong>
+									</p>
+								</div>
+							) : (
+								''
+							)}
+						</div>
+						<div className="form-group">
+							<label htmlFor="password">Password</label>
+							<input
+								className="form-control"
+								type="password"
+								onChange={(e) => {
+									this.setState({ password: e.target.value });
+								}}
+							/>
 
-						{!this.state.isPasswordValid ? (
-							<div className="animated fadeInUp">
-								<p className="text-danger">
-									<strong>The username or password you entered is incorrect.</strong>
-								</p>
-							</div>
-						) : (
-							''
-						)}
+							{!this.state.isPasswordValid ? (
+								<div className="animated fadeInUp">
+									<p className="text-danger">
+										<strong>The username or password you entered is incorrect.</strong>
+									</p>
+								</div>
+							) : (
+								''
+							)}
 
-						{!this.state.password && !this.state.isValid ? (
-							<div className="animated fadeInUp">
-								<p className="text-danger">
-									<strong>Please enter a valid password.</strong>
-								</p>
-							</div>
-						) : (
-							''
-						)}
-					</div>
-					<div className="form-check">
-						<input type="checkbox" className="form-check-input" id="rememberMe" />
-						<label className="form-check-label" htmlFor="rememberMe">
-							Remember Username
-						</label>
-					</div>
-					<button
-						type="submit"
-						className="btn btn-default float-right"
-						style={style.buttonStyle}
-						onClick={(e) => this.handleSubmit(e)}
-					>
-						Log in
-					</button>
-					<br />
-					<br />
-					<hr style={style.hrStyle} />
-					<p>
-						Don't have an account? <Link to="/register">Sign up now!</Link>
-					</p>
-					{/* <p>
+							{!this.state.password && !this.state.isValid ? (
+								<div className="animated fadeInUp">
+									<p className="text-danger">
+										<strong>Please enter a valid password.</strong>
+									</p>
+								</div>
+							) : (
+								''
+							)}
+						</div>
+						<div className="form-check">
+							<input type="checkbox" className="form-check-input" id="rememberMe" />
+							<label className="form-check-label" htmlFor="rememberMe">
+								Remember Username
+							</label>
+						</div>
+						<button
+							type="submit"
+							className="btn btn-default float-right"
+							style={style.buttonStyle}
+							onClick={(e) => this.handleSubmit(e)}
+						>
+							Log in
+						</button>
+						<br />
+						<br />
+						<hr style={style.hrStyle} />
+						<p>
+							Don't have an account? <Link to="/register">Sign up now!</Link>
+						</p>
+						{/* <p>
 						Forgot your <Link to="/forgot_username">username?</Link>
 					</p> */}
-					<p>
-						Forgot your <Link to="/forgot_password">password?</Link>
-					</p>
-
-					<div align="right">
-						{/* https://www.npmjs.com/package/react-google-login */}
-						<GoogleLogin />
-					</div>
-				</form>
+						<p>
+							Forgot your <Link to="/forgot_password">password?</Link>
+						</p>
+					</form>
+				</div>
 			</div>
 		);
 	}

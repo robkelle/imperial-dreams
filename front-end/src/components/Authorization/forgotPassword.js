@@ -30,32 +30,34 @@ const ForgotPassword = (props) => {
 
 	return (
 		<div align="center">
-			<form style={style.formStyle} align="left">
-				<p>
-					<Link to="/login">Back to Login</Link>
-				</p>
-				<p className="h5">Forgot Password</p>
-				<small>Send a link to your email to reset your password</small>
-				<hr style={style.hrStyle} />
-				<div className="form-group">
-					<label htmlFor="email">Email</label>
-					<input
-						className="form-control"
-						type="email"
-						value={email}
-						onChange={(e) => setEmail(e.target.value)}
-					/>
-				</div>
+			<div style={style.main}>
+				<form style={style.formStyle} align="left">
+					<p>
+						<Link to="/login">Back to Login</Link>
+					</p>
+					<h1 style={style.labelStyle}>Forgot Password</h1>
+					<small>Send a link to your email to reset your password</small>
+					<hr style={style.hrStyle} />
+					<div className="form-group">
+						<label htmlFor="email">Email</label>
+						<input
+							className="form-control"
+							type="email"
+							value={email}
+							onChange={(e) => setEmail(e.target.value)}
+						/>
+					</div>
 
-				<button
-					type="submit"
-					className="btn btn-default float-right"
-					style={style.buttonStyle}
-					onClick={(e) => handleSubmit(e)}
-				>
-					Send
-				</button>
-			</form>
+					<button
+						type="submit"
+						className="btn btn-default float-right"
+						style={style.buttonStyle}
+						onClick={(e) => handleSubmit(e)}
+					>
+						Send
+					</button>
+				</form>
+			</div>
 		</div>
 	);
 };
