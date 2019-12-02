@@ -45,7 +45,7 @@ class UserDashboard extends Component {
 				return res.json();
 			})
 			.then((res) => {
-				if (res.httpStatus == 401) {
+				if (res.httpStatus === 401) {
 					cookies.remove('isAuthorized', { path: '/' });
 					cookies.remove('loggedInUser', { path: '/' });
 				}
