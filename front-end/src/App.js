@@ -70,7 +70,7 @@ function App(props) {
 				{/* Initialize all routes */}
 				<Route exact path="/" component={() => <Landing isAuthorized={isAuthorized} />} />
 				<Route exact path="/login" component={(e) => <Login style={classes} history={e.history} />} />
-				<Route exact path="/register" component={() => <Register style={classes} />} />
+				<Route exact path="/register" component={(e) => <Register style={classes} history={e.history} />} />
 				<Route exact path="/forgot_password" component={() => <ForgotPassword style={classes} />} />
 				<Route
 					exact

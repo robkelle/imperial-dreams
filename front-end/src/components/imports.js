@@ -12,7 +12,7 @@ import { Navbar } from './navbar';
 import React from 'react';
 import { Register } from './Authorization/register';
 import { ResetPassword } from './Authorization/resetPassword';
-import { UserDashboard } from './userDashboard';
+import UserDashboard from './userDashboard';
 import { withCookies } from 'react-cookie';
 
 export {

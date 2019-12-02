@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+
 const Schema = mongoose.Schema;
 
 // Fix deprecation warnings
@@ -10,8 +11,18 @@ module.exports = mongoose.model(
 		username: String,
 		email: String,
 		created: Date,
-		accessToken: String,
-		refreshToken: String,
+		accessToken: {
+			issuer: String,
+			token: String,
+			iat: Date,
+			exp: Date
+		},
+		refreshToken: {
+			issuer: String,
+			token: String,
+			iat: Date,
+			exp: Date
+		},
 		resetToken: String,
 		password: String
 	})
