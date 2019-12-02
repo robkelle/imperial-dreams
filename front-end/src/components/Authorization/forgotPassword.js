@@ -29,7 +29,7 @@ const ForgotPassword = (props) => {
 	};
 
 	return (
-		<div align="center">
+		<div align="center" className="animated fadeInLeft faster">
 			<div style={style.main}>
 				<form style={style.formStyle} align="left">
 					<p>

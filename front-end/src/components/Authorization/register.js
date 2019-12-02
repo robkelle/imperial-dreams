@@ -52,7 +52,7 @@ class Register extends Component {
 	render() {
 		const { style } = this.props;
 		return (
-			<div align="center">
+			<div align="center" className="animated fadeInLeft faster">
 				<div style={style.main}>
 					<form style={style.formStyle} align="left">
 						<h1 style={style.labelStyle}>Register Account</h1>
