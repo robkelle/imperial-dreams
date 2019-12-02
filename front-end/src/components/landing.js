@@ -23,7 +23,7 @@ const classes = {
 		fontSize: '44px'
 	},
 	box: {
-		backgroundColor: 'rgb(0, 51, 102',
+		backgroundColor: 'rgb(0, 51, 102)',
 		width: '650px',
 		borderStyle: 'solid',
 		borderColor: 'rgb(255, 180, 59)',
