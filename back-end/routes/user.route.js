@@ -1,6 +1,7 @@
+import checkAuthorization from '../middleware/checkAuthorization';
 import express from 'express';
 import userController from '../controllers/user.controller';
-import checkAuthorization from '../middleware/checkAuthorization';
+
 const router = express.Router();
 
 // All routes associated to their corresponding controller
@@ -10,5 +11,6 @@ router.post('/signin', userController.signin);
 router.post('/forgot', userController.forgotPassword);
 router.post('/reset', checkAuthorization, userController.resetPassword);
 router.get('/logout', checkAuthorization, userController.logout);
+router.get('/verify', checkAuthorization, userController.verifyAuth);
 
 module.exports = router;

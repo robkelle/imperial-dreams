@@ -24,7 +24,8 @@ exports.signup = (req, res) => {
 	//Create new user based on User schema
 	let user = new User({
 		username: req.body.username,
-		password: hashedPassword
+		password: hashedPassword,
+		created: new Date()
 	});
 
 	function userValidations() {
@@ -137,12 +138,25 @@ exports.signin = (req, res, next) => {
 					}
 				);
 
+				let jwtRefreshDecoded = jwt.decode(refreshToken);
+				let jwtTokenDecoded = jwt.decode(token);
+
 				// Updates the users access token in the database when the login API is hit
 				User.findOneAndUpdate(
 					{ username: req.body.username },
 					{
-						accessToken: token,
-						refreshToken: refreshToken
+						accessToken: {
+							issuer: jwtTokenDecoded.username,
+							token: token,
+							iat: new Date(jwtTokenDecoded.iat * 1000),
+							exp: new Date(jwtTokenDecoded.exp * 1000)
+						},
+						refreshToken: {
+							issuer: jwtRefreshDecoded.username,
+							token: refreshToken,
+							iat: new Date(jwtRefreshDecoded.iat * 1000),
+							exp: new Date(jwtRefreshDecoded.exp * 1000)
+						}
 					},
 					{ upsert: 'true' },
 					function(err) {
@@ -191,7 +205,9 @@ exports.logout = (req, res) => {
 	if (!userJWTPayload) {
 	} else {
 		User.findOneAndUpdate(
-			{ accessToken: accessToken },
+			{
+				'accessToken.token': accessToken
+			},
 			{
 				accessToken: null
 			},
@@ -306,4 +322,8 @@ exports.resetPassword = (req, res) => {
 			});
 		}
 	});
+};
+
+exports.verifyAuth = (req, res) => {
+	res.status(200).send({ message: 'User is logged in.' });
 };
