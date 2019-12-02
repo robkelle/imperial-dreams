@@ -78,7 +78,11 @@ function App(props) {
 					component={(e) => <ResetPassword style={classes} location={e.location} />}
 				/>
 				<Route exact path="/loading" component={(e) => <LoadingScreen history={e.history} />} />
-				<Route exact path="/user_dashboard" render={() => (isAuthorized ? <UserDashboard /> : <Login />)} />
+				<Route
+					exact
+					path="/user_dashboard"
+					render={(e) => (isAuthorized ? <UserDashboard /> : <Login style={classes} history={e.history} />)}
+				/>
 			</Router>
 		</div>
 	);
