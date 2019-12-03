@@ -65,14 +65,13 @@ io.on('connection', (socket) => {
 			message: res.message
 		});
 
-		message.save();
-
-		// Need to fix this where emit happens outside of find
-		if (res) {
-			Message.find({}, (err, messages) => {
-				io.emit('refresh', { message: messages });
-			});
-		}
+		message.save().then((res) => {
+			if (res) {
+				Message.find({}, (err, messages) => {
+					io.emit('refresh', { message: messages });
+				});
+			}
+		});
 	});
 });
 
