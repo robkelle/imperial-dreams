@@ -24,11 +24,10 @@ class InitSockets {
 		});
 	}
 
-	handleCallBackHell() {
-		const promise = Message.find({}).exec();
-
-		return promise.then((res) => {
-			console.log(res);
+	async handleCallBackHell() {
+		return await Message.find({}, (err, result) => {
+			// Run funciton in here to handle async code
+			return result;
 		});
 	}
 }
