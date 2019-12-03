@@ -67,6 +67,7 @@ io.on('connection', (socket) => {
 
 		message.save().then((res) => {
 			if (res) {
+				// Resolve callback issue so that I do not have to run message in front of emit
 				Message.find({}, (err, messages) => {
 					io.emit('refresh', { message: messages });
 				});
