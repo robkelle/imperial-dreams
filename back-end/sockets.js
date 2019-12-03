@@ -1,15 +1,20 @@
 import Message from './models/message.model';
 
 class InitSockets {
-	constructor(port) {
-		this.io = require('socket.io')(port);
+	constructor() {
 		this.messageCollection = Message;
 	}
 
 	start() {
-		this.io.on('connection', (socket) => {
-			socket.emit('announcements', { message: 'This is a test message coming from the web socket.' });
+		Message.find({}, (err, messages) => {
+			io.on('connection', (socket) => {
+				socket.emit('announcements', {
+					message: messages
+				});
+			});
+		});
 
+		io.on('connection', (socket) => {
 			socket.on('addNews', (data) => {
 				let message = new Message({
 					message: data.message

@@ -53,14 +53,17 @@ class UserDashboard extends Component {
 					cookies.remove('isAuthorized', { path: '/' });
 				}
 			});
-
-		var socket = io('http://localhost:8080');
-		// socket.on('announcements', (result) => {
-		// 	this.setState({ announcements: result.message });
-		// });
-
-		socket.emit('addNews', { message: 'Hello World' });
 	}
+
+	addMessage = (message) => {
+		let socket = io('http://localhost:4000');
+		socket.emit('addMessage', { message: message });
+		this.setState({ message: '' });
+
+		socket.on('refresh', (res) => {
+			console.log(res);
+		});
+	};
 
 	render() {
 		return (
@@ -81,6 +84,29 @@ class UserDashboard extends Component {
 
 						<img src={DashboardImage} style={classes.image} alt="" />
 						<div style={{ padding: 20 }}>{this.state.announcements}</div>
+
+						<div className="input-group mb-3" style={{ position: 'absolute', bottom: 0 }}>
+							<div className="input-group-prepend">
+								<button
+									className="btn btn-outline-primary"
+									type="button"
+									onClick={() => this.addMessage(this.state.message)}
+								>
+									Post
+								</button>
+							</div>
+							<input
+								type="text"
+								className="form-control"
+								placeholder=""
+								aria-label=""
+								aria-describedby="basic-addon1"
+								value={this.state.message}
+								onChange={(e) => {
+									this.setState({ message: e.target.value });
+								}}
+							/>
+						</div>
 					</div>
 
 					<div className="col-4" style={classes.colStyle}>

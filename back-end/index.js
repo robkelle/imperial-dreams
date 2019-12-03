@@ -1,6 +1,6 @@
 // Import API Web Application Framework
 
-import InitSockets from './sockets';
+import Message from './models/message.model';
 import bodyParser from 'body-parser';
 import config from './config.json';
 import cookieParser from 'cookie-parser';
@@ -51,12 +51,31 @@ app.use(cors(corsOptions));
 // API routes
 app.use('/api/user/', userRoute);
 
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
+
 // Start express server
-app.listen(port, () => {
+server.listen(port, () => {
 	console.log({ message: 'Express is running.', port: port, httpStatus: 200 });
 });
 
+io.on('connection', (socket) => {
+	socket.on('addMessage', (res) => {
+		let message = new Message({
+			message: res.message
+		});
+
+		message.save();
+
+		// Need to fix this where emit happens outside of find
+		if (res) {
+			Message.find({}, (err, messages) => {
+				io.emit('refresh', { message: messages });
+			});
+		}
+	});
+});
+
 // Initialize sockets
-const socket = new InitSockets(8080);
-socket.start();
-//socket.clientInbound();
+// const socket = new InitSockets();
+// socket.start();
