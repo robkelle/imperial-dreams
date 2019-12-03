@@ -101,7 +101,7 @@ class UserDashboard extends Component {
 								placeholder=""
 								aria-label=""
 								aria-describedby="basic-addon1"
-								value={this.state.message}
+								value={this.state.message || ''}
 								onChange={(e) => {
 									this.setState({ message: e.target.value });
 								}}

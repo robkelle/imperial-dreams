@@ -1,6 +1,6 @@
 // Import API Web Application Framework
 
-import Message from './models/message.model';
+import InitSockets from './sockets';
 import bodyParser from 'body-parser';
 import config from './config.json';
 import cookieParser from 'cookie-parser';
@@ -59,23 +59,7 @@ server.listen(port, () => {
 	console.log({ message: 'Express is running.', port: port, httpStatus: 200 });
 });
 
-io.on('connection', (socket) => {
-	socket.on('addMessage', (res) => {
-		let message = new Message({
-			message: res.message
-		});
-
-		message.save().then((res) => {
-			if (res) {
-				// Resolve callback issue so that I do not have to run message in front of emit
-				Message.find({}, (err, messages) => {
-					io.emit('refresh', { message: messages });
-				});
-			}
-		});
-	});
-});
-
 // Initialize sockets
-// const socket = new InitSockets();
-// socket.start();
+const socket = new InitSockets(io);
+socket.start();
+console.log(socket.handleCallBackHell());

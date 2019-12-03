@@ -1,27 +1,34 @@
 import Message from './models/message.model';
 
 class InitSockets {
-	constructor() {
-		this.messageCollection = Message;
+	constructor(io) {
+		this.io = io;
 	}
 
 	start() {
-		Message.find({}, (err, messages) => {
-			io.on('connection', (socket) => {
-				socket.emit('announcements', {
-					message: messages
+		this.io.on('connection', (socket) => {
+			socket.on('addMessage', (res) => {
+				let message = new Message({
+					message: res.message
+				});
+
+				message.save().then((res) => {
+					if (res) {
+						// Resolve callback issue so that I do not have to run message in front of emit
+						Message.find({}, (err, messages) => {
+							this.io.emit('refresh', { message: messages });
+						});
+					}
 				});
 			});
 		});
+	}
 
-		io.on('connection', (socket) => {
-			socket.on('addNews', (data) => {
-				let message = new Message({
-					message: data.message
-				});
+	handleCallBackHell() {
+		const promise = Message.find({}).exec();
 
-				message.save();
-			});
+		return promise.then((res) => {
+			console.log(res);
 		});
 	}
 }
