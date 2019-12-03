@@ -33,7 +33,7 @@ class ResetPassword extends Component {
 	render() {
 		const { style } = this.props;
 		return (
-			<div align="center" className="animated fadeInLeft faster">
+			<div align="center" className="animated fadeInDown faster">
 				<div style={style.main}>
 					<form style={style.formStyle} align="left">
 						<p>

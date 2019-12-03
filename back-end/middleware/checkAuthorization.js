@@ -53,7 +53,7 @@ const checkAuthorization = function(req, res, next) {
 							.status(401)
 							.send({ message: 'User needs to login before accessing this API.', httpStatus: 401 });
 					} else {
-						console.log({ message: `${user.username} has logged in.`, httpStatus: 200 });
+						console.log({ message: `${user.username} is logged in.`, httpStatus: 200 });
 						// Executes the middleware succeeding this middleware function
 						next();
 					}

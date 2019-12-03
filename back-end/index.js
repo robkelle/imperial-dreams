@@ -1,16 +1,12 @@
 // Import API Web Application Framework
-import express from 'express';
 
-// Import middleware
-import cors from 'cors';
+import InitSockets from './sockets';
 import bodyParser from 'body-parser';
-import mongoose from 'mongoose';
-import cookieParser from 'cookie-parser';
-
-// Import configuration file
 import config from './config.json';
-
-// Import routes
+import cookieParser from 'cookie-parser';
+import cors from 'cors';
+import express from 'express';
+import mongoose from 'mongoose';
 import userRoute from './routes/user.route';
 
 // Connect to mongodb server
@@ -47,7 +43,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 const corsOptions = {
 	credentials: true,
-	origin: 'http://localhost:3000'
+	origin: config.ALLOW_ORIGIN
 };
 
 app.use(cors(corsOptions));
@@ -60,4 +56,7 @@ app.listen(port, () => {
 	console.log({ message: 'Express is running.', port: port, httpStatus: 200 });
 });
 
-require('dotenv').config();
+// Initialize sockets
+const socket = new InitSockets(8080);
+socket.start();
+//socket.clientInbound();

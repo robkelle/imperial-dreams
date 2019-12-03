@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import BorderBackground from '../images/borderBackground.jpg';
 import DashboardImage from '../images/dashboardTop.png';
 import config from '../config.json';
+import io from 'socket.io-client';
 import { withCookies } from 'react-cookie';
 
 const classes = {
@@ -31,6 +32,9 @@ const classes = {
 };
 
 class UserDashboard extends Component {
+	state = {
+		announcements: ''
+	};
 	componentDidMount() {
 		const { cookies } = this.props;
 		fetch(`${config.API.DOMAIN}:${config.API.PORT}/api/user/verify`, {
@@ -47,9 +51,15 @@ class UserDashboard extends Component {
 			.then((res) => {
 				if (res.httpStatus === 401) {
 					cookies.remove('isAuthorized', { path: '/' });
-					cookies.remove('loggedInUser', { path: '/' });
 				}
 			});
+
+		var socket = io('http://localhost:8080');
+		// socket.on('announcements', (result) => {
+		// 	this.setState({ announcements: result.message });
+		// });
+
+		socket.emit('addNews', { message: 'Hello World' });
 	}
 
 	render() {
@@ -70,12 +80,7 @@ class UserDashboard extends Component {
 						<h5 style={classes.header}>NEWS</h5>
 
 						<img src={DashboardImage} style={classes.image} alt="" />
-						<div style={{ padding: 20 }}>
-							Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
-							been the industry's standard dummy text ever since the 1500s, when an unknown printer took a
-							galley of type and scrambled it to make a type specimen book. It has survived not only five
-							centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
-						</div>
+						<div style={{ padding: 20 }}>{this.state.announcements}</div>
 					</div>
 
 					<div className="col-4" style={classes.colStyle}>

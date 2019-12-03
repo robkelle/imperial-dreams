@@ -187,6 +187,7 @@ exports.signin = (req, res, next) => {
 				res.status(200).send({
 					refreshToken: refreshToken,
 					username: user.username,
+					_id: user._id,
 					isLoggedIn: true
 				});
 			}

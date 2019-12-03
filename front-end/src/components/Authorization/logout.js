@@ -22,7 +22,6 @@ class Logout extends Component {
 			.then((res) => {
 				if (res.isLoggedIn === false) {
 					cookies.remove('isAuthorized', { path: '/' });
-					cookies.remove('loggedInUser', { path: '/' });
 				}
 			});
 	};
