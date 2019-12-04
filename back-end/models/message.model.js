@@ -11,6 +11,7 @@ module.exports = mongoose.model(
 		message: String,
 		userID: String,
 		username: String,
-		type: String
+		type: String,
+		messageType: String
 	})
 );
