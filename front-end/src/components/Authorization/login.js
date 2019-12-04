@@ -38,7 +38,8 @@ class Login extends Component {
 			.then((res, next) => {
 				if (res.isLoggedIn === true) {
 					cookies.set('isAuthorized', res.isLoggedIn, { path: '/' });
-					cookies.set('loggedInUser', res.username, { path: '/' });
+					cookies.set('user', res.username, { path: '/' });
+					cookies.set('_id', res._id, { path: '/' });
 					this.props.history.push('/loading');
 				} else {
 					this.setState({
@@ -74,7 +75,7 @@ class Login extends Component {
 	render() {
 		const { style } = this.props;
 		return (
-			<div align="center" className="animated fadeInLeft faster">
+			<div align="center" className="animated fadeInDown faster">
 				<div style={style.main}>
 					<form style={style.formStyle} align="left">
 						<h1 style={style.labelStyle}>Account Login</h1>
