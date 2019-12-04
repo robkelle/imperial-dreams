@@ -1,72 +1,88 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
-import favicon from './images/favicon.ico';
-import './App.css';
-import ForgotPassword from './components/forgotPassword';
-import ForgotUsername from './components/forgotUsername';
-import Login from './components/login';
-import Landing from './components/landing';
-import Register from './components/register';
-import Logout from './components/logout';
-import UserDashboard from './components/userDashboard';
-import LoadingScreen from './components/loadingScreen';
-import { withCookies } from 'react-cookie';
-import ResetPassword from './components/resetPassword';
+// Exported by the imports.js file
+
+import {
+	BorderBackground,
+	ButtonBackground,
+	ForgotPassword,
+	Landing,
+	LoadingScreen,
+	Login,
+	Navbar,
+	React,
+	Register,
+	ResetPassword,
+	Route,
+	Router,
+	UserDashboard,
+	withCookies
+} from './components/imports';
+
+const classes = {
+	main: {
+		borderRadius: '25px',
+		backgroundImage: `url(${BorderBackground})`,
+		width: 600,
+		padding: '25px 35px 60px 35px',
+		marginTop: 10
+	},
+	formStyle: {
+		backgroundColor: 'rgba(0, 51, 102, .85)',
+		padding: '10px 35px 60px 35px',
+		color: '#BEBEBE',
+		marginTop: 10,
+		width: 500,
+		fontSize: 16,
+		borderStyle: 'solid',
+		borderColor: 'rgb(255, 180, 59)',
+		borderWidth: '15px',
+		borderRadius: '25px'
+	},
+	labelStyle: {
+		fontFamily: 'Trade Winds',
+		color: 'rgb(255, 180, 59)',
+		fontSize: '44px'
+	},
+	hrStyle: {
+		borderTop: '1px solid #fff',
+		color: '#fff'
+	},
+	liStyle: {
+		listStyleType: 'none',
+		color: 'red'
+	},
+	buttonStyle: {
+		backgroundImage: `url(${ButtonBackground})`,
+		backgroundPosition: 'center',
+		backgroundSize: 'cover',
+		backgroundRepeat: 'no-repeat',
+		color: '#fff',
+		width: 160
+	}
+};
 
 function App(props) {
 	const isAuthorized = props.cookies.get('isAuthorized');
-	const loggedInUser = props.cookies.get('loggedInUser');
 
 	return (
 		<div>
 			<Router basename="imperial">
-				<nav className="navbar navbar-expand-lg" id="custom-nav" style={{ backgroundColor: 'rgb(0, 51, 102)' }}>
-					<a className="navbar-brand" href="/">
-						<img src={favicon} height={35} alt="" />
-					</a>
-					<ul className="navbar-nav">
-						<li className="nav-item active">
-							<div className="nav-link" href="/">
-								<Link to="/">Home</Link>
-							</div>
-						</li>
-						{!isAuthorized ? (
-							<li className="nav-item">
-								<div className="nav-link" href="/login">
-									<Link to="/login">Login</Link>
-								</div>
-							</li>
-						) : (
-							<li className="nav-item">
-								<div className="nav-link" href="/login">
-									<Link to="/user_dashboard">Dashboard</Link>
-								</div>
-							</li>
-						)}
-					</ul>
-					{isAuthorized ? (
-						<ul className="nav navbar-nav ml-auto">
-							<li className="nav-item">
-								<div className="nav-link" href="/login">
-									<Logout />
-								</div>
-							</li>
-						</ul>
-					) : (
-						''
-					)}
-				</nav>
-				<div align="center">
-					{/* Specify all routes in the client-side */}
-					<Route exact path="/" component={() => <Landing isAuthorized={isAuthorized} />} />
-					<Route exact path="/login" component={Login} />
-					<Route exact path="/register" component={Register} />
-					<Route exact path="/forgot_username" component={ForgotUsername} />
-					<Route exact path="/forgot_password" component={ForgotPassword} />
-					<Route exact path="/reset_password" component={ResetPassword} />
-					<Route exact path="/loading" component={LoadingScreen} />
-					<Route path="/user_dashboard" render={() => (isAuthorized ? <UserDashboard /> : <Login />)} />
-				</div>
+				<Navbar isAuthorized={isAuthorized} />
+				{/* Initialize all routes */}
+				<Route exact path="/" component={() => <Landing isAuthorized={isAuthorized} />} />
+				<Route exact path="/login" component={(e) => <Login style={classes} history={e.history} />} />
+				<Route exact path="/register" component={(e) => <Register style={classes} history={e.history} />} />
+				<Route exact path="/forgot_password" component={() => <ForgotPassword style={classes} />} />
+				<Route
+					exact
+					path="/reset_password"
+					component={(e) => <ResetPassword style={classes} location={e.location} />}
+				/>
+				<Route exact path="/loading" component={(e) => <LoadingScreen history={e.history} />} />
+				<Route
+					exact
+					path="/user_dashboard"
+					render={(e) => (isAuthorized ? <UserDashboard /> : <Login style={classes} history={e.history} />)}
+				/>
 			</Router>
 		</div>
 	);

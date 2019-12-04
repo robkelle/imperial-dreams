@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+
 import favicon from '../images/favicon.ico';
 
 class LoadingScreen extends Component {
@@ -38,6 +39,7 @@ class LoadingScreen extends Component {
 	render() {
 		return (
 			<div
+				align="center"
 				style={{ backgroundColor: '#000', height: '100%', width: '100%', position: 'absolute' }}
 				className={this.state.complete === false ? '' : 'animated slideOutUp'}
 			>
@@ -51,7 +53,7 @@ class LoadingScreen extends Component {
 						transform: 'translate(-50%, -50%)'
 					}}
 				>
-					<img src={favicon} />
+					<img src={favicon} alt="" />
 					<h5 style={{ color: '#fff' }}>Loading...</h5>
 					<div className="row">
 						<div
@@ -68,4 +70,4 @@ class LoadingScreen extends Component {
 	}
 }
 
-export default LoadingScreen;
+export { LoadingScreen };

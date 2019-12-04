@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import config from '../config.json';
-import { withCookies } from 'react-cookie';
+
 import { Link } from 'react-router-dom';
+import config from '../../config.json';
+import { withCookies } from 'react-cookie';
 
 class Logout extends Component {
 	handleClick = () => {
@@ -21,7 +22,6 @@ class Logout extends Component {
 			.then((res) => {
 				if (res.isLoggedIn === false) {
 					cookies.remove('isAuthorized', { path: '/' });
-					cookies.remove('loggedInUser', { path: '/' });
 				}
 			});
 	};
