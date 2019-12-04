@@ -1,6 +1,7 @@
 import BorderBackground from '../images/borderBackground.jpg';
 import Chat from './chat';
 import React from 'react';
+import { withCookies } from 'react-cookie';
 
 const classes = {
 	row: {
@@ -26,7 +27,7 @@ const classes = {
 	}
 };
 
-const UserDashboard = () => {
+const UserDashboard = (props) => {
 	return (
 		<div
 			className="container animated fadeInDown faster"
@@ -41,8 +42,8 @@ const UserDashboard = () => {
 		>
 			<div className="row" style={classes.row}>
 				<div className="col-12" style={classes.colStyle}>
-					<h1 style={classes.header}>CHAT</h1>
-					<div style={{ backgroundColor: '#485563', height: 50 }} />
+					<h1 style={classes.header}>Welcome {props.cookies.get('user')}</h1>
+					<div style={{ backgroundColor: '#485563', height: 60 }} />
 					<Chat />
 				</div>
 			</div>
@@ -50,4 +51,4 @@ const UserDashboard = () => {
 	);
 };
 
-export default UserDashboard;
+export default withCookies(UserDashboard);
