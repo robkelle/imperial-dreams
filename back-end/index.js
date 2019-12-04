@@ -62,4 +62,3 @@ server.listen(port, () => {
 // Initialize sockets
 const socket = new InitSockets(io);
 socket.start();
-console.log(socket.handleCallBackHell());

@@ -9,25 +9,27 @@ class InitSockets {
 		this.io.on('connection', (socket) => {
 			socket.on('addMessage', (res) => {
 				let message = new Message({
-					message: res.message
+					message: res.message,
+					username: res.username
 				});
 
 				message.save().then((res) => {
 					if (res) {
 						// Resolve callback issue so that I do not have to run message in front of emit
-						Message.find({}, (err, messages) => {
-							this.io.emit('refresh', { message: messages });
+						Message.find({}, (err, res) => {
+							this.io.emit('refresh', { message: res });
 						});
 					}
 				});
 			});
-		});
-	}
 
-	async handleCallBackHell() {
-		return await Message.find({}, (err, result) => {
-			// Run funciton in here to handle async code
-			return result;
+			socket.on('load', (res) => {
+				if (res === 'load') {
+					Message.find({}, (err, res) => {
+						this.io.emit('refresh', { message: res });
+					});
+				}
+			});
 		});
 	}
 }

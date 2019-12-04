@@ -10,7 +10,7 @@ module.exports = mongoose.model(
 	new Schema({
 		message: String,
 		userID: String,
-		user: String,
+		username: String,
 		type: String
 	})
 );
