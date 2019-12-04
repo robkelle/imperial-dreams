@@ -104,7 +104,7 @@ class UserDashboard extends Component {
 						<h1 style={classes.header}>CHAT</h1>
 
 						<div style={{ backgroundColor: '#485563', height: 50 }} />
-						<div className="overflow-auto side_bar" style={{ overflow: 'visible', height: 150 }}>
+						<div className="overflow-auto side_bar" style={{ overflow: 'visible', height: 300 }}>
 							<div style={{ padding: 20, marginBottom: 30 }}>{this.state.announcements}</div>
 						</div>
 
