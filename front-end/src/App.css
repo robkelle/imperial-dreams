@@ -14,7 +14,7 @@ a:hover {
 	font-weight: bold;
 }
 
-.side_bar {
+.side-bar {
 	padding-right: 20px;
 	margin-left: -12px;
 	position: sticky;
@@ -23,23 +23,23 @@ a:hover {
 	overflow-y: scroll;
 	/* width */
 }
-.side_bar::-webkit-scrollbar {
+.side-bar::-webkit-scrollbar {
 	width: 15px;
 }
 
 /* Track */
-.side_bar::-webkit-scrollbar-track {
+.side-bar::-webkit-scrollbar-track {
 	box-shadow: inset 0 0 2px #fff;
 	border-radius: 10px;
 }
 
 /* Handle */
-.side_bar::-webkit-scrollbar-thumb {
+.side-bar::-webkit-scrollbar-thumb {
 	background: #e6e8ea;
 	border-radius: 10px;
 }
 
 /* Handle on hover */
-.side_bar::-webkit-scrollbar-thumb:hover {
+.side-bar::-webkit-scrollbar-thumb:hover {
 	background: #009eb3;
 }
