@@ -135,7 +135,7 @@ class Chat extends Component {
 	render() {
 		return (
 			<div>
-				<div className="overflow-auto side-bar" style={{ overflow: 'visible', height: 300 }}>
+				<div className="overflow-auto side-bar" style={{ overflow: 'visible', height: 500 }}>
 					<div style={{ padding: 20, marginBottom: 30 }}>
 						{this.state.messages}
 						<div
