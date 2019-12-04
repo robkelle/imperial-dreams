@@ -11,7 +11,7 @@ const classes = {
 		color: '#BEBEBE',
 		padding: 0,
 		backgroundImage: `url(${BorderBackground})`,
-		margin: 10
+		margin: 0
 	},
 	image: {
 		maxWidth: '100%',
@@ -32,7 +32,7 @@ const UserDashboard = () => {
 			className="container animated fadeInDown faster"
 			style={{
 				backgroundColor: 'rgb(0, 51, 102)',
-				padding: 25,
+				padding: 35,
 				marginTop: 10,
 				borderImage: `url(${BorderBackground}) 30 round`,
 				borderWidth: '25px',
@@ -40,7 +40,7 @@ const UserDashboard = () => {
 			}}
 		>
 			<div className="row" style={classes.row}>
-				<div className="col-11" style={classes.colStyle}>
+				<div className="col-12" style={classes.colStyle}>
 					<h1 style={classes.header}>CHAT</h1>
 					<div style={{ backgroundColor: '#485563', height: 50 }} />
 					<Chat />
