@@ -29,7 +29,7 @@ const classes = {
 const UserDashboard = () => {
 	return (
 		<div
-			className="container"
+			className="container animated fadeInDown faster"
 			style={{
 				backgroundColor: 'rgb(0, 51, 102)',
 				padding: 25,
