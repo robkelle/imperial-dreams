@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 import BorderBackground from '../images/borderBackground.jpg';
-import DashboardImage from '../images/dashboardTop.png';
 import config from '../config.json';
 import io from 'socket.io-client';
 import { withCookies } from 'react-cookie';
