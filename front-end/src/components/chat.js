@@ -13,7 +13,7 @@ class Chat extends Component {
 		this._isMounted = false;
 		this.classes = {
 			messageStyle: {
-				margin: 5
+				margin: 10
 			}
 		};
 		this.state = {
