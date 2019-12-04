@@ -10,7 +10,8 @@ class InitSockets {
 			socket.on('addMessage', (res) => {
 				let message = new Message({
 					message: res.message,
-					username: res.username
+					username: res.username,
+					messageType: res.messageType
 				});
 
 				message.save().then((res) => {

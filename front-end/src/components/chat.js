@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import GIF from '../images/gif.png';
+import Picker from 'react-giphy-component';
 import config from '../config.json';
 import io from 'socket.io-client';
 import { withCookies } from 'react-cookie';
@@ -9,12 +11,19 @@ class Chat extends Component {
 		super();
 		this.socket = io('http://localhost:4000');
 		this._isMounted = false;
+		this.classes = {
+			messageStyle: {
+				margin: 5
+			}
+		};
 		this.state = {
 			messages: null,
-			addMessage: null
+			addMessage: null,
+			displayGif: false
 		};
 	}
 
+	// Event handling
 	handleKeyDown = (e) => {
 		if (e.key === 'Enter') {
 			this.addMessage(this.state.addMessage);
@@ -25,20 +34,42 @@ class Chat extends Component {
 		this.messagesEnd.scrollIntoView({ behavior: 'smooth' });
 	};
 
-	addMessage = (message) => {
+	// Actions
+
+	gifyLoader = (gif) => {
+		if (gif) {
+			this.addMessage(gif.fixed_height.url, 'gif');
+			this.setState({
+				displayGif: false
+			});
+		}
+	};
+
+	addMessage = (message, type) => {
 		const { cookies } = this.props;
-		this.socket.emit('addMessage', { message: message, username: cookies.get('user') });
+		this.socket.emit('addMessage', { message: message, username: cookies.get('user'), messageType: type });
 		this.setState({ addMessage: '' });
 
 		// Post chat message and refresh from server
 		this.socket.on('refresh', (res) => {
 			this.setState({
-				messages: res.message.map((value, index) => (
-					<div key={index}>
-						<strong>{value.username}: </strong>
-						{value.message}
-					</div>
-				))
+				messages: res.message.map((value, index) => {
+					if (value.messageType === 'gif') {
+						return (
+							<div key={index} style={this.classes.messageStyle}>
+								<strong>{value.username}: </strong>
+								<img src={value.message} alt="" />
+							</div>
+						);
+					} else {
+						return (
+							<div key={index} style={this.classes.messageStyle}>
+								<strong>{value.username}: </strong>
+								{value.message}
+							</div>
+						);
+					}
+				})
 			});
 		});
 	};
@@ -71,12 +102,23 @@ class Chat extends Component {
 		this.socket.on('refresh', (res) => {
 			if (this._isMounted) {
 				this.setState({
-					messages: res.message.map((value, index) => (
-						<div key={index}>
-							<strong>{value.username}: </strong>
-							{value.message}
-						</div>
-					))
+					messages: res.message.map((value, index) => {
+						if (value.messageType === 'gif') {
+							return (
+								<div key={index} style={this.classes.messageStyle}>
+									<strong>{value.username}: </strong>
+									<img src={value.message} alt="" />
+								</div>
+							);
+						} else {
+							return (
+								<div key={index} style={this.classes.messageStyle}>
+									<strong>{value.username}: </strong>
+									{value.message}
+								</div>
+							);
+						}
+					})
 				});
 			}
 		});
@@ -127,7 +169,17 @@ class Chat extends Component {
 						}}
 						onKeyDown={this.handleKeyDown}
 					/>
+					<div className="input-group-prepend">
+						<button
+							className="btn btn-secondary"
+							type="button"
+							onClick={() => this.setState({ displayGif: true })}
+						>
+							<img src={GIF} height="25px" alt="" />
+						</button>
+					</div>
 				</div>
+				<div align="right">{this.state.displayGif ? <Picker onSelected={this.gifyLoader} /> : ''}</div>
 			</div>
 		);
 	}
