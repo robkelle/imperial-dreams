@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+import InfiniteScroll from 'react-infinite-scroller';
 import GIF from '../images/gif.png';
 import Picker from 'react-giphy-component';
 import config from '../config.json';
@@ -137,7 +138,21 @@ class Chat extends Component {
 			<div>
 				<div className="overflow-auto side-bar" style={{ overflow: 'visible', height: 500 }}>
 					<div style={{ padding: 20, marginBottom: 30 }}>
-						{this.state.messages}
+						{/* npm i react-infinite-scroller */}
+						<InfiniteScroll
+							pageStart={0}
+							initialLoad={true}
+							isReverse={true}
+							hasMore={true}
+							loader={
+								<div className="loader" key={0}>
+									Loading ...
+								</div>
+							}
+							useWindow={false}
+						>
+							{this.state.messages}
+						</InfiniteScroll>
 						<div
 							style={{ float: 'left', clear: 'both' }}
 							ref={(el) => {
