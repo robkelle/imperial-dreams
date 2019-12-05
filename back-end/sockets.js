@@ -11,7 +11,8 @@ class InitSockets {
 				let message = new Message({
 					message: res.message,
 					username: res.username,
-					messageType: res.messageType
+					messageType: res.messageType,
+					posted: new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')
 				});
 
 				message.save().then((res) => {
@@ -25,8 +26,8 @@ class InitSockets {
 			});
 
 			socket.on('load', (res) => {
-				if (res === 'load') {
-					Message.find({}, (err, res) => {
+				if (res.load === true) {
+					Message.find().skip(res.page * res.pageLimit).limit(res.pageLimit).exec((err, res) => {
 						this.io.emit('refresh', { message: res });
 					});
 				}
