@@ -148,31 +148,33 @@ class Chat extends Component {
 					console.log(res.message);
 					this.hasMore = true;
 					this.setState({
-						messages: res.message.map((value, index) => {
-							if (value.messageType === 'gif') {
-								return (
-									<div key={index}>
-										<ConstructGifMessage
-											message={value.message}
-											posted={value.posted}
-											user={value.username}
-											style={this.classes.messageStyleSpan}
-										/>
-									</div>
-								);
-							} else {
-								return (
-									<div key={index}>
-										<ConstructMessage
-											message={value.message}
-											posted={value.posted}
-											user={value.username}
-											style={this.classes.messageStyleSpan}
-										/>
-									</div>
-								);
-							}
-						})
+						messages: res.message
+							.map((value, index) => {
+								if (value.messageType === 'gif') {
+									return (
+										<div key={index}>
+											<ConstructGifMessage
+												message={value.message}
+												posted={value.posted}
+												user={value.username}
+												style={this.classes.messageStyleSpan}
+											/>
+										</div>
+									);
+								} else {
+									return (
+										<div key={index}>
+											<ConstructMessage
+												message={value.message}
+												posted={value.posted}
+												user={value.username}
+												style={this.classes.messageStyleSpan}
+											/>
+										</div>
+									);
+								}
+							})
+							.concat(this.state.messages)
 					});
 
 					this.setState({
