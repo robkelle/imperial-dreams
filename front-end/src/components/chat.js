@@ -46,7 +46,6 @@ class Chat extends Component {
 		super();
 		this.socket = io('http://localhost:4000');
 		this._isMounted = false;
-		this.initialLoad = true;
 		this.classes = {
 			messageStyleSpan: {
 				borderRadius: 10,
@@ -55,6 +54,8 @@ class Chat extends Component {
 				margin: 10
 			}
 		};
+		this.initialLoad = true;
+		this.hasMore = true;
 		this.state = {
 			messages: null,
 			addMessage: null,
@@ -89,38 +90,49 @@ class Chat extends Component {
 
 	addMessage = (message, type) => {
 		const { cookies } = this.props;
-		this.socket.emit('addMessage', { message: message, username: cookies.get('user'), messageType: type });
+		this.socket.emit('addMessage', {
+			message: message,
+			username: cookies.get('user'),
+			messageType: type,
+			page: this.state.page,
+			pageLimit: this.state.pageLimit
+		});
 		this.setState({ addMessage: '' });
 
-		// Post chat message and refresh from server
+		let count = 0;
 		this.socket.on('refresh', (res) => {
-			this.setState({
-				messages: res.message.map((value, index) => {
-					if (value.messageType === 'gif') {
-						return (
-							<div key={index}>
-								<ConstructGifMessage
-									message={value.message}
-									posted={value.posted}
-									user={value.username}
-									style={this.classes.messageStyleSpan}
-								/>
-							</div>
-						);
-					} else {
-						return (
-							<div key={index}>
-								<ConstructMessage
-									message={value.message}
-									posted={value.posted}
-									user={value.username}
-									style={this.classes.messageStyleSpan}
-								/>
-							</div>
-						);
-					}
-				})
-			});
+			count = count + 1;
+
+			if (count > 1) {
+			} else {
+				this.setState({
+					messages: res.message.map((value, index) => {
+						if (value.messageType === 'gif') {
+							return (
+								<div key={index}>
+									<ConstructGifMessage
+										message={value.message}
+										posted={value.posted}
+										user={value.username}
+										style={this.classes.messageStyleSpan}
+									/>
+								</div>
+							);
+						} else {
+							return (
+								<div key={index}>
+									<ConstructMessage
+										message={value.message}
+										posted={value.posted}
+										user={value.username}
+										style={this.classes.messageStyleSpan}
+									/>
+								</div>
+							);
+						}
+					})
+				});
+			}
 		});
 	};
 
@@ -134,6 +146,7 @@ class Chat extends Component {
 				if (count > 1) {
 				} else {
 					console.log(res.message);
+					this.hasMore = true;
 					this.setState({
 						messages: res.message.map((value, index) => {
 							if (value.messageType === 'gif') {
@@ -161,10 +174,11 @@ class Chat extends Component {
 							}
 						})
 					});
+
+					this.setState({
+						page: this.state.page + 1
+					});
 				}
-				this.setState({
-					page: this.state.page + 1
-				});
 			} else {
 				this.setState({
 					hasMoreItems: false
@@ -237,6 +251,7 @@ class Chat extends Component {
 
 	componentDidUpdate() {
 		this.scrollToBottom();
+		this.hasMore = false;
 	}
 
 	render() {
@@ -246,10 +261,12 @@ class Chat extends Component {
 			</div>
 		);
 
+		console.log(this.state.page);
+
 		return (
 			<div>
 				<div style={{ padding: 20, marginBottom: 30 }}>
-					<div className="overflow-auto side-bar" style={{ height: 700, overflow: 'auto' }}>
+					<div className="overflow-auto side-bar" style={{ height: 500, overflow: 'auto' }}>
 						<InfiniteScroll
 							pageStart={0}
 							threshold={250}
@@ -257,7 +274,7 @@ class Chat extends Component {
 							initialLoad={this.initialLoad}
 							loadMore={this.loadItems}
 							isReverse={true}
-							hasMore={this.state.hasMoreItems}
+							hasMore={this.hasMore}
 							loader={loader}
 						>
 							{this.state.messages}

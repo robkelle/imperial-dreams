@@ -12,13 +12,13 @@ class InitSockets {
 					message: res.message,
 					username: res.username,
 					messageType: res.messageType,
-					posted: new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')
+					posted: new Date()
 				});
 
 				message.save().then((res) => {
 					if (res) {
 						// Resolve callback issue so that I do not have to run message in front of emit
-						Message.find({}, (err, res) => {
+						Message.find().skip(res.page * res.pageLimit).limit(res.pageLimit).exec((err, res) => {
 							this.io.emit('refresh', { message: res });
 						});
 					}
@@ -27,9 +27,13 @@ class InitSockets {
 
 			socket.on('load', (res) => {
 				if (res.load === true) {
-					Message.find().skip(res.page * res.pageLimit).limit(res.pageLimit).exec((err, res) => {
-						this.io.emit('refresh', { message: res });
-					});
+					Message.find()
+						.limit(res.pageLimit)
+						.skip(res.page * res.pageLimit)
+						.sort({ posted: 1 })
+						.exec((err, res) => {
+							this.io.emit('refresh', { message: res });
+						});
 				}
 			});
 		});
