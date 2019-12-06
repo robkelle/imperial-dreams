@@ -27,10 +27,13 @@ class InitSockets {
 
 			socket.on('load', (res) => {
 				if (res.load === true) {
-					Message.find().sort({ posted: 1 }).exec((err, res) => {
-						Message.find().limit(res.pageLimit).skip(res.page * res.pageLimit).exec((err, res) => {
-							this.io.emit('refresh', { message: res });
-						});
+					// Gets the total count of records
+					Message.find().count().exec((err, res) => {
+						this.io.emit('count', { count: res });
+					});
+
+					Message.find().skip(res.page).limit(res.pageLimit).sort({ posted: 1 }).exec((err, res) => {
+						this.io.emit('refresh', { message: res });
 					});
 				}
 			});

@@ -178,7 +178,7 @@ class Chat extends Component {
 					});
 
 					this.setState({
-						page: this.state.page + 1
+						page: this.state.page + this.state.pageLimit
 					});
 				}
 			} else {
@@ -262,8 +262,6 @@ class Chat extends Component {
 				Loading ...
 			</div>
 		);
-
-		console.log(this.state.page);
 
 		return (
 			<div>
