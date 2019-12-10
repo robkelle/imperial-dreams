@@ -43,3 +43,8 @@ a:hover {
 .side-bar::-webkit-scrollbar-thumb:hover {
 	background: #009eb3;
 }
+
+.MuiListItemText-secondary {
+	color: rgb(255, 180, 59) !important;
+	font-size: 12px !important;
+}

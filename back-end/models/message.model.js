@@ -9,8 +9,10 @@ module.exports = mongoose.model(
 	'messages',
 	new Schema({
 		message: String,
+		posted: Date,
 		userID: String,
 		username: String,
-		type: String
+		type: String,
+		messageType: String
 	})
 );
