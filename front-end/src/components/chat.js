@@ -98,40 +98,43 @@ class Chat extends Component {
 			page: this.state.page,
 			pageLimit: this.state.pageLimit
 		});
+
 		this.setState({ addMessage: '' });
 
 		let count = 0;
-		this.socket.on('refresh', (res) => {
+		this.socket.on('refreshAdd', (res) => {
 			count = count + 1;
 
 			if (count > 1) {
 			} else {
 				this.setState({
-					messages: res.message.map((value, index) => {
-						if (value.messageType === 'gif') {
-							return (
-								<div key={value._id}>
-									<ConstructGifMessage
-										message={value.message}
-										posted={value.posted}
-										user={value.username}
-										style={this.classes.messageStyleSpan}
-									/>
-								</div>
-							);
-						} else {
-							return (
-								<div key={value._id}>
-									<ConstructMessage
-										message={value.message}
-										posted={value.posted}
-										user={value.username}
-										style={this.classes.messageStyleSpan}
-									/>
-								</div>
-							);
-						}
-					})
+					messages: res.message
+						.map((value, index) => {
+							if (value.messageType === 'gif') {
+								return (
+									<div key={value._id}>
+										<ConstructGifMessage
+											message={value.message}
+											posted={value.posted}
+											user={value.username}
+											style={this.classes.messageStyleSpan}
+										/>
+									</div>
+								);
+							} else {
+								return (
+									<div key={value._id}>
+										<ConstructMessage
+											message={value.message}
+											posted={value.posted}
+											user={value.username}
+											style={this.classes.messageStyleSpan}
+										/>
+									</div>
+								);
+							}
+						})
+						.concat(this.state.messages)
 				});
 			}
 		});
@@ -153,7 +156,7 @@ class Chat extends Component {
 							.map((value, index) => {
 								if (value.messageType === 'gif') {
 									return (
-										<div key={value._id}>
+										<div key={value._id + index}>
 											<ConstructGifMessage
 												message={value.message}
 												posted={value.posted}
@@ -164,7 +167,7 @@ class Chat extends Component {
 									);
 								} else {
 									return (
-										<div key={value._id}>
+										<div key={value._id + index}>
 											<ConstructMessage
 												message={value.message}
 												posted={value.posted}

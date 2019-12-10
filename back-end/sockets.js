@@ -16,19 +16,14 @@ class InitSockets {
 				});
 
 				message.save().then((res) => {
-					Message.find()
-						.skip(res.page * res.pageLimit)
-						.limit(res.pageLimit)
-						.sort({ posted: -1 })
-						.exec((err, res) => {
-							this.io.emit('refresh', { message: res });
-						});
+					Message.find({ _id: res._id }, (err, res) => {
+						this.io.emit('refreshAdd', { message: res });
+					});
 				});
 			});
 
 			socket.on('load', (res) => {
 				if (res.load === true) {
-					console.log(res);
 					Message.find()
 						.skip(res.page * res.pageLimit)
 						.limit(res.pageLimit)
