@@ -16,7 +16,7 @@ class InitSockets {
 				});
 
 				message.save().then((res) => {
-					Message.find({ _id: res._id }, (err, res) => {
+					Message.find({ _id: res._id }).exec((err, res) => {
 						this.io.emit('refreshAdd', { message: res });
 					});
 				});
