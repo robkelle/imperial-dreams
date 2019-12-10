@@ -8,6 +8,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemText from '@material-ui/core/ListItemText';
 import Picker from 'react-giphy-component';
+import _ from 'lodash';
 import config from '../config.json';
 import io from 'socket.io-client';
 import { withCookies } from 'react-cookie';
@@ -109,7 +110,7 @@ class Chat extends Component {
 					messages: res.message.map((value, index) => {
 						if (value.messageType === 'gif') {
 							return (
-								<div key={index}>
+								<div key={value._id}>
 									<ConstructGifMessage
 										message={value.message}
 										posted={value.posted}
@@ -120,7 +121,7 @@ class Chat extends Component {
 							);
 						} else {
 							return (
-								<div key={index}>
+								<div key={value._id}>
 									<ConstructMessage
 										message={value.message}
 										posted={value.posted}
@@ -138,6 +139,7 @@ class Chat extends Component {
 
 	loadItems = () => {
 		let count = 0;
+
 		this.socket.emit('load', { load: true, page: this.state.page, pageLimit: this.state.pageLimit });
 		this.socket.on('refresh', (res) => {
 			if (res.message.length !== 0) {
@@ -145,14 +147,13 @@ class Chat extends Component {
 
 				if (count > 1) {
 				} else {
-					console.log(res.message);
 					this.hasMore = true;
 					this.setState({
 						messages: res.message
 							.map((value, index) => {
 								if (value.messageType === 'gif') {
 									return (
-										<div key={index}>
+										<div key={value._id}>
 											<ConstructGifMessage
 												message={value.message}
 												posted={value.posted}
@@ -163,7 +164,7 @@ class Chat extends Component {
 									);
 								} else {
 									return (
-										<div key={index}>
+										<div key={value._id}>
 											<ConstructMessage
 												message={value.message}
 												posted={value.posted}
@@ -178,7 +179,7 @@ class Chat extends Component {
 					});
 
 					this.setState({
-						page: this.state.page + this.state.pageLimit
+						page: this.state.page + 1
 					});
 				}
 			} else {
@@ -213,6 +214,7 @@ class Chat extends Component {
 			});
 
 		let count = 0;
+
 		// Load all existing chats
 		this.socket.emit('load', { load: true, page: this.state.page, pageLimit: this.state.pageLimit });
 		this.socket.on('refresh', (res) => {
@@ -224,7 +226,7 @@ class Chat extends Component {
 					messages: res.message.map((value, index) => {
 						if (value.messageType === 'gif') {
 							return (
-								<div key={index}>
+								<div key={value._id}>
 									<ConstructGifMessage
 										message={value.message}
 										posted={value.posted}
@@ -235,7 +237,7 @@ class Chat extends Component {
 							);
 						} else {
 							return (
-								<div key={index}>
+								<div key={value._id}>
 									<ConstructMessage
 										message={value.message}
 										posted={value.posted}
@@ -277,7 +279,11 @@ class Chat extends Component {
 							hasMore={this.hasMore}
 							loader={loader}
 						>
-							{this.state.messages}
+							{_.sortBy(this.state.messages, (o) => {
+								try {
+									return o.props.children.props.posted;
+								} catch (e) {}
+							})}
 						</InfiniteScroll>
 						<div
 							style={{ float: 'left', clear: 'both' }}

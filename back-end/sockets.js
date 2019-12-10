@@ -16,20 +16,26 @@ class InitSockets {
 				});
 
 				message.save().then((res) => {
-					if (res) {
-						// Resolve callback issue so that I do not have to run message in front of emit
-						Message.find().skip(res.page).limit(res.pageLimit).sort({ posted: 1 }).exec((err, res) => {
+					Message.find()
+						.skip(res.page * res.pageLimit)
+						.limit(res.pageLimit)
+						.sort({ posted: -1 })
+						.exec((err, res) => {
 							this.io.emit('refresh', { message: res });
 						});
-					}
 				});
 			});
 
 			socket.on('load', (res) => {
 				if (res.load === true) {
-					Message.find().skip(res.page).limit(res.pageLimit).sort({ posted: 1 }).exec((err, res) => {
-						this.io.emit('refresh', { message: res });
-					});
+					console.log(res);
+					Message.find()
+						.skip(res.page * res.pageLimit)
+						.limit(res.pageLimit)
+						.sort({ posted: -1 })
+						.exec((err, res) => {
+							this.io.emit('refresh', { message: res });
+						});
 				}
 			});
 		});
