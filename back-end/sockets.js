@@ -11,24 +11,26 @@ class InitSockets {
 				let message = new Message({
 					message: res.message,
 					username: res.username,
-					messageType: res.messageType
+					messageType: res.messageType,
+					posted: new Date()
 				});
 
 				message.save().then((res) => {
-					if (res) {
-						// Resolve callback issue so that I do not have to run message in front of emit
-						Message.find({}, (err, res) => {
-							this.io.emit('refresh', { message: res });
-						});
-					}
+					Message.find({ _id: res._id }, (err, res) => {
+						this.io.emit('refreshAdd', { message: res });
+					});
 				});
 			});
 
 			socket.on('load', (res) => {
-				if (res === 'load') {
-					Message.find({}, (err, res) => {
-						this.io.emit('refresh', { message: res });
-					});
+				if (res.load === true) {
+					Message.find()
+						.skip(res.page * res.pageLimit)
+						.limit(res.pageLimit)
+						.sort({ posted: -1 })
+						.exec((err, res) => {
+							this.io.emit('refresh', { message: res });
+						});
 				}
 			});
 		});
