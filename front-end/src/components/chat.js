@@ -58,7 +58,6 @@ class Chat extends Component {
 		this.initialLoad = true;
 		this.hasMore = true;
 		this.state = {
-			messages: null,
 			addMessage: null,
 			displayGif: false,
 			page: 0,
@@ -103,44 +102,56 @@ class Chat extends Component {
 
 		let count = 0;
 		this.socket.on('refreshAdd', (res) => {
-			count = count + 1;
+			if (res.message.length !== 0) {
+				count = count + 1;
 
-			if (count > 1) {
+				if (count > 1) {
+				} else {
+					this.hasMore = true;
+					this.setState({
+						messages: res.message
+							.map((value, index) => {
+								if (value.messageType === 'gif') {
+									return (
+										<div key={value._id + index}>
+											<ConstructGifMessage
+												message={value.message}
+												posted={value.posted}
+												user={value.username}
+												style={this.classes.messageStyleSpan}
+											/>
+										</div>
+									);
+								} else {
+									return (
+										<div key={value._id + index}>
+											<ConstructMessage
+												message={value.message}
+												posted={value.posted}
+												user={value.username}
+												style={this.classes.messageStyleSpan}
+											/>
+										</div>
+									);
+								}
+							})
+							.concat(this.state.messages)
+					});
+
+					this.setState({
+						page: this.state.page + 1
+					});
+				}
 			} else {
 				this.setState({
-					messages: res.message
-						.map((value, index) => {
-							if (value.messageType === 'gif') {
-								return (
-									<div key={value._id}>
-										<ConstructGifMessage
-											message={value.message}
-											posted={value.posted}
-											user={value.username}
-											style={this.classes.messageStyleSpan}
-										/>
-									</div>
-								);
-							} else {
-								return (
-									<div key={value._id}>
-										<ConstructMessage
-											message={value.message}
-											posted={value.posted}
-											user={value.username}
-											style={this.classes.messageStyleSpan}
-										/>
-									</div>
-								);
-							}
-						})
-						.concat(this.state.messages)
+					hasMoreItems: false
 				});
 			}
 		});
 	};
 
 	loadItems = () => {
+		this.hasMore = false;
 		let count = 0;
 
 		this.socket.emit('load', { load: true, page: this.state.page, pageLimit: this.state.pageLimit });
@@ -194,6 +205,11 @@ class Chat extends Component {
 	};
 
 	// Life cycle components
+
+	/*
+      Load the initial array of chats
+  */
+
 	componentDidMount() {
 		const { cookies } = this.props;
 		this.initialLoad = false;
@@ -257,8 +273,12 @@ class Chat extends Component {
 	}
 
 	componentDidUpdate() {
-		this.scrollToBottom();
 		this.hasMore = false;
+		this.scrollToBottom();
+	}
+
+	componentWillUnmount() {
+		this.socket.disconnect();
 	}
 
 	render() {
