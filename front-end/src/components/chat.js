@@ -61,8 +61,7 @@ class Chat extends Component {
 			addMessage: null,
 			displayGif: false,
 			page: 0,
-			pageLimit: 10,
-			hasMoreItems: true
+			pageLimit: 10
 		};
 	}
 
@@ -78,7 +77,6 @@ class Chat extends Component {
 	};
 
 	// Actions
-
 	gifyLoader = (gif) => {
 		if (gif) {
 			this.addMessage(gif.fixed_height.url, 'gif');
@@ -88,8 +86,57 @@ class Chat extends Component {
 		}
 	};
 
+	// loadItems = () => {
+	// 	this.hasMore = false;
+	// 	this.socket.emit('lazyLoad', {
+	// 		page: this.state.page,
+	// 		pageLimit: this.state.pageLimit
+	// 	});
+
+	// 	this.socket.once('refresh', (res) => {
+	// 		if (res.message.length !== 0) {
+	// 			this.hasMore = true;
+	// 			this.setState({
+	// 				messages: res.message.map((value, index) => {
+	// 					if (value.messageType === 'gif') {
+	// 						return (
+	// 							<div key={value._id + index}>
+	// 								<ConstructGifMessage
+	// 									message={value.message}
+	// 									posted={value.posted}
+	// 									user={value.username}
+	// 									style={this.classes.messageStyleSpan}
+	// 								/>
+	// 							</div>
+	// 						);
+	// 					} else {
+	// 						return (
+	// 							<div key={value._id + index}>
+	// 								<ConstructMessage
+	// 									message={value.message}
+	// 									posted={value.posted}
+	// 									user={value.username}
+	// 									style={this.classes.messageStyleSpan}
+	// 								/>
+	// 							</div>
+	// 						);
+	// 					}
+	// 				})
+	// 			});
+
+	// 			this.setState({
+	// 				page: this.state.page + 1
+	// 			});
+	// 		} else {
+	// 			this.hasMore = false;
+	// 		}
+	// 	});
+	// };
+
 	addMessage = (message, type) => {
 		const { cookies } = this.props;
+
+		// Adds the message into the database
 		this.socket.emit('addMessage', {
 			message: message,
 			username: cookies.get('user'),
@@ -98,118 +145,49 @@ class Chat extends Component {
 			pageLimit: this.state.pageLimit
 		});
 
+		// Clears the value of the posted message
 		this.setState({ addMessage: '' });
 
-		let count = 0;
-		this.socket.on('refreshAdd', (res) => {
-			if (res.message.length !== 0) {
-				count = count + 1;
-
-				if (count > 1) {
-				} else {
-					this.hasMore = true;
-					this.setState({
-						messages: res.message
-							.map((value, index) => {
-								if (value.messageType === 'gif') {
-									return (
-										<div key={value._id + index}>
-											<ConstructGifMessage
-												message={value.message}
-												posted={value.posted}
-												user={value.username}
-												style={this.classes.messageStyleSpan}
-											/>
-										</div>
-									);
-								} else {
-									return (
-										<div key={value._id + index}>
-											<ConstructMessage
-												message={value.message}
-												posted={value.posted}
-												user={value.username}
-												style={this.classes.messageStyleSpan}
-											/>
-										</div>
-									);
-								}
-							})
-							.concat(this.state.messages)
-					});
-
-					this.setState({
-						page: this.state.page + 1
-					});
-				}
-			} else {
-				this.setState({
-					hasMoreItems: false
-				});
-			}
+		this.socket.emit('load', {
+			pageDidMount: false,
+			page: 0,
+			pageLimit: this.state.pageLimit,
+			method: 'addMessage'
 		});
-	};
-
-	loadItems = () => {
-		this.hasMore = false;
-		let count = 0;
-
-		this.socket.emit('load', { load: true, page: this.state.page, pageLimit: this.state.pageLimit });
-		this.socket.on('refresh', (res) => {
-			if (res.message.length !== 0) {
-				count = count + 1;
-
-				if (count > 1) {
-				} else {
-					this.hasMore = true;
-					this.setState({
-						messages: res.message
-							.map((value, index) => {
-								if (value.messageType === 'gif') {
-									return (
-										<div key={value._id + index}>
-											<ConstructGifMessage
-												message={value.message}
-												posted={value.posted}
-												user={value.username}
-												style={this.classes.messageStyleSpan}
-											/>
-										</div>
-									);
-								} else {
-									return (
-										<div key={value._id + index}>
-											<ConstructMessage
-												message={value.message}
-												posted={value.posted}
-												user={value.username}
-												style={this.classes.messageStyleSpan}
-											/>
-										</div>
-									);
-								}
-							})
-							.concat(this.state.messages)
-					});
-
-					this.setState({
-						page: this.state.page + 1
-					});
-				}
-			} else {
-				this.setState({
-					hasMoreItems: false
-				});
-			}
+		this.socket.once('refresh', (res) => {
+			console.log('ADD MESSAGE');
+			console.log(res);
+			this.setState({
+				messages: res.message.map((value, index) => {
+					if (value.messageType === 'gif') {
+						return (
+							<div key={value._id + index}>
+								<ConstructGifMessage
+									message={value.message}
+									posted={value.posted}
+									user={value.username}
+									style={this.classes.messageStyleSpan}
+								/>
+							</div>
+						);
+					} else {
+						return (
+							<div key={value._id + index}>
+								<ConstructMessage
+									message={value.message}
+									posted={value.posted}
+									user={value.username}
+									style={this.classes.messageStyleSpan}
+								/>
+							</div>
+						);
+					}
+				})
+			});
 		});
 	};
 
 	// Life cycle components
-
-	/*
-      Load the initial array of chats
-  */
-
 	componentDidMount() {
 		const { cookies } = this.props;
 		this.initialLoad = false;
@@ -232,43 +210,43 @@ class Chat extends Component {
 				}
 			});
 
-		let count = 0;
-
 		// Load all existing chats
-		this.socket.emit('load', { load: true, page: this.state.page, pageLimit: this.state.pageLimit });
+		this.socket.emit('load', {
+			pageDidMount: true,
+			page: this.state.page,
+			pageLimit: this.state.pageLimit,
+			method: 'componentDidMount'
+		});
 		this.socket.on('refresh', (res) => {
-			count = count + 1;
-
-			if (count > 1) {
-			} else {
-				this.setState({
-					messages: res.message.map((value, index) => {
-						if (value.messageType === 'gif') {
-							return (
-								<div key={value._id}>
-									<ConstructGifMessage
-										message={value.message}
-										posted={value.posted}
-										user={value.username}
-										style={this.classes.messageStyleSpan}
-									/>
-								</div>
-							);
-						} else {
-							return (
-								<div key={value._id}>
-									<ConstructMessage
-										message={value.message}
-										posted={value.posted}
-										user={value.username}
-										style={this.classes.messageStyleSpan}
-									/>
-								</div>
-							);
-						}
-					})
-				});
-			}
+			console.log('COMPONENT MOUNT');
+			console.log(res);
+			this.setState({
+				messages: res.message.map((value, index) => {
+					if (value.messageType === 'gif') {
+						return (
+							<div key={value._id}>
+								<ConstructGifMessage
+									message={value.message}
+									posted={value.posted}
+									user={value.username}
+									style={this.classes.messageStyleSpan}
+								/>
+							</div>
+						);
+					} else {
+						return (
+							<div key={value._id}>
+								<ConstructMessage
+									message={value.message}
+									posted={value.posted}
+									user={value.username}
+									style={this.classes.messageStyleSpan}
+								/>
+							</div>
+						);
+					}
+				})
+			});
 		});
 	}
 
@@ -308,6 +286,7 @@ class Chat extends Component {
 								} catch (e) {}
 							})}
 						</InfiniteScroll>
+
 						<div
 							style={{ float: 'left', clear: 'both' }}
 							ref={(el) => {
