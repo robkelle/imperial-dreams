@@ -86,52 +86,54 @@ class Chat extends Component {
 		}
 	};
 
-	// loadItems = () => {
-	// 	this.hasMore = false;
-	// 	this.socket.emit('lazyLoad', {
-	// 		page: this.state.page,
-	// 		pageLimit: this.state.pageLimit
-	// 	});
+	loadItems = () => {
+		this.hasMore = false;
+		this.socket.emit('lazyLoad', {
+			page: this.state.page,
+			pageLimit: this.state.pageLimit
+		});
 
-	// 	this.socket.once('refresh', (res) => {
-	// 		if (res.message.length !== 0) {
-	// 			this.hasMore = true;
-	// 			this.setState({
-	// 				messages: res.message.map((value, index) => {
-	// 					if (value.messageType === 'gif') {
-	// 						return (
-	// 							<div key={value._id + index}>
-	// 								<ConstructGifMessage
-	// 									message={value.message}
-	// 									posted={value.posted}
-	// 									user={value.username}
-	// 									style={this.classes.messageStyleSpan}
-	// 								/>
-	// 							</div>
-	// 						);
-	// 					} else {
-	// 						return (
-	// 							<div key={value._id + index}>
-	// 								<ConstructMessage
-	// 									message={value.message}
-	// 									posted={value.posted}
-	// 									user={value.username}
-	// 									style={this.classes.messageStyleSpan}
-	// 								/>
-	// 							</div>
-	// 						);
-	// 					}
-	// 				})
-	// 			});
+		this.socket.once('refresh', (res) => {
+			if (res.message.length !== 0) {
+				this.hasMore = true;
+				this.setState({
+					messages: res.message
+						.map((value, index) => {
+							if (value.messageType === 'gif') {
+								return (
+									<div key={value._id + index}>
+										<ConstructGifMessage
+											message={value.message}
+											posted={value.posted}
+											user={value.username}
+											style={this.classes.messageStyleSpan}
+										/>
+									</div>
+								);
+							} else {
+								return (
+									<div key={value._id + index}>
+										<ConstructMessage
+											message={value.message}
+											posted={value.posted}
+											user={value.username}
+											style={this.classes.messageStyleSpan}
+										/>
+									</div>
+								);
+							}
+						})
+						.concat(this.state.messages)
+				});
 
-	// 			this.setState({
-	// 				page: this.state.page + 1
-	// 			});
-	// 		} else {
-	// 			this.hasMore = false;
-	// 		}
-	// 	});
-	// };
+				this.setState({
+					page: this.state.page + 1
+				});
+			} else {
+				this.hasMore = false;
+			}
+		});
+	};
 
 	addMessage = (message, type) => {
 		const { cookies } = this.props;
@@ -148,15 +150,13 @@ class Chat extends Component {
 		// Clears the value of the posted message
 		this.setState({ addMessage: '' });
 
-		this.socket.emit('load', {
+		this.socket.emit('lazyLoad', {
 			pageDidMount: false,
 			page: 0,
 			pageLimit: this.state.pageLimit,
 			method: 'addMessage'
 		});
 		this.socket.once('refresh', (res) => {
-			console.log('ADD MESSAGE');
-			console.log(res);
 			this.setState({
 				messages: res.message.map((value, index) => {
 					if (value.messageType === 'gif') {
@@ -211,43 +211,41 @@ class Chat extends Component {
 			});
 
 		// Load all existing chats
-		this.socket.emit('load', {
-			pageDidMount: true,
-			page: this.state.page,
-			pageLimit: this.state.pageLimit,
-			method: 'componentDidMount'
-		});
-		this.socket.on('refresh', (res) => {
-			console.log('COMPONENT MOUNT');
-			console.log(res);
-			this.setState({
-				messages: res.message.map((value, index) => {
-					if (value.messageType === 'gif') {
-						return (
-							<div key={value._id}>
-								<ConstructGifMessage
-									message={value.message}
-									posted={value.posted}
-									user={value.username}
-									style={this.classes.messageStyleSpan}
-								/>
-							</div>
-						);
-					} else {
-						return (
-							<div key={value._id}>
-								<ConstructMessage
-									message={value.message}
-									posted={value.posted}
-									user={value.username}
-									style={this.classes.messageStyleSpan}
-								/>
-							</div>
-						);
-					}
-				})
-			});
-		});
+		// this.socket.emit('lazyLoad', {
+		// 	pageDidMount: true,
+		// 	page: this.state.page,
+		// 	pageLimit: this.state.pageLimit,
+		// 	method: 'componentDidMount'
+		// });
+		// this.socket.on('refresh', (res) => {
+		// 	this.setState({
+		// 		messages: res.message.map((value, index) => {
+		// 			if (value.messageType === 'gif') {
+		// 				return (
+		// 					<div key={value._id}>
+		// 						<ConstructGifMessage
+		// 							message={value.message}
+		// 							posted={value.posted}
+		// 							user={value.username}
+		// 							style={this.classes.messageStyleSpan}
+		// 						/>
+		// 					</div>
+		// 				);
+		// 			} else {
+		// 				return (
+		// 					<div key={value._id}>
+		// 						<ConstructMessage
+		// 							message={value.message}
+		// 							posted={value.posted}
+		// 							user={value.username}
+		// 							style={this.classes.messageStyleSpan}
+		// 						/>
+		// 					</div>
+		// 				);
+		// 			}
+		// 		})
+		// 	});
+		// });
 	}
 
 	componentDidUpdate() {

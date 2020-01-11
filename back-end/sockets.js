@@ -53,7 +53,7 @@ class InitSockets {
     @returns {type} description
   */
 	_socketLoader(socket) {
-		socket.on('load', (res) => {
+		socket.on('lazyLoad', (res) => {
 			console.log(res);
 			if (res.pageDidMount) {
 				this._getMessages(res.page, res.pageLimit);
