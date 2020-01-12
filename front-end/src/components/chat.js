@@ -87,7 +87,6 @@ class Chat extends Component {
 	};
 
 	loadItems = () => {
-		this.hasMore = false;
 		this.socket.emit('lazyLoad', {
 			page: this.state.page,
 			pageLimit: this.state.pageLimit
@@ -129,8 +128,6 @@ class Chat extends Component {
 				this.setState({
 					page: this.state.page + 1
 				});
-			} else {
-				this.hasMore = false;
 			}
 		});
 	};
@@ -149,48 +146,11 @@ class Chat extends Component {
 
 		// Clears the value of the posted message
 		this.setState({ addMessage: '' });
-
-		this.socket.emit('lazyLoad', {
-			pageDidMount: false,
-			page: 0,
-			pageLimit: this.state.pageLimit,
-			method: 'addMessage'
-		});
-		this.socket.once('refresh', (res) => {
-			this.setState({
-				messages: res.message.map((value, index) => {
-					if (value.messageType === 'gif') {
-						return (
-							<div key={value._id + index}>
-								<ConstructGifMessage
-									message={value.message}
-									posted={value.posted}
-									user={value.username}
-									style={this.classes.messageStyleSpan}
-								/>
-							</div>
-						);
-					} else {
-						return (
-							<div key={value._id + index}>
-								<ConstructMessage
-									message={value.message}
-									posted={value.posted}
-									user={value.username}
-									style={this.classes.messageStyleSpan}
-								/>
-							</div>
-						);
-					}
-				})
-			});
-		});
 	};
 
 	// Life cycle components
 	componentDidMount() {
 		const { cookies } = this.props;
-		this.initialLoad = false;
 
 		// Verify that the user is authenticated
 		fetch(`${config.API.DOMAIN}:${config.API.PORT}/api/user/verify`, {
@@ -210,42 +170,37 @@ class Chat extends Component {
 				}
 			});
 
-		// Load all existing chats
-		// this.socket.emit('lazyLoad', {
-		// 	pageDidMount: true,
-		// 	page: this.state.page,
-		// 	pageLimit: this.state.pageLimit,
-		// 	method: 'componentDidMount'
-		// });
-		// this.socket.on('refresh', (res) => {
-		// 	this.setState({
-		// 		messages: res.message.map((value, index) => {
-		// 			if (value.messageType === 'gif') {
-		// 				return (
-		// 					<div key={value._id}>
-		// 						<ConstructGifMessage
-		// 							message={value.message}
-		// 							posted={value.posted}
-		// 							user={value.username}
-		// 							style={this.classes.messageStyleSpan}
-		// 						/>
-		// 					</div>
-		// 				);
-		// 			} else {
-		// 				return (
-		// 					<div key={value._id}>
-		// 						<ConstructMessage
-		// 							message={value.message}
-		// 							posted={value.posted}
-		// 							user={value.username}
-		// 							style={this.classes.messageStyleSpan}
-		// 						/>
-		// 					</div>
-		// 				);
-		// 			}
-		// 		})
-		// 	});
-		// });
+		this.socket.on('newMessage', (res) => {
+			this.setState({
+				messages: res.message
+					.map((value, index) => {
+						if (value.messageType === 'gif') {
+							return (
+								<div key={value._id + index}>
+									<ConstructGifMessage
+										message={value.message}
+										posted={value.posted}
+										user={value.username}
+										style={this.classes.messageStyleSpan}
+									/>
+								</div>
+							);
+						} else {
+							return (
+								<div key={value._id + index}>
+									<ConstructMessage
+										message={value.message}
+										posted={value.posted}
+										user={value.username}
+										style={this.classes.messageStyleSpan}
+									/>
+								</div>
+							);
+						}
+					})
+					.concat(this.state.messages)
+			});
+		});
 	}
 
 	componentDidUpdate() {

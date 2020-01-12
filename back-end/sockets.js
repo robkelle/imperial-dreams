@@ -37,7 +37,11 @@ class InitSockets {
 			posted: new Date()
 		});
 
-		message.save();
+		message.save().then(() => {
+			Message.findById(message._id).exec((err, res) => {
+				this.io.emit('newMessage', { message: [ res ] });
+			});
+		});
 	}
 
 	/**
@@ -55,11 +59,7 @@ class InitSockets {
 	_socketLoader(socket) {
 		socket.on('lazyLoad', (res) => {
 			console.log(res);
-			if (res.pageDidMount) {
-				this._getMessages(res.page, res.pageLimit);
-			} else {
-				this._getMessages(res.page, res.pageLimit);
-			}
+			this._getMessages(res.page, res.pageLimit);
 		});
 	}
 
