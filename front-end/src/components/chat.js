@@ -95,7 +95,6 @@ class Chat extends Component {
 		});
 
 		this.socket.once('refresh', (res) => {
-			console.log(res);
 			if (res.message.length !== 0) {
 				this.hasMore = true;
 				this.setState({
@@ -103,7 +102,7 @@ class Chat extends Component {
 						.map((value, index) => {
 							if (value.messageType === 'gif') {
 								return (
-									<div key={value._id + index}>
+									<div key={value._id}>
 										<ConstructGifMessage
 											message={value.message}
 											posted={value.posted}
@@ -114,7 +113,7 @@ class Chat extends Component {
 								);
 							} else {
 								return (
-									<div key={value._id + index}>
+									<div key={value._id}>
 										<ConstructMessage
 											message={value.message}
 											posted={value.posted}
