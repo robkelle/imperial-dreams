@@ -87,12 +87,15 @@ class Chat extends Component {
 	};
 
 	loadItems = () => {
+		this.initialLoad = false;
+
 		this.socket.emit('lazyLoad', {
 			page: this.state.page,
 			pageLimit: this.state.pageLimit
 		});
 
 		this.socket.once('refresh', (res) => {
+			console.log(res);
 			if (res.message.length !== 0) {
 				this.hasMore = true;
 				this.setState({
