@@ -136,7 +136,7 @@ class Chat extends Component {
 		const { cookies } = this.props;
 
 		// Adds the message into the database
-		this.socket.emit('addMessage', {
+		this.socket.emit('postMessage', {
 			message: message,
 			username: cookies.get('user'),
 			messageType: type,
@@ -170,7 +170,7 @@ class Chat extends Component {
 				}
 			});
 
-		this.socket.on('newMessage', (res) => {
+		this.socket.on('loadMessage', (res) => {
 			this.setState({
 				messages: res.message
 					.map((value, index) => {

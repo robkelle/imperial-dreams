@@ -37,9 +37,10 @@ class InitSockets {
 			posted: new Date()
 		});
 
+		// When the message is saved to the database, emits the message to the client
 		message.save().then(() => {
 			Message.findById(message._id).exec((err, res) => {
-				this.io.emit('newMessage', { message: [ res ] });
+				this.io.emit('loadMessage', { message: [ res ] });
 			});
 		});
 	}
@@ -58,13 +59,12 @@ class InitSockets {
   */
 	_socketLoader(socket) {
 		socket.on('lazyLoad', (res) => {
-			console.log(res);
 			this._getMessages(res.page, res.pageLimit);
 		});
 	}
 
 	_socketPoster(socket) {
-		socket.on('addMessage', (res) => {
+		socket.on('postMessage', (res) => {
 			this._postMessage(res);
 		});
 	}
