@@ -65,9 +65,7 @@ class InitSockets {
 
 	/**
     @name _socketPoster
-
     @private
-
     @description  Posts a message to the message collection
 
     @param {Object} [socket] - description
@@ -85,7 +83,6 @@ class InitSockets {
 
 	/**
     @name start
-
     @description description
 
     @example
