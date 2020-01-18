@@ -44,7 +44,7 @@ const UserDashboard = (props) => {
 				<div className="col-12" style={classes.colStyle}>
 					<h1 style={classes.header}>Welcome {props.cookies.get('user')}</h1>
 					<div style={{ backgroundColor: '#485563', height: 60 }} />
-					<Chat />
+					<Chat room={'ImperialDreams1'} />
 				</div>
 			</div>
 		</div>

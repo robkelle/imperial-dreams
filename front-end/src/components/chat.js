@@ -1,12 +1,8 @@
+import { Avatar, List, ListItem, ListItemAvatar, ListItemText } from '@material-ui/core';
 import React, { Component } from 'react';
 
-import { Avatar } from '@material-ui/core';
 import Gif from '../images/gif.png';
 import InfiniteScroll from 'react-infinite-scroller';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import ListItemText from '@material-ui/core/ListItemText';
 import Picker from 'react-giphy-component';
 import _ from 'lodash';
 import config from '../config.json';
@@ -50,8 +46,8 @@ class Chat extends Component {
 		this.classes = {
 			messageStyleSpan: {
 				borderRadius: 10,
-				backgroundColor: '#343D47',
-				color: '#BDC0C4',
+				backgroundColor: '#6B6BE9',
+				color: '#fff',
 				margin: 10
 			}
 		};
@@ -91,11 +87,11 @@ class Chat extends Component {
 
 		this.socket.emit('lazyLoad', {
 			page: this.state.page,
-			pageLimit: this.state.pageLimit
+			pageLimit: this.state.pageLimit,
+			room: this.props.room
 		});
 
 		this.socket.once('refresh', (res) => {
-			console.log(res);
 			if (res.message.length !== 0) {
 				this.hasMore = true;
 				this.setState({
@@ -144,7 +140,8 @@ class Chat extends Component {
 			username: cookies.get('user'),
 			messageType: type,
 			page: this.state.page,
-			pageLimit: this.state.pageLimit
+			pageLimit: this.state.pageLimit,
+			room: this.props.room
 		});
 
 		// Clears the value of the posted message
@@ -172,6 +169,17 @@ class Chat extends Component {
 					cookies.remove('isAuthorized', { path: '/' });
 				}
 			});
+
+		// this.socket.on('userConnected', (res) => {
+		// 	// Adds the message into the database
+		// 	this.socket.emit('postMessage', {
+		// 		message: `${cookies.get('user')} has joined ${this.props.room}`,
+		// 		username: cookies.get('user'),
+		// 		page: this.state.page,
+		// 		pageLimit: this.state.pageLimit,
+		// 		room: this.props.room
+		// 	});
+		// });
 
 		this.socket.on('loadMessage', (res) => {
 			this.setState({
@@ -279,7 +287,7 @@ class Chat extends Component {
 							className="btn btn-secondary"
 							type="button"
 							onClick={() => this.setState({ displayGif: true })}
-							style={{ backgroundColor: '#343D47' }}
+							style={{ backgroundColor: '#6B6BE9' }}
 						>
 							<img src={Gif} height="25px" alt="" />
 						</button>

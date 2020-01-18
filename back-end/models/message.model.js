@@ -13,6 +13,7 @@ module.exports = mongoose.model(
 		userID: String,
 		username: String,
 		type: String,
-		messageType: String
+		messageType: String,
+		room: String
 	})
 );
