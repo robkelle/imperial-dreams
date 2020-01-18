@@ -63,12 +63,33 @@ class InitSockets {
 		});
 	}
 
+	/**
+    @name _socketPoster
+    @private
+    @description  Posts a message to the message collection
+
+    @param {Object} [socket] - description
+
+    @example
+      code example
+
+    @returns {type} description
+  */
 	_socketPoster(socket) {
 		socket.on('postMessage', (res) => {
 			this._postMessage(res);
 		});
 	}
 
+	/**
+    @name start
+    @description description
+
+    @example
+      code example
+
+    @returns {type} description
+  */
 	start() {
 		this.io.on('connection', (socket) => {
 			this._socketLoader(socket);
