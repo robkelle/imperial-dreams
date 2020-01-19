@@ -71,7 +71,7 @@ class Chat extends Component {
 		super();
 		this.socket = io('http://localhost:4000');
 		this._isMounted = false;
-		this.chatColor = 'rgba(0, 51, 102)';
+		this.chatColor = '#8a0303';
 		this.classes = {
 			messageStyleSpanPersonal: {
 				backgroundColor: this.chatColor /*'#6B6BE9' OR #8a0303,*/,
