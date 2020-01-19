@@ -81,8 +81,8 @@ class Chat extends Component {
 				backgroundColor: '#D8DAE0',
 				color: '#000'
 			},
-			personalMessage: 'flex-end',
-			externalMessage: 'flex-start'
+			sentMessageStyle: 'flex-end',
+			receivedMessageStyle: 'flex-start'
 		};
 		this.initialLoad = true;
 		this.hasMore = true;
@@ -154,9 +154,9 @@ class Chat extends Component {
 											}
 											action={
 												this.props.cookies.get('user') === value.username ? (
-													this.classes.personalMessage
+													this.classes.sentMessageStyle
 												) : (
-													this.classes.externalMessage
+													this.classes.receivedMessageStyle
 												)
 											}
 										/>
@@ -178,9 +178,9 @@ class Chat extends Component {
 											}
 											action={
 												this.props.cookies.get('user') === value.username ? (
-													this.classes.personalMessage
+													this.classes.sentMessageStyle
 												) : (
-													this.classes.externalMessage
+													this.classes.receivedMessageStyle
 												)
 											}
 										/>
@@ -268,9 +268,9 @@ class Chat extends Component {
 										}
 										action={
 											this.props.cookies.get('user') === value.username ? (
-												this.classes.personalMessage
+												this.classes.sentMessageStyle
 											) : (
-												this.classes.externalMessage
+												this.classes.receivedMessageStyle
 											)
 										}
 									/>
@@ -292,9 +292,9 @@ class Chat extends Component {
 										}
 										action={
 											this.props.cookies.get('user') === value.username ? (
-												this.classes.personalMessage
+												this.classes.sentMessageStyle
 											) : (
-												this.classes.externalMessage
+												this.classes.receivedMessageStyle
 											)
 										}
 									/>
