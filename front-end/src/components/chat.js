@@ -21,7 +21,7 @@ import config from '../config.json';
 import io from 'socket.io-client';
 import { withCookies } from 'react-cookie';
 
-const ConstructGifMessage = (props) => {
+const ChatGIFMessage = (props) => {
 	return (
 		<Grid container spacing={5}>
 			<Grid item xs={12}>
@@ -43,7 +43,7 @@ const ConstructGifMessage = (props) => {
 	);
 };
 
-const ConstructMessage = (props) => {
+const ChatMessage = (props) => {
 	return (
 		<Grid container spacing={5}>
 			<Grid item xs={12}>
@@ -70,9 +70,10 @@ class Chat extends Component {
 		super();
 		this.socket = io('http://localhost:4000');
 		this._isMounted = false;
+		this.chatColor = 'rgba(0, 51, 102)';
 		this.classes = {
 			messageStyleSpanPersonal: {
-				backgroundColor: '#8a0303' /*'#6B6BE9',*/,
+				backgroundColor: this.chatColor /*'#6B6BE9' OR #8a0303,*/,
 				color: '#fff'
 			},
 			messageStyleSpan: {
@@ -111,6 +112,14 @@ class Chat extends Component {
 		}
 	};
 
+	/**
+    @name loadItems
+
+    @description A React component to render while more items are loading. The parent component must have a unique key prop.
+
+    @example
+      this.loadItems();
+  */
 	loadItems = () => {
 		this.initialLoad = false;
 
@@ -129,7 +138,7 @@ class Chat extends Component {
 							if (value.messageType === 'gif') {
 								return (
 									<div key={value._id}>
-										<ConstructGifMessage
+										<ChatGIFMessage
 											message={value.message}
 											posted={value.posted}
 											user={value.username}
@@ -146,7 +155,7 @@ class Chat extends Component {
 							} else {
 								return (
 									<div key={value._id}>
-										<ConstructMessage
+										<ChatMessage
 											message={value.message}
 											posted={value.posted}
 											user={value.username}
@@ -229,7 +238,7 @@ class Chat extends Component {
 						if (value.messageType === 'gif') {
 							return (
 								<div key={value._id + index}>
-									<ConstructGifMessage
+									<ChatGIFMessage
 										message={value.message}
 										posted={value.posted}
 										user={value.username}
@@ -246,7 +255,7 @@ class Chat extends Component {
 						} else {
 							return (
 								<div key={value._id + index}>
-									<ConstructMessage
+									<ChatMessage
 										message={value.message}
 										posted={value.posted}
 										user={value.username}
@@ -278,7 +287,7 @@ class Chat extends Component {
 
 	render() {
 		const loader = (
-			<div className="loader" style={{ height: '100px' }}>
+			<div className="loader" key={0} style={{ height: '100px' }}>
 				Loading ...
 			</div>
 		);
@@ -352,7 +361,7 @@ class Chat extends Component {
 							className="btn btn-secondary"
 							type="button"
 							onClick={() => this.setState({ displayGif: true })}
-							style={{ backgroundColor: '#8a0303' }}
+							style={{ backgroundColor: this.chatColor }}
 						>
 							<img src={Gif} height="25px" alt="" />
 						</button>
