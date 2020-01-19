@@ -16,6 +16,7 @@ import InfiniteScroll from 'react-infinite-scroller';
 import Moment from 'moment';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Picker from 'react-giphy-component';
+import Skeleton from '@material-ui/lab/Skeleton';
 import _ from 'lodash';
 import config from '../config.json';
 import io from 'socket.io-client';
@@ -288,7 +289,23 @@ class Chat extends Component {
 	render() {
 		const loader = (
 			<div className="loader" key={0} style={{ height: '100px' }}>
-				Loading ...
+				<Grid container spacing={5}>
+					<Grid item xs={12}>
+						<Paper elevation={10}>
+							<List>
+								<ListItem>
+									<ListItemAvatar>
+										<Skeleton variant="circle" width={40} height={40} />
+									</ListItemAvatar>
+									<ListItemText
+										primary={<Skeleton variant="rect" width={'100%'} height={50} />}
+										secondary={<Skeleton variant="text" width={'25%'} />}
+									/>
+								</ListItem>
+							</List>
+						</Paper>
+					</Grid>
+				</Grid>
 			</div>
 		);
 
