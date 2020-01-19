@@ -45,6 +45,6 @@ a:hover {
 }
 
 .MuiListItemText-secondary {
-	color: rgb(255, 180, 59) !important;
+	color: #000 !important;
 	font-size: 12px !important;
 }

@@ -1,12 +1,20 @@
+import {
+	Avatar,
+	Grid,
+	IconButton,
+	List,
+	ListItem,
+	ListItemAvatar,
+	ListItemText,
+	Paper,
+	Typography
+} from '@material-ui/core';
 import React, { Component } from 'react';
 
-import { Avatar } from '@material-ui/core';
 import Gif from '../images/gif.png';
 import InfiniteScroll from 'react-infinite-scroller';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import ListItemText from '@material-ui/core/ListItemText';
+import Moment from 'moment';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Picker from 'react-giphy-component';
 import _ from 'lodash';
 import config from '../config.json';
@@ -15,30 +23,45 @@ import { withCookies } from 'react-cookie';
 
 const ConstructGifMessage = (props) => {
 	return (
-		<List>
-			<ListItem style={props.style}>
-				<ListItemAvatar>
-					<Avatar>{props.user.substring(0, 2)}</Avatar>
-				</ListItemAvatar>
-				<ListItemText
-					primary={<img src={props.message} alt="" />}
-					secondary={`${props.user} posted on ${props.posted}`}
-				/>
-			</ListItem>
-		</List>
+		<Grid container spacing={5}>
+			<Grid item xs={12}>
+				<Paper style={props.style} elevation={5}>
+					<List>
+						<ListItem>
+							<ListItemAvatar>
+								<Avatar>{props.user.substring(0, 1).toUpperCase()}</Avatar>
+							</ListItemAvatar>
+							<ListItemText
+								primary={<img src={props.message} alt="" />}
+								secondary={`${props.user} posted on ${Moment(props.posted).format('llll')}`}
+							/>
+						</ListItem>
+					</List>
+				</Paper>
+			</Grid>
+		</Grid>
 	);
 };
 
 const ConstructMessage = (props) => {
 	return (
-		<List>
-			<ListItem style={props.style}>
-				<ListItemAvatar>
-					<Avatar>{props.user.substring(0, 2)}</Avatar>
-				</ListItemAvatar>
-				<ListItemText primary={props.message} secondary={`${props.user} posted on ${props.posted}`} />
-			</ListItem>
-		</List>
+		<Grid container spacing={5}>
+			<Grid item xs={12}>
+				<Paper style={props.style} elevation={10}>
+					<List>
+						<ListItem>
+							<ListItemAvatar>
+								<Avatar>{props.user.substring(0, 1).toUpperCase()}</Avatar>
+							</ListItemAvatar>
+							<ListItemText
+								primary={props.message}
+								secondary={`${props.user} posted on ${Moment(props.posted).format('llll')}`}
+							/>
+						</ListItem>
+					</List>
+				</Paper>
+			</Grid>
+		</Grid>
 	);
 };
 
@@ -48,11 +71,13 @@ class Chat extends Component {
 		this.socket = io('http://localhost:4000');
 		this._isMounted = false;
 		this.classes = {
+			messageStyleSpanPersonal: {
+				backgroundColor: '#8a0303' /*'#6B6BE9',*/,
+				color: '#fff'
+			},
 			messageStyleSpan: {
-				borderRadius: 10,
-				backgroundColor: '#343D47',
-				color: '#BDC0C4',
-				margin: 10
+				backgroundColor: '#D8DAE0',
+				color: '#000'
 			}
 		};
 		this.initialLoad = true;
@@ -91,7 +116,8 @@ class Chat extends Component {
 
 		this.socket.emit('lazyLoad', {
 			page: this.state.page,
-			pageLimit: this.state.pageLimit
+			pageLimit: this.state.pageLimit,
+			room: this.props.room
 		});
 
 		this.socket.once('refresh', (res) => {
@@ -107,7 +133,13 @@ class Chat extends Component {
 											message={value.message}
 											posted={value.posted}
 											user={value.username}
-											style={this.classes.messageStyleSpan}
+											style={
+												this.props.cookies.get('user') === value.username ? (
+													this.classes.messageStyleSpanPersonal
+												) : (
+													this.classes.messageStyleSpan
+												)
+											}
 										/>
 									</div>
 								);
@@ -118,7 +150,13 @@ class Chat extends Component {
 											message={value.message}
 											posted={value.posted}
 											user={value.username}
-											style={this.classes.messageStyleSpan}
+											style={
+												this.props.cookies.get('user') === value.username ? (
+													this.classes.messageStyleSpanPersonal
+												) : (
+													this.classes.messageStyleSpan
+												)
+											}
 										/>
 									</div>
 								);
@@ -143,7 +181,8 @@ class Chat extends Component {
 			username: cookies.get('user'),
 			messageType: type,
 			page: this.state.page,
-			pageLimit: this.state.pageLimit
+			pageLimit: this.state.pageLimit,
+			room: this.props.room
 		});
 
 		// Clears the value of the posted message
@@ -172,6 +211,17 @@ class Chat extends Component {
 				}
 			});
 
+		// this.socket.on('userConnected', (res) => {
+		// 	// Adds the message into the database
+		// 	this.socket.emit('postMessage', {
+		// 		message: `${cookies.get('user')} has joined ${this.props.room}`,
+		// 		username: cookies.get('user'),
+		// 		page: this.state.page,
+		// 		pageLimit: this.state.pageLimit,
+		// 		room: this.props.room
+		// 	});
+		// });
+
 		this.socket.on('loadMessage', (res) => {
 			this.setState({
 				messages: res.message
@@ -183,7 +233,13 @@ class Chat extends Component {
 										message={value.message}
 										posted={value.posted}
 										user={value.username}
-										style={this.classes.messageStyleSpan}
+										style={
+											this.props.cookies.get('user') === value.username ? (
+												this.classes.messageStyleSpanPersonal
+											) : (
+												this.classes.messageStyleSpan
+											)
+										}
 									/>
 								</div>
 							);
@@ -194,7 +250,13 @@ class Chat extends Component {
 										message={value.message}
 										posted={value.posted}
 										user={value.username}
-										style={this.classes.messageStyleSpan}
+										style={
+											this.props.cookies.get('user') === value.username ? (
+												this.classes.messageStyleSpanPersonal
+											) : (
+												this.classes.messageStyleSpan
+											)
+										}
 									/>
 								</div>
 							);
@@ -223,6 +285,18 @@ class Chat extends Component {
 
 		return (
 			<div>
+				<Grid container spacing={2} justify={'flex-end'}>
+					<Grid item xs={8} sm={8} md={8} lg={8} xl={8} align="center">
+						<Typography variant="h4" color={'error'}>
+							ROOM {this.props.room.toUpperCase()}
+						</Typography>
+					</Grid>
+					<Grid item xs={2} sm={2} md={2} lg={2} xl={2} align="right">
+						<IconButton aria-label="settings" style={{ color: '#fff' }}>
+							<MoreVertIcon />
+						</IconButton>
+					</Grid>
+				</Grid>
 				<div style={{ padding: 20, marginBottom: 30 }}>
 					<div className="overflow-auto side-bar" style={{ height: 500, overflow: 'auto' }}>
 						<InfiniteScroll
@@ -278,7 +352,7 @@ class Chat extends Component {
 							className="btn btn-secondary"
 							type="button"
 							onClick={() => this.setState({ displayGif: true })}
-							style={{ backgroundColor: '#343D47' }}
+							style={{ backgroundColor: '#8a0303' }}
 						>
 							<img src={Gif} height="25px" alt="" />
 						</button>
