@@ -1,8 +1,20 @@
-import { Avatar, Grid, List, ListItem, ListItemAvatar, ListItemText, Paper, Typography } from '@material-ui/core';
+import {
+	Avatar,
+	Grid,
+	IconButton,
+	List,
+	ListItem,
+	ListItemAvatar,
+	ListItemText,
+	Paper,
+	Typography
+} from '@material-ui/core';
 import React, { Component } from 'react';
 
 import Gif from '../images/gif.png';
 import InfiniteScroll from 'react-infinite-scroller';
+import Moment from 'moment';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Picker from 'react-giphy-component';
 import _ from 'lodash';
 import config from '../config.json';
@@ -21,7 +33,7 @@ const ConstructGifMessage = (props) => {
 							</ListItemAvatar>
 							<ListItemText
 								primary={<img src={props.message} alt="" />}
-								secondary={`${props.user} posted on ${props.posted}`}
+								secondary={`${props.user} posted on ${Moment(props.posted).format('llll')}`}
 							/>
 						</ListItem>
 					</List>
@@ -43,7 +55,7 @@ const ConstructMessage = (props) => {
 							</ListItemAvatar>
 							<ListItemText
 								primary={props.message}
-								secondary={`${props.user} posted on ${props.posted}`}
+								secondary={`${props.user} posted on ${Moment(props.posted).format('llll')}`}
 							/>
 						</ListItem>
 					</List>
@@ -60,7 +72,7 @@ class Chat extends Component {
 		this._isMounted = false;
 		this.classes = {
 			messageStyleSpanPersonal: {
-				backgroundColor: '#6B6BE9',
+				backgroundColor: '#8a0303' /*'#6B6BE9',*/,
 				color: '#fff'
 			},
 			messageStyleSpan: {
@@ -273,8 +285,17 @@ class Chat extends Component {
 
 		return (
 			<div>
-				<Grid container spacing={2}>
-					<Grid item xs={12} />
+				<Grid container spacing={2} justify={'flex-end'}>
+					<Grid item xs={8} sm={8} md={8} lg={8} xl={8} align="center">
+						<Typography variant="h4" color={'error'}>
+							ROOM {this.props.room.toUpperCase()}
+						</Typography>
+					</Grid>
+					<Grid item xs={2} sm={2} md={2} lg={2} xl={2} align="right">
+						<IconButton aria-label="settings" style={{ color: '#fff' }}>
+							<MoreVertIcon />
+						</IconButton>
+					</Grid>
 				</Grid>
 				<div style={{ padding: 20, marginBottom: 30 }}>
 					<div className="overflow-auto side-bar" style={{ height: 500, overflow: 'auto' }}>
@@ -331,7 +352,7 @@ class Chat extends Component {
 							className="btn btn-secondary"
 							type="button"
 							onClick={() => this.setState({ displayGif: true })}
-							style={{ backgroundColor: '#6B6BE9' }}
+							style={{ backgroundColor: '#8a0303' }}
 						>
 							<img src={Gif} height="25px" alt="" />
 						</button>

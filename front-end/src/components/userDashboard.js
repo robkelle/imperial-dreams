@@ -9,12 +9,12 @@ const UserDashboard = () => {
 		<div
 			className="container animated fadeInDown faster"
 			style={{
-				marginTop: 10
+				marginTop: 20
 			}}
 		>
 			<Grid container spacing={0}>
 				<Grid item xs={12}>
-					<Paper style={{ backgroundColor: '#121212' }}>
+					<Paper style={{ backgroundColor: 'rgba(18,18,18,.85)' }}>
 						<Chat room={'ImperialDreams1'} />
 					</Paper>
 				</Grid>
