@@ -1,4 +1,4 @@
-import { Avatar, Grid, List, ListItem, ListItemAvatar, ListItemText, Paper } from '@material-ui/core';
+import { Avatar, Grid, List, ListItem, ListItemAvatar, ListItemText, Paper, Typography } from '@material-ui/core';
 import React, { Component } from 'react';
 
 import Gif from '../images/gif.png';
@@ -273,6 +273,9 @@ class Chat extends Component {
 
 		return (
 			<div>
+				<Grid container spacing={2}>
+					<Grid item xs={12} />
+				</Grid>
 				<div style={{ padding: 20, marginBottom: 30 }}>
 					<div className="overflow-auto side-bar" style={{ height: 500, overflow: 'auto' }}>
 						<InfiniteScroll
