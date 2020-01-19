@@ -1,4 +1,4 @@
-import { Avatar, List, ListItem, ListItemAvatar, ListItemText } from '@material-ui/core';
+import { Avatar, Grid, List, ListItem, ListItemAvatar, ListItemText, Typography } from '@material-ui/core';
 import React, { Component } from 'react';
 
 import Gif from '../images/gif.png';
@@ -11,30 +11,38 @@ import { withCookies } from 'react-cookie';
 
 const ConstructGifMessage = (props) => {
 	return (
-		<List>
-			<ListItem style={props.style}>
-				<ListItemAvatar>
-					<Avatar>{props.user.substring(0, 2)}</Avatar>
-				</ListItemAvatar>
-				<ListItemText
-					primary={<img src={props.message} alt="" />}
-					secondary={`${props.user} posted on ${props.posted}`}
-				/>
-			</ListItem>
-		</List>
+		<Grid container spacing={3}>
+			<Grid item xs={12}>
+				<List>
+					<ListItem style={props.style}>
+						<ListItemAvatar>
+							<Avatar>{props.user.substring(0, 2)}</Avatar>
+						</ListItemAvatar>
+						<ListItemText
+							primary={<img src={props.message} alt="" />}
+							secondary={`${props.user} posted on ${props.posted}`}
+						/>
+					</ListItem>
+				</List>
+			</Grid>
+		</Grid>
 	);
 };
 
 const ConstructMessage = (props) => {
 	return (
-		<List>
-			<ListItem style={props.style}>
-				<ListItemAvatar>
-					<Avatar>{props.user.substring(0, 2)}</Avatar>
-				</ListItemAvatar>
-				<ListItemText primary={props.message} secondary={`${props.user} posted on ${props.posted}`} />
-			</ListItem>
-		</List>
+		<Grid container spacing={3}>
+			<Grid item xs={12}>
+				<List>
+					<ListItem style={props.style}>
+						<ListItemAvatar>
+							<Avatar>{props.user.substring(0, 2)}</Avatar>
+						</ListItemAvatar>
+						<ListItemText primary={props.message} secondary={`${props.user} posted on ${props.posted}`} />
+					</ListItem>
+				</List>
+			</Grid>
+		</Grid>
 	);
 };
 
@@ -44,11 +52,15 @@ class Chat extends Component {
 		this.socket = io('http://localhost:4000');
 		this._isMounted = false;
 		this.classes = {
-			messageStyleSpan: {
+			messageStyleSpanPersonal: {
 				borderRadius: 10,
 				backgroundColor: '#6B6BE9',
-				color: '#fff',
-				margin: 10
+				color: '#fff'
+			},
+			messageStyleSpan: {
+				borderRadius: 10,
+				backgroundColor: '#D8DAE0',
+				color: '#000'
 			}
 		};
 		this.initialLoad = true;
@@ -104,7 +116,13 @@ class Chat extends Component {
 											message={value.message}
 											posted={value.posted}
 											user={value.username}
-											style={this.classes.messageStyleSpan}
+											style={
+												this.props.cookies.get('user') === value.username ? (
+													this.classes.messageStyleSpanPersonal
+												) : (
+													this.classes.messageStyleSpan
+												)
+											}
 										/>
 									</div>
 								);
@@ -115,7 +133,13 @@ class Chat extends Component {
 											message={value.message}
 											posted={value.posted}
 											user={value.username}
-											style={this.classes.messageStyleSpan}
+											style={
+												this.props.cookies.get('user') === value.username ? (
+													this.classes.messageStyleSpanPersonal
+												) : (
+													this.classes.messageStyleSpan
+												)
+											}
 										/>
 									</div>
 								);
@@ -192,7 +216,13 @@ class Chat extends Component {
 										message={value.message}
 										posted={value.posted}
 										user={value.username}
-										style={this.classes.messageStyleSpan}
+										style={
+											this.props.cookies.get('user') === value.username ? (
+												this.classes.messageStyleSpanPersonal
+											) : (
+												this.classes.messageStyleSpan
+											)
+										}
 									/>
 								</div>
 							);
@@ -203,7 +233,13 @@ class Chat extends Component {
 										message={value.message}
 										posted={value.posted}
 										user={value.username}
-										style={this.classes.messageStyleSpan}
+										style={
+											this.props.cookies.get('user') === value.username ? (
+												this.classes.messageStyleSpanPersonal
+											) : (
+												this.classes.messageStyleSpan
+											)
+										}
 									/>
 								</div>
 							);
