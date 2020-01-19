@@ -24,8 +24,8 @@ import { withCookies } from 'react-cookie';
 
 const ChatGIFMessage = (props) => {
 	return (
-		<Grid container spacing={5}>
-			<Grid item xs={12}>
+		<Grid container spacing={5} justify={props.action}>
+			<Grid item xs={'auto'} sm={'auto'} md={'auto'} lg={'auto'} xl={'auto'}>
 				<Paper style={props.style} elevation={5}>
 					<List>
 						<ListItem>
@@ -46,8 +46,8 @@ const ChatGIFMessage = (props) => {
 
 const ChatMessage = (props) => {
 	return (
-		<Grid container spacing={5}>
-			<Grid item xs={12}>
+		<Grid container spacing={5} justify={props.action}>
+			<Grid item xs={'auto'} sm={'auto'} md={'auto'} lg={'auto'} xl={'auto'}>
 				<Paper style={props.style} elevation={10}>
 					<List>
 						<ListItem>
@@ -80,7 +80,9 @@ class Chat extends Component {
 			messageStyleSpan: {
 				backgroundColor: '#D8DAE0',
 				color: '#000'
-			}
+			},
+			personalMessage: 'flex-end',
+			externalMessage: 'flex-start'
 		};
 		this.initialLoad = true;
 		this.hasMore = true;
@@ -150,6 +152,13 @@ class Chat extends Component {
 													this.classes.messageStyleSpan
 												)
 											}
+											action={
+												this.props.cookies.get('user') === value.username ? (
+													this.classes.personalMessage
+												) : (
+													this.classes.externalMessage
+												)
+											}
 										/>
 									</div>
 								);
@@ -165,6 +174,13 @@ class Chat extends Component {
 													this.classes.messageStyleSpanPersonal
 												) : (
 													this.classes.messageStyleSpan
+												)
+											}
+											action={
+												this.props.cookies.get('user') === value.username ? (
+													this.classes.personalMessage
+												) : (
+													this.classes.externalMessage
 												)
 											}
 										/>
@@ -250,6 +266,13 @@ class Chat extends Component {
 												this.classes.messageStyleSpan
 											)
 										}
+										action={
+											this.props.cookies.get('user') === value.username ? (
+												this.classes.personalMessage
+											) : (
+												this.classes.externalMessage
+											)
+										}
 									/>
 								</div>
 							);
@@ -265,6 +288,13 @@ class Chat extends Component {
 												this.classes.messageStyleSpanPersonal
 											) : (
 												this.classes.messageStyleSpan
+											)
+										}
+										action={
+											this.props.cookies.get('user') === value.username ? (
+												this.classes.personalMessage
+											) : (
+												this.classes.externalMessage
 											)
 										}
 									/>
