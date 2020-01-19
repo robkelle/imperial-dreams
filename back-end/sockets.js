@@ -13,9 +13,9 @@ class InitSockets {
     @example
       this._getMessages();
   */
-	_getMessages(page, pageLimit) {
-		Message.find().skip(page * pageLimit).limit(pageLimit).sort({ posted: -1 }).exec((err, res) => {
-			this.io.emit('refresh', { message: res });
+	_getMessages(page, pageLimit, room) {
+		Message.find({ room: room }).skip(page * pageLimit).limit(pageLimit).sort({ posted: -1 }).exec((err, res) => {
+			this.io.in(room).emit('refresh', { message: res });
 		});
 	}
 
@@ -34,13 +34,14 @@ class InitSockets {
 			message: res.message,
 			username: res.username,
 			messageType: res.messageType,
-			posted: new Date()
+			posted: new Date(),
+			room: res.room
 		});
 
 		// When the message is saved to the database, emits the message to the client
 		message.save().then(() => {
 			Message.findById(message._id).exec((err, res) => {
-				this.io.emit('loadMessage', { message: [ res ] });
+				this.io.in(res.room).emit('loadMessage', { message: [ res ] });
 			});
 		});
 	}
@@ -59,18 +60,41 @@ class InitSockets {
   */
 	_socketLoader(socket) {
 		socket.on('lazyLoad', (res) => {
-			this._getMessages(res.page, res.pageLimit);
+			socket.join(res.room);
+			this._getMessages(res.page, res.pageLimit, res.room);
 		});
 	}
 
+	/**
+    @name _socketPoster
+    @private
+    @description  Posts a message to the message collection
+
+    @param {Object} [socket] - description
+
+    @example
+      code example
+
+    @returns {type} description
+  */
 	_socketPoster(socket) {
 		socket.on('postMessage', (res) => {
 			this._postMessage(res);
 		});
 	}
 
+	/**
+    @name start
+    @description description
+
+    @example
+      code example
+
+    @returns {type} description
+  */
 	start() {
 		this.io.on('connection', (socket) => {
+			this.io.emit('userConnected', 'User connected to chat room.');
 			this._socketLoader(socket);
 			this._socketPoster(socket);
 		});
