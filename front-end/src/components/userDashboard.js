@@ -1,3 +1,5 @@
+import { Grid, Paper } from '@material-ui/core';
+
 import BorderBackground from '../images/borderBackground.jpg';
 import Chat from './chat';
 import React from 'react';
@@ -8,10 +10,10 @@ const classes = {
 		paddingTop: 10
 	},
 	colStyle: {
-		backgroundColor: 'rgb(0, 51, 102)',
+		backgroundColor: 'rgb(255, 255, 255)',
 		color: '#BEBEBE',
 		padding: 0,
-		backgroundImage: `url(${BorderBackground})`,
+		//backgroundImage: `url(${BorderBackground})`,
 		margin: 0
 	},
 	image: {
@@ -32,21 +34,16 @@ const UserDashboard = (props) => {
 		<div
 			className="container animated fadeInDown faster"
 			style={{
-				backgroundColor: 'rgb(0, 51, 102)',
-				padding: 35,
-				marginTop: 10,
-				borderImage: `url(${BorderBackground}) 30 round`,
-				borderWidth: '25px',
-				borderStyle: 'solid'
+				marginTop: 10
 			}}
 		>
-			<div className="row" style={classes.row}>
-				<div className="col-12" style={classes.colStyle}>
-					<h1 style={classes.header}>Welcome {props.cookies.get('user')}</h1>
-					<div style={{ backgroundColor: '#485563', height: 60 }} />
-					<Chat room={'ImperialDreams1'} />
-				</div>
-			</div>
+			<Grid container spacing={0}>
+				<Grid item xs={12}>
+					<Paper>
+						<Chat room={'ImperialDreams1'} />
+					</Paper>
+				</Grid>
+			</Grid>
 		</div>
 	);
 };

@@ -17,7 +17,7 @@ const ConstructGifMessage = (props) => {
 					<List>
 						<ListItem>
 							<ListItemAvatar>
-								<Avatar>{props.user.substring(0, 2)}</Avatar>
+								<Avatar>{props.user.substring(0, 1).toUpperCase()}</Avatar>
 							</ListItemAvatar>
 							<ListItemText
 								primary={<img src={props.message} alt="" />}
@@ -35,11 +35,11 @@ const ConstructMessage = (props) => {
 	return (
 		<Grid container spacing={5}>
 			<Grid item xs={12}>
-				<Paper style={props.style} elevation={5}>
+				<Paper style={props.style} elevation={10}>
 					<List>
 						<ListItem>
 							<ListItemAvatar>
-								<Avatar>{props.user.substring(0, 2)}</Avatar>
+								<Avatar>{props.user.substring(0, 1).toUpperCase()}</Avatar>
 							</ListItemAvatar>
 							<ListItemText
 								primary={props.message}
