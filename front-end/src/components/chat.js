@@ -1,4 +1,4 @@
-import { Avatar, Grid, List, ListItem, ListItemAvatar, ListItemText, Typography } from '@material-ui/core';
+import { Avatar, Grid, List, ListItem, ListItemAvatar, ListItemText, Paper } from '@material-ui/core';
 import React, { Component } from 'react';
 
 import Gif from '../images/gif.png';
@@ -11,19 +11,21 @@ import { withCookies } from 'react-cookie';
 
 const ConstructGifMessage = (props) => {
 	return (
-		<Grid container spacing={3}>
+		<Grid container spacing={5}>
 			<Grid item xs={12}>
-				<List>
-					<ListItem style={props.style}>
-						<ListItemAvatar>
-							<Avatar>{props.user.substring(0, 2)}</Avatar>
-						</ListItemAvatar>
-						<ListItemText
-							primary={<img src={props.message} alt="" />}
-							secondary={`${props.user} posted on ${props.posted}`}
-						/>
-					</ListItem>
-				</List>
+				<Paper style={props.style} elevation={5}>
+					<List>
+						<ListItem>
+							<ListItemAvatar>
+								<Avatar>{props.user.substring(0, 2)}</Avatar>
+							</ListItemAvatar>
+							<ListItemText
+								primary={<img src={props.message} alt="" />}
+								secondary={`${props.user} posted on ${props.posted}`}
+							/>
+						</ListItem>
+					</List>
+				</Paper>
 			</Grid>
 		</Grid>
 	);
@@ -31,16 +33,21 @@ const ConstructGifMessage = (props) => {
 
 const ConstructMessage = (props) => {
 	return (
-		<Grid container spacing={3}>
+		<Grid container spacing={5}>
 			<Grid item xs={12}>
-				<List>
-					<ListItem style={props.style}>
-						<ListItemAvatar>
-							<Avatar>{props.user.substring(0, 2)}</Avatar>
-						</ListItemAvatar>
-						<ListItemText primary={props.message} secondary={`${props.user} posted on ${props.posted}`} />
-					</ListItem>
-				</List>
+				<Paper style={props.style} elevation={5}>
+					<List>
+						<ListItem>
+							<ListItemAvatar>
+								<Avatar>{props.user.substring(0, 2)}</Avatar>
+							</ListItemAvatar>
+							<ListItemText
+								primary={props.message}
+								secondary={`${props.user} posted on ${props.posted}`}
+							/>
+						</ListItem>
+					</List>
+				</Paper>
 			</Grid>
 		</Grid>
 	);
@@ -53,12 +60,10 @@ class Chat extends Component {
 		this._isMounted = false;
 		this.classes = {
 			messageStyleSpanPersonal: {
-				borderRadius: 10,
 				backgroundColor: '#6B6BE9',
 				color: '#fff'
 			},
 			messageStyleSpan: {
-				borderRadius: 10,
 				backgroundColor: '#D8DAE0',
 				color: '#000'
 			}
