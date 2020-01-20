@@ -183,6 +183,21 @@ class Chat extends Component {
 			// Clears the value of the posted message
 			this.setState({ addMessage: '', helperText: false });
 		}
+
+		if (type) {
+			// Adds the message into the database
+			this.socket.emit('postMessage', {
+				message: message,
+				username: cookies.get('user'),
+				messageType: type,
+				page: this.state.page,
+				pageLimit: this.state.pageLimit,
+				room: this.props.room
+			});
+
+			// Clears the value of the posted message
+			this.setState({ addMessage: '', helperText: false });
+		}
 	};
 
 	// Life cycle components
