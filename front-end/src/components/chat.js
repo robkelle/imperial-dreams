@@ -1,7 +1,12 @@
 import {
 	Avatar,
+	Fab,
+	FormControl,
 	Grid,
 	IconButton,
+	Input,
+	InputAdornment,
+	InputLabel,
 	List,
 	ListItem,
 	ListItemAvatar,
@@ -11,20 +16,22 @@ import {
 } from '@material-ui/core';
 import React, { Component } from 'react';
 
-import Gif from '../images/gif.png';
+import ArrowIcon from '@material-ui/icons/ArrowForwardIos';
+import GifIcon from '@material-ui/icons/Gif';
 import InfiniteScroll from 'react-infinite-scroller';
 import Moment from 'moment';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Picker from 'react-giphy-component';
+import Skeleton from '@material-ui/lab/Skeleton';
 import _ from 'lodash';
 import config from '../config.json';
 import io from 'socket.io-client';
 import { withCookies } from 'react-cookie';
 
-const ConstructGifMessage = (props) => {
+const ChatGIFMessage = (props) => {
 	return (
-		<Grid container spacing={5}>
-			<Grid item xs={12}>
+		<Grid container spacing={5} justify={props.action}>
+			<Grid item xs={'auto'} sm={'auto'} md={'auto'} lg={'auto'} xl={'auto'}>
 				<Paper style={props.style} elevation={5}>
 					<List>
 						<ListItem>
@@ -43,10 +50,10 @@ const ConstructGifMessage = (props) => {
 	);
 };
 
-const ConstructMessage = (props) => {
+const ChatMessage = (props) => {
 	return (
-		<Grid container spacing={5}>
-			<Grid item xs={12}>
+		<Grid container spacing={5} justify={props.action}>
+			<Grid item xs={'auto'} sm={'auto'} md={'auto'} lg={'auto'} xl={'auto'}>
 				<Paper style={props.style} elevation={10}>
 					<List>
 						<ListItem>
@@ -70,15 +77,18 @@ class Chat extends Component {
 		super();
 		this.socket = io('http://localhost:4000');
 		this._isMounted = false;
+		this.chatColor = '#8a0303';
 		this.classes = {
 			messageStyleSpanPersonal: {
-				backgroundColor: '#8a0303' /*'#6B6BE9',*/,
+				backgroundColor: this.chatColor /*'#6B6BE9' OR #8a0303,*/,
 				color: '#fff'
 			},
 			messageStyleSpan: {
 				backgroundColor: '#D8DAE0',
 				color: '#000'
-			}
+			},
+			sentMessageStyle: 'flex-end',
+			receivedMessageStyle: 'flex-start'
 		};
 		this.initialLoad = true;
 		this.hasMore = true;
@@ -111,6 +121,14 @@ class Chat extends Component {
 		}
 	};
 
+	/**
+    @name loadItems
+
+    @description A React component to render while more items are loading. The parent component must have a unique key prop.
+
+    @example
+      this.loadItems();
+  */
 	loadItems = () => {
 		this.initialLoad = false;
 
@@ -129,7 +147,7 @@ class Chat extends Component {
 							if (value.messageType === 'gif') {
 								return (
 									<div key={value._id}>
-										<ConstructGifMessage
+										<ChatGIFMessage
 											message={value.message}
 											posted={value.posted}
 											user={value.username}
@@ -140,13 +158,20 @@ class Chat extends Component {
 													this.classes.messageStyleSpan
 												)
 											}
+											action={
+												this.props.cookies.get('user') === value.username ? (
+													this.classes.sentMessageStyle
+												) : (
+													this.classes.receivedMessageStyle
+												)
+											}
 										/>
 									</div>
 								);
 							} else {
 								return (
 									<div key={value._id}>
-										<ConstructMessage
+										<ChatMessage
 											message={value.message}
 											posted={value.posted}
 											user={value.username}
@@ -155,6 +180,13 @@ class Chat extends Component {
 													this.classes.messageStyleSpanPersonal
 												) : (
 													this.classes.messageStyleSpan
+												)
+											}
+											action={
+												this.props.cookies.get('user') === value.username ? (
+													this.classes.sentMessageStyle
+												) : (
+													this.classes.receivedMessageStyle
 												)
 											}
 										/>
@@ -229,7 +261,7 @@ class Chat extends Component {
 						if (value.messageType === 'gif') {
 							return (
 								<div key={value._id + index}>
-									<ConstructGifMessage
+									<ChatGIFMessage
 										message={value.message}
 										posted={value.posted}
 										user={value.username}
@@ -240,13 +272,20 @@ class Chat extends Component {
 												this.classes.messageStyleSpan
 											)
 										}
+										action={
+											this.props.cookies.get('user') === value.username ? (
+												this.classes.sentMessageStyle
+											) : (
+												this.classes.receivedMessageStyle
+											)
+										}
 									/>
 								</div>
 							);
 						} else {
 							return (
 								<div key={value._id + index}>
-									<ConstructMessage
+									<ChatMessage
 										message={value.message}
 										posted={value.posted}
 										user={value.username}
@@ -255,6 +294,13 @@ class Chat extends Component {
 												this.classes.messageStyleSpanPersonal
 											) : (
 												this.classes.messageStyleSpan
+											)
+										}
+										action={
+											this.props.cookies.get('user') === value.username ? (
+												this.classes.sentMessageStyle
+											) : (
+												this.classes.receivedMessageStyle
 											)
 										}
 									/>
@@ -278,8 +324,24 @@ class Chat extends Component {
 
 	render() {
 		const loader = (
-			<div className="loader" style={{ height: '100px' }}>
-				Loading ...
+			<div className="loader" key={0} style={{ height: '100px' }}>
+				<Grid container spacing={5}>
+					<Grid item xs={12}>
+						<Paper elevation={10}>
+							<List>
+								<ListItem>
+									<ListItemAvatar>
+										<Skeleton variant="circle" width={40} height={40} />
+									</ListItemAvatar>
+									<ListItemText
+										primary={<Skeleton variant="rect" width={'100%'} height={50} />}
+										secondary={<Skeleton variant="text" width={'25%'} />}
+									/>
+								</ListItem>
+							</List>
+						</Paper>
+					</Grid>
+				</Grid>
 			</div>
 		);
 
@@ -298,7 +360,10 @@ class Chat extends Component {
 					</Grid>
 				</Grid>
 				<div style={{ padding: 20, marginBottom: 30 }}>
-					<div className="overflow-auto side-bar" style={{ height: 500, overflow: 'auto' }}>
+					<div
+						className="overflow-auto side-bar"
+						style={{ height: 500, overflow: 'auto', borderTop: 'solid 1px #f44336', paddingTop: 20 }}
+					>
 						<InfiniteScroll
 							pageStart={0}
 							threshold={250}
@@ -325,38 +390,36 @@ class Chat extends Component {
 					</div>
 				</div>
 
-				<div className="input-group">
-					<div className="input-group-prepend">
-						<button
-							className="btn btn-outline-secondary"
-							type="button"
-							onClick={() => this.addMessage(this.state.addMessage)}
-						>
-							Post
-						</button>
-					</div>
-					<input
-						type="text"
-						className="form-control"
-						placeholder="Type a message"
-						aria-label=""
-						aria-describedby="basic-addon1"
-						value={this.state.addMessage || ''}
-						onChange={(e) => {
-							this.setState({ addMessage: e.target.value });
-						}}
-						onKeyDown={this.handleKeyDown}
-					/>
-					<div className="input-group-prepend">
-						<button
-							className="btn btn-secondary"
-							type="button"
-							onClick={() => this.setState({ displayGif: true })}
-							style={{ backgroundColor: '#8a0303' }}
-						>
-							<img src={Gif} height="25px" alt="" />
-						</button>
-					</div>
+				<div style={{ margin: '10px 0px 10px 0px' }} width={'100%'}>
+					<Paper style={{ padding: 20 }}>
+						<FormControl fullWidth={true} hiddenLabel={true}>
+							<InputLabel htmlFor="message-input">Type a message</InputLabel>
+							<Input
+								id="message-input"
+								fullWidth={true}
+								autoFocus={true}
+								value={this.state.addMessage || ''}
+								multiline={true}
+								onChange={(e) => {
+									this.setState({ addMessage: e.target.value });
+								}}
+								onKeyDown={this.handleKeyDown}
+								endAdornment={
+									<InputAdornment position="end" style={{ marginBottom: 12 }}>
+										<Fab size={'small'} style={{ backgroundColor: this.chatColor, color: '#fff' }}>
+											<ArrowIcon onClick={() => this.addMessage(this.state.addMessage)} />
+										</Fab>
+										<Fab
+											size={'small'}
+											style={{ backgroundColor: this.chatColor, color: '#fff', marginLeft: 5 }}
+										>
+											<GifIcon onClick={() => this.setState({ displayGif: true })} />
+										</Fab>
+									</InputAdornment>
+								}
+							/>
+						</FormControl>
+					</Paper>
 				</div>
 				<div align="right">{this.state.displayGif ? <Picker onSelected={this.gifyLoader} /> : ''}</div>
 			</div>
