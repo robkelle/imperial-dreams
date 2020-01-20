@@ -399,7 +399,7 @@ class Chat extends Component {
 								fullWidth={true}
 								autoFocus={true}
 								value={this.state.addMessage || ''}
-								multiline={true}
+								multiline={false}
 								onChange={(e) => {
 									this.setState({ addMessage: e.target.value });
 								}}
