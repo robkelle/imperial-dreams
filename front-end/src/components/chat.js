@@ -17,9 +17,10 @@ import {
 import React, { Component } from 'react';
 
 import ArrowIcon from '@material-ui/icons/ArrowForwardIos';
+import ChatGIFMessage from './ChatGIFMessage';
+import ChatMessage from './ChatMessage';
 import GifIcon from '@material-ui/icons/Gif';
 import InfiniteScroll from 'react-infinite-scroller';
-import Moment from 'moment';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Picker from 'react-giphy-component';
 import Skeleton from '@material-ui/lab/Skeleton';
@@ -27,50 +28,6 @@ import _ from 'lodash';
 import config from '../config.json';
 import io from 'socket.io-client';
 import { withCookies } from 'react-cookie';
-
-const ChatGIFMessage = (props) => {
-	return (
-		<Grid container spacing={5} justify={props.action}>
-			<Grid item xs={'auto'} sm={'auto'} md={'auto'} lg={'auto'} xl={'auto'}>
-				<Paper style={props.style} elevation={5}>
-					<List>
-						<ListItem>
-							<ListItemAvatar>
-								<Avatar>{props.user.substring(0, 1).toUpperCase()}</Avatar>
-							</ListItemAvatar>
-							<ListItemText
-								primary={<img src={props.message} alt="" />}
-								secondary={`${props.user} posted on ${Moment(props.posted).format('llll')}`}
-							/>
-						</ListItem>
-					</List>
-				</Paper>
-			</Grid>
-		</Grid>
-	);
-};
-
-const ChatMessage = (props) => {
-	return (
-		<Grid container spacing={5} justify={props.action}>
-			<Grid item xs={'auto'} sm={'auto'} md={'auto'} lg={'auto'} xl={'auto'}>
-				<Paper style={props.style} elevation={10}>
-					<List>
-						<ListItem>
-							<ListItemAvatar>
-								<Avatar>{props.user.substring(0, 1).toUpperCase()}</Avatar>
-							</ListItemAvatar>
-							<ListItemText
-								primary={props.message}
-								secondary={`${props.user} posted on ${Moment(props.posted).format('llll')}`}
-							/>
-						</ListItem>
-					</List>
-				</Paper>
-			</Grid>
-		</Grid>
-	);
-};
 
 class Chat extends Component {
 	constructor() {
