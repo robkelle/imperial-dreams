@@ -1,6 +1,6 @@
 import Favicon from '../images/favicon.ico';
 import { Link } from 'react-router-dom';
-import Logout from './Authorization/logout';
+import Logout from './Authorization/Logout';
 import React from 'react';
 
 const Navbar = (props) => {
