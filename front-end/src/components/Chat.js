@@ -53,13 +53,14 @@ class Chat extends Component {
 			addMessage: null,
 			displayGif: false,
 			page: 0,
-			pageLimit: 10
+			pageLimit: 10,
+			helperText: false
 		};
 	}
 
 	// Event handling
 	handleKeyDown = (e) => {
-		if (e.key === 'Enter' && this.state.addMessage !== '' && this.state.addMessage !== null) {
+		if (e.key === 'Enter') {
 			this.addMessage(this.state.addMessage);
 		}
 	};
@@ -164,18 +165,24 @@ class Chat extends Component {
 	addMessage = (message, type) => {
 		const { cookies } = this.props;
 
-		// Adds the message into the database
-		this.socket.emit('postMessage', {
-			message: message,
-			username: cookies.get('user'),
-			messageType: type,
-			page: this.state.page,
-			pageLimit: this.state.pageLimit,
-			room: this.props.room
-		});
+		if (this.state.addMessage === '' || this.state.addMessage === null) {
+			this.setState({
+				helperText: true
+			});
+		} else {
+			// Adds the message into the database
+			this.socket.emit('postMessage', {
+				message: message,
+				username: cookies.get('user'),
+				messageType: type,
+				page: this.state.page,
+				pageLimit: this.state.pageLimit,
+				room: this.props.room
+			});
 
-		// Clears the value of the posted message
-		this.setState({ addMessage: '' });
+			// Clears the value of the posted message
+			this.setState({ addMessage: '', helperText: false });
+		}
 	};
 
 	// Life cycle components
@@ -364,12 +371,7 @@ class Chat extends Component {
 								endAdornment={
 									<InputAdornment position="end" style={{ marginBottom: 12 }}>
 										<Fab size={'small'} style={{ backgroundColor: this.chatColor, color: '#fff' }}>
-											<ArrowIcon
-												onClick={() =>
-													this.state.addMessage === '' || this.state.addMessage === null
-														? ''
-														: this.addMessage(this.state.addMessage)}
-											/>
+											<ArrowIcon onClick={() => this.addMessage(this.state.addMessage)} />
 										</Fab>
 										<Fab
 											size={'small'}
@@ -380,9 +382,13 @@ class Chat extends Component {
 									</InputAdornment>
 								}
 							/>
-							<FormHelperText error={true} style={{ color: '#181818' }}>
-								Please type a message to continue.
-							</FormHelperText>
+							{this.state.helperText ? (
+								<FormHelperText error={true} style={{ color: '#181818' }}>
+									Please type a message to continue.
+								</FormHelperText>
+							) : (
+								''
+							)}
 						</FormControl>
 					</Paper>
 				</div>
