@@ -1,5 +1,4 @@
 import {
-	Avatar,
 	Fab,
 	FormControl,
 	Grid,
