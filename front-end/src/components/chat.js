@@ -102,7 +102,8 @@ class Chat extends Component {
 
 	// Event handling
 	handleKeyDown = (e) => {
-		if (e.key === 'Enter') {
+		if (e.key === 'Enter' && this.state.addMessage !== '' && this.state.addMessage !== null) {
+			console.log(this.state.addMessage);
 			this.addMessage(this.state.addMessage);
 		}
 	};
@@ -407,7 +408,12 @@ class Chat extends Component {
 								endAdornment={
 									<InputAdornment position="end" style={{ marginBottom: 12 }}>
 										<Fab size={'small'} style={{ backgroundColor: this.chatColor, color: '#fff' }}>
-											<ArrowIcon onClick={() => this.addMessage(this.state.addMessage)} />
+											<ArrowIcon
+												onClick={() =>
+													this.state.addMessage === ''
+														? ''
+														: this.addMessage(this.state.addMessage)}
+											/>
 										</Fab>
 										<Fab
 											size={'small'}
