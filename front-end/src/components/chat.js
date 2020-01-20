@@ -103,7 +103,6 @@ class Chat extends Component {
 	// Event handling
 	handleKeyDown = (e) => {
 		if (e.key === 'Enter' && this.state.addMessage !== '' && this.state.addMessage !== null) {
-			console.log(this.state.addMessage);
 			this.addMessage(this.state.addMessage);
 		}
 	};
@@ -410,7 +409,7 @@ class Chat extends Component {
 										<Fab size={'small'} style={{ backgroundColor: this.chatColor, color: '#fff' }}>
 											<ArrowIcon
 												onClick={() =>
-													this.state.addMessage === ''
+													this.state.addMessage === '' || this.state.addMessage === null
 														? ''
 														: this.addMessage(this.state.addMessage)}
 											/>
