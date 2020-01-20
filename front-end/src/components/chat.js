@@ -1,7 +1,12 @@
 import {
 	Avatar,
+	Fab,
+	FormControl,
 	Grid,
 	IconButton,
+	Input,
+	InputAdornment,
+	InputLabel,
 	List,
 	ListItem,
 	ListItemAvatar,
@@ -11,7 +16,8 @@ import {
 } from '@material-ui/core';
 import React, { Component } from 'react';
 
-import Gif from '../images/gif.png';
+import ArrowIcon from '@material-ui/icons/ArrowForwardIos';
+import GifIcon from '@material-ui/icons/Gif';
 import InfiniteScroll from 'react-infinite-scroller';
 import Moment from 'moment';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
@@ -384,38 +390,36 @@ class Chat extends Component {
 					</div>
 				</div>
 
-				<div className="input-group">
-					<div className="input-group-prepend">
-						<button
-							className="btn btn-outline-secondary"
-							type="button"
-							onClick={() => this.addMessage(this.state.addMessage)}
-						>
-							Post
-						</button>
-					</div>
-					<input
-						type="text"
-						className="form-control"
-						placeholder="Type a message"
-						aria-label=""
-						aria-describedby="basic-addon1"
-						value={this.state.addMessage || ''}
-						onChange={(e) => {
-							this.setState({ addMessage: e.target.value });
-						}}
-						onKeyDown={this.handleKeyDown}
-					/>
-					<div className="input-group-prepend">
-						<button
-							className="btn btn-secondary"
-							type="button"
-							onClick={() => this.setState({ displayGif: true })}
-							style={{ backgroundColor: this.chatColor }}
-						>
-							<img src={Gif} height="25px" alt="" />
-						</button>
-					</div>
+				<div style={{ margin: '10px 0px 10px 0px' }} width={'100%'}>
+					<Paper style={{ padding: 20 }}>
+						<FormControl fullWidth={true} hiddenLabel={true}>
+							<InputLabel htmlFor="message-input">Type a message</InputLabel>
+							<Input
+								id="message-input"
+								fullWidth={true}
+								autoFocus={true}
+								value={this.state.addMessage || ''}
+								multiline={true}
+								onChange={(e) => {
+									this.setState({ addMessage: e.target.value });
+								}}
+								onKeyDown={this.handleKeyDown}
+								endAdornment={
+									<InputAdornment position="end" style={{ marginBottom: 12 }}>
+										<Fab size={'small'} style={{ backgroundColor: this.chatColor, color: '#fff' }}>
+											<ArrowIcon onClick={() => this.addMessage(this.state.addMessage)} />
+										</Fab>
+										<Fab
+											size={'small'}
+											style={{ backgroundColor: this.chatColor, color: '#fff', marginLeft: 5 }}
+										>
+											<GifIcon onClick={() => this.setState({ displayGif: true })} />
+										</Fab>
+									</InputAdornment>
+								}
+							/>
+						</FormControl>
+					</Paper>
 				</div>
 				<div align="right">{this.state.displayGif ? <Picker onSelected={this.gifyLoader} /> : ''}</div>
 			</div>
