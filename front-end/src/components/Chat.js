@@ -1,6 +1,7 @@
 import {
 	Fab,
 	FormControl,
+	FormHelperText,
 	Grid,
 	IconButton,
 	Input,
@@ -379,6 +380,9 @@ class Chat extends Component {
 									</InputAdornment>
 								}
 							/>
+							<FormHelperText error={true} style={{ color: '#181818' }}>
+								Please type a message to continue.
+							</FormHelperText>
 						</FormControl>
 					</Paper>
 				</div>
