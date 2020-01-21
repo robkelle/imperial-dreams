@@ -7,7 +7,7 @@ const ChatGIFMessage = (props) => {
 	return (
 		<Grid container spacing={5} justify={props.action}>
 			<Grid item xs={'auto'} sm={'auto'} md={'auto'} lg={'auto'} xl={'auto'}>
-				<Paper style={props.style} elevation={5}>
+				<Paper style={props.style} elevation={10}>
 					<List>
 						<ListItem>
 							<ListItemAvatar>
