@@ -332,10 +332,7 @@ class Chat extends Component {
 					</Grid>
 				</Grid>
 				<div style={{ padding: 20, marginBottom: 30 }}>
-					<div
-						className="overflow-auto side-bar"
-						style={{ height: 500, overflow: 'auto', borderTop: 'solid 1px #f44336', paddingTop: 20 }}
-					>
+					<div className="overflow-auto side-bar" style={{ height: 500, overflow: 'auto', paddingTop: 20 }}>
 						<InfiniteScroll
 							pageStart={0}
 							threshold={250}
