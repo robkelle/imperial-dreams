@@ -9,10 +9,6 @@ import {
 	Input,
 	InputAdornment,
 	InputLabel,
-	List,
-	ListItem,
-	ListItemAvatar,
-	ListItemText,
 	Paper,
 	Typography
 } from '@material-ui/core';
@@ -20,13 +16,13 @@ import React, { Component } from 'react';
 
 import ArrowIcon from '@material-ui/icons/ArrowForwardIos';
 import ChatGIFMessage from './ChatGIFMessage';
+import ChatLoader from './ChatLoader';
 import ChatMessage from './ChatMessage';
 import CloseIcon from '@material-ui/icons/Close';
 import GifIcon from '@material-ui/icons/Gif';
 import InfiniteScroll from 'react-infinite-scroller';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Picker from 'react-giphy-component';
-import Skeleton from '@material-ui/lab/Skeleton';
 import _ from 'lodash';
 import config from '../config.json';
 import io from 'socket.io-client';
@@ -117,7 +113,7 @@ class Chat extends Component {
 				this.hasMore = true;
 				this.setState({
 					messages: res.message
-						.map((value, index) => {
+						.map((value) => {
 							if (value.messageType === 'gif') {
 								return (
 									<div key={value._id}>
@@ -200,6 +196,7 @@ class Chat extends Component {
 			this.setState({ addMessage: '', helperText: false });
 		}
 
+		// This needs to be refactored to remove duplicate method call
 		if (type) {
 			// Adds the message into the database
 			this.socket.emit('postMessage', {
@@ -318,27 +315,7 @@ class Chat extends Component {
 	}
 
 	render() {
-		const loader = (
-			<div className="loader" key={0} style={{ height: '100px' }}>
-				<Grid container spacing={5}>
-					<Grid item xs={12}>
-						<Paper elevation={10}>
-							<List>
-								<ListItem>
-									<ListItemAvatar>
-										<Skeleton variant="circle" width={40} height={40} />
-									</ListItemAvatar>
-									<ListItemText
-										primary={<Skeleton variant="rect" width={'100%'} height={50} />}
-										secondary={<Skeleton variant="text" width={'25%'} />}
-									/>
-								</ListItem>
-							</List>
-						</Paper>
-					</Grid>
-				</Grid>
-			</div>
-		);
+		const loader = <ChatLoader />;
 
 		return (
 			<div>
