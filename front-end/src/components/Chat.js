@@ -1,4 +1,6 @@
 import {
+	Dialog,
+	DialogTitle,
 	Fab,
 	FormControl,
 	FormHelperText,
@@ -19,6 +21,7 @@ import React, { Component } from 'react';
 import ArrowIcon from '@material-ui/icons/ArrowForwardIos';
 import ChatGIFMessage from './ChatGIFMessage';
 import ChatMessage from './ChatMessage';
+import CloseIcon from '@material-ui/icons/Close';
 import GifIcon from '@material-ui/icons/Gif';
 import InfiniteScroll from 'react-infinite-scroller';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
@@ -45,13 +48,20 @@ class Chat extends Component {
 				color: '#000'
 			},
 			sentMessageStyle: 'flex-end',
-			receivedMessageStyle: 'flex-start'
+			receivedMessageStyle: 'flex-start',
+			closeButton: {
+				position: 'absolute',
+				right: 0,
+				top: 0,
+				width: 50
+			}
 		};
 		this.initialLoad = true;
 		this.hasMore = true;
 		this.state = {
 			addMessage: null,
 			displayGif: false,
+			gifyOpen: true,
 			page: 0,
 			pageLimit: 10,
 			helperText: false
@@ -77,6 +87,12 @@ class Chat extends Component {
 				displayGif: false
 			});
 		}
+	};
+
+	handleClose = () => {
+		this.setState({
+			gifyOpen: false
+		});
 	};
 
 	/**
@@ -392,14 +408,16 @@ class Chat extends Component {
 											size={'small'}
 											style={{ backgroundColor: this.chatColor, color: '#fff', marginLeft: 5 }}
 										>
-											<GifIcon onClick={() => this.setState({ displayGif: true })} />
+											<GifIcon
+												onClick={() => this.setState({ displayGif: true, gifyOpen: true })}
+											/>
 										</Fab>
 									</InputAdornment>
 								}
 							/>
 							{this.state.helperText ? (
-								<FormHelperText error={true} style={{ color: '#181818' }}>
-									Please type a message to continue.
+								<FormHelperText error={true} style={{ color: this.chatColor }}>
+									<strong>Please type a message to continue.</strong>
 								</FormHelperText>
 							) : (
 								''
@@ -407,7 +425,28 @@ class Chat extends Component {
 						</FormControl>
 					</Paper>
 				</div>
-				<div align="right">{this.state.displayGif ? <Picker onSelected={this.gifyLoader} /> : ''}</div>
+				<div align="right">
+					{this.state.displayGif ? (
+						<Dialog
+							fullScreen={false}
+							open={this.state.gifyOpen}
+							onBackdropClick={() => this.setState({ gifyOpen: false })}
+						>
+							<DialogTitle align="right">
+								<IconButton
+									aria-label="Close"
+									onClick={this.handleClose}
+									style={{ backgroundColor: this.chatColor, color: '#fff' }}
+								>
+									<CloseIcon />
+								</IconButton>
+							</DialogTitle>
+							<Picker onSelected={this.gifyLoader} />
+						</Dialog>
+					) : (
+						''
+					)}
+				</div>
 			</div>
 		);
 	}
