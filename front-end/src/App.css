@@ -41,10 +41,13 @@ a:hover {
 
 /* Handle on hover */
 .side-bar::-webkit-scrollbar-thumb:hover {
-	background: #009eb3;
+	background: #e6e8ea;
 }
 
 .MuiListItemText-secondary {
-	color: #000 !important;
 	font-size: 12px !important;
+}
+
+.MuiInputLabel-root {
+	color: #181818 !important;
 }

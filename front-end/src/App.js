@@ -15,7 +15,7 @@ import {
 	Router,
 	UserDashboard,
 	withCookies
-} from './components/imports';
+} from './components/Imports';
 
 const classes = {
 	main: {
