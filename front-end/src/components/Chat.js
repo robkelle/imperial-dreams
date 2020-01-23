@@ -321,7 +321,7 @@ class Chat extends Component {
 			<div>
 				<Grid container spacing={2} justify={'flex-end'}>
 					<Grid item xs={8} sm={8} md={8} lg={8} xl={8} align="center">
-						<Typography variant="h4" color={'error'}>
+						<Typography variant="h4" style={{ color: 'rgb(217, 217, 217)' }}>
 							ROOM {this.props.room.toUpperCase()}
 						</Typography>
 					</Grid>

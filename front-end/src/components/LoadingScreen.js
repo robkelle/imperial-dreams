@@ -47,7 +47,7 @@ class LoadingScreen extends Component {
 					style={{
 						margin: 0,
 						position: 'absolute',
-						top: '50%',
+						top: '40%',
 						left: '50%',
 						width: 400,
 						transform: 'translate(-50%, -50%)'

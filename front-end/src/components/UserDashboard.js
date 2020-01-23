@@ -12,9 +12,9 @@ const UserDashboard = () => {
 				marginTop: 20
 			}}
 		>
-			<Grid container spacing={0}>
-				<Grid item xs={12}>
-					<Paper style={{ backgroundColor: 'rgba(18,18,18,.85)' }}>
+			<Grid container spacing={0} justify={'center'}>
+				<Grid item xs={6}>
+					<Paper style={{ backgroundColor: 'rgba(18,18,18,.85)', marginTop: 50 }}>
 						<Chat room={'ImperialDreams1'} />
 					</Paper>
 				</Grid>
