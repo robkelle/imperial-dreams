@@ -17,7 +17,7 @@ import {
 	withCookies
 } from './components/Imports';
 
-import { Authenticator } from './components/Authorization/AuthenticatorContext';
+import { Authenticator } from './components/Authentication/AuthenticatorContext';
 
 const classes = {
 	main: {
