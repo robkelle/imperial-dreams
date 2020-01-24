@@ -5,13 +5,17 @@ import {
 	FormControl,
 	FormHelperText,
 	Grid,
+	IconButton,
 	Input,
 	InputLabel,
 	Typography
 } from '@material-ui/core';
 import React, { Component } from 'react';
 
+import EmailIcon from '@material-ui/icons/MailOutline';
 import { Link } from 'react-router-dom';
+import PasswordIcon from '@material-ui/icons/LockOpen';
+import UserIcon from '@material-ui/icons/AccountCircle';
 import { withStyles } from '@material-ui/core/styles';
 
 const styles = (theme) => ({
@@ -116,15 +120,17 @@ class Register extends Component {
 								}}
 							>
 								<form>
-									<FormControl margin="normal" style={{ width: '75%' }}>
+									<FormControl margin="normal" style={{ width: '80%' }}>
 										<InputLabel className={classes.root}>Email</InputLabel>
 										<Input
 											type="email"
 											fullWidth={true}
+											autoFocus={true}
 											classes={{ underline: classes.underline, root: classes.root }}
 											onChange={(e) => {
 												this.setState({ email: e.target.value });
 											}}
+											endAdornment={<EmailIcon />}
 										/>
 										{!this.state.emailValid ? (
 											<div className="animated fadeInUp">
@@ -145,7 +151,7 @@ class Register extends Component {
 											''
 										)}
 									</FormControl>
-									<FormControl margin="normal" style={{ width: '75%' }}>
+									<FormControl margin="normal" style={{ width: '80%' }}>
 										<InputLabel className={classes.root}>Username</InputLabel>
 										<Input
 											required={true}
@@ -155,6 +161,7 @@ class Register extends Component {
 											onChange={(e) => {
 												this.setState({ username: e.target.value });
 											}}
+											endAdornment={<UserIcon />}
 										/>
 										{!this.state.usernameValid ? (
 											<div className="animated fadeInUp">
@@ -175,7 +182,7 @@ class Register extends Component {
 											''
 										)}
 									</FormControl>
-									<FormControl margin="normal" style={{ width: '75%' }}>
+									<FormControl margin="normal" style={{ width: '80%' }}>
 										<InputLabel className={classes.root}>Password</InputLabel>
 										<Input
 											type="password"
@@ -185,6 +192,7 @@ class Register extends Component {
 											onChange={(e) => {
 												this.setState({ password: e.target.value });
 											}}
+											endAdornment={<PasswordIcon />}
 										/>
 
 										{!this.state.passwordValid ? (
@@ -199,7 +207,7 @@ class Register extends Component {
 										)}
 									</FormControl>
 									{this.state.password > '' && (
-										<FormControl margin="normal" style={{ width: '75%' }}>
+										<FormControl margin="normal" style={{ width: '80%' }}>
 											<InputLabel className={classes.root}>Repeat Password</InputLabel>
 											<Input
 												type="password"
@@ -209,6 +217,7 @@ class Register extends Component {
 												onChange={(e) => {
 													this.setState({ repeatPassword: e.target.value });
 												}}
+												endAdornment={<PasswordIcon />}
 											/>
 											{!this.state.repeatPasswordValid ? (
 												<div className="animated fadeInUp">

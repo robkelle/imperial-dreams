@@ -15,6 +15,8 @@ import {
 import React, { Component } from 'react';
 
 import { Link } from 'react-router-dom';
+import PasswordIcon from '@material-ui/icons/LockOpen';
+import UserIcon from '@material-ui/icons/AccountCircle';
 import config from '../../config.json';
 import { withStyles } from '@material-ui/core/styles';
 
@@ -141,9 +143,11 @@ class Login extends Component {
 												required={true}
 												classes={{ underline: classes.underline, root: classes.root }}
 												fullWidth={true}
+												autoFocus={true}
 												onChange={(e) => {
 													this.setState({ username: e.target.value });
 												}}
+												endAdornment={<UserIcon />}
 											/>
 
 											{!this.state.username && !this.state.isValid ? (
@@ -168,6 +172,7 @@ class Login extends Component {
 												onChange={(e) => {
 													this.setState({ password: e.target.value });
 												}}
+												endAdornment={<PasswordIcon />}
 											/>
 											{!this.state.isPasswordValid ? (
 												<div className="animated fadeInUp">
