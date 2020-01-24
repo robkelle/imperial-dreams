@@ -1,9 +1,9 @@
 import AppBar from '@material-ui/core/AppBar';
-import { Authenticator } from './Authorization/AuthenticatorContext';
+import { Authenticator } from './Authentication/AuthenticatorContext';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import { Link } from 'react-router-dom';
-import Logout from './Authorization/Logout';
+import Logout from './Authentication/Logout';
 import MenuIcon from '@material-ui/icons/Menu';
 import React from 'react';
 import Toolbar from '@material-ui/core/Toolbar';

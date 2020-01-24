@@ -3,7 +3,7 @@ import '../App.css';
 import { Button, Card, CardContent, Grid, Typography } from '@material-ui/core';
 import React, { Component } from 'react';
 
-import Authenticator from './Authorization/AuthenticatorContext';
+import Authenticator from './Authentication/AuthenticatorContext';
 import { Link } from 'react-router-dom';
 
 const classes = {
