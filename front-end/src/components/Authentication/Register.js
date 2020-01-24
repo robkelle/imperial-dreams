@@ -180,9 +180,4 @@ class Register extends Component {
 	}
 }
 
-// Login.propTypes = {
-// 	formStyle: PropTypes.object.isRequired,
-// 	hrStyle: PropTypes.object.isRequired
-// };
-
 export { Register };

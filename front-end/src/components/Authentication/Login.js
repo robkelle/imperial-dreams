@@ -61,7 +61,7 @@ class Login extends Component {
 			.then((res) => {
 				return res.json();
 			})
-			.then((res, next) => {
+			.then((res) => {
 				if (res.isLoggedIn === true) {
 					cookies.set('isAuthorized', res.isLoggedIn, { path: '/' });
 					cookies.set('user', res.username, { path: '/' });
@@ -230,10 +230,5 @@ class Login extends Component {
 		);
 	}
 }
-
-// Login.propTypes = {
-// 	formStyle: PropTypes.object.isRequired,
-// 	hrStyle: PropTypes.object.isRequired
-// };;
 
 export default withStyles(styles)(Login);
