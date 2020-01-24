@@ -134,7 +134,7 @@ class Login extends Component {
 							>
 								<form>
 									<div>
-										<FormControl margin="normal">
+										<FormControl margin="normal" style={{ width: '75%' }}>
 											<InputLabel className={classes.root}>Username</InputLabel>
 											<Input
 												type="text"
@@ -158,7 +158,7 @@ class Login extends Component {
 										</FormControl>
 									</div>
 									<div>
-										<FormControl margin="normal">
+										<FormControl margin="normal" style={{ width: '75%' }}>
 											<InputLabel className={classes.root}>Password</InputLabel>
 											<Input
 												type="password"

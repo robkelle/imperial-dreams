@@ -2,7 +2,6 @@ import { Grid, Paper } from '@material-ui/core';
 
 import Chat from './Chat';
 import React from 'react';
-import { withCookies } from 'react-cookie';
 
 const UserDashboard = () => {
 	return (
@@ -23,4 +22,4 @@ const UserDashboard = () => {
 	);
 };
 
-export default withCookies(UserDashboard);
+export default UserDashboard;

@@ -1,4 +1,5 @@
 import AppBar from '@material-ui/core/AppBar';
+import { Authenticator } from './Authorization/AuthenticatorContext';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import { Link } from 'react-router-dom';
@@ -21,8 +22,7 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-const Navbar = (props) => {
-	const { isAuthorized } = props;
+const Navbar = () => {
 	const classes = useStyles();
 	return (
 		<div className={classes.root}>
@@ -37,22 +37,28 @@ const Navbar = (props) => {
 						</Button>
 					</Typography>
 
-					{!isAuthorized ? (
-						<Button color="inherit">
-							<Link to="/login">Login</Link>
-						</Button>
-					) : (
-						<Button color="inherit">
-							<Link to="/user_dashboard">Dashboard</Link>
-						</Button>
-					)}
-					{isAuthorized ? (
-						<Button color="inherit">
-							<Logout />
-						</Button>
-					) : (
-						''
-					)}
+					<Authenticator.Consumer>
+						{(props) => {
+							if (props.isAuthorized) {
+								return (
+									<div>
+										<Button color="inherit">
+											<Link to="/user_dashboard">Dashboard</Link>
+										</Button>
+										<Button color="inherit">
+											<Logout />
+										</Button>
+									</div>
+								);
+							} else {
+								return (
+									<Button color="inherit">
+										<Link to="/login">Login</Link>
+									</Button>
+								);
+							}
+						}}
+					</Authenticator.Consumer>
 				</Toolbar>
 			</AppBar>
 		</div>

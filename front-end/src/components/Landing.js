@@ -3,6 +3,7 @@ import '../App.css';
 import { Button, Card, CardContent, Grid, Typography } from '@material-ui/core';
 import React, { Component } from 'react';
 
+import Authenticator from './Authorization/AuthenticatorContext';
 import { Link } from 'react-router-dom';
 
 const classes = {
@@ -53,7 +54,6 @@ class ChangingText extends Component {
 const Landing = (props) => {
 	let summary =
 		'The continent of Acar is in tatters. A multi-generational war to exterminate the gods broke the world asunder. Society, culture and knowledge faded in the centuries following the apocalypse, with the world reverting back to its primeval origins. The land of Acar is a blank slate. Its history, cultures, religions and institutions will be formed at the hands of the characters that inhabit it.';
-	const { isAuthorized } = props;
 	return (
 		<div align="center" className="animated fadeInDown faster">
 			<Grid container={true} justify={'center'}>
@@ -91,21 +91,25 @@ const Landing = (props) => {
 							<Typography style={classes.role}>
 								<ChangingText textTimeout={2500} /> ?
 							</Typography>
-							{isAuthorized ? (
-								''
-							) : (
-								<Link to="/register" style={{ textDecoration: 'none' }}>
-									<Button
-										style={{
-											backgroundColor: 'rgb(217, 217, 217)',
-											color: '#181818',
-											width: 160
-										}}
-									>
-										Play Now!
-									</Button>
-								</Link>
-							)}
+							<Authenticator.Consumer>
+								{(props) => {
+									if (!props.isAuthorized) {
+										return (
+											<Link to="/register" style={{ textDecoration: 'none' }}>
+												<Button
+													style={{
+														backgroundColor: 'rgb(217, 217, 217)',
+														color: '#181818',
+														width: 160
+													}}
+												>
+													Play Now!
+												</Button>
+											</Link>
+										);
+									}
+								}}
+							</Authenticator.Consumer>
 						</CardContent>
 					</Card>
 				</Grid>
