@@ -1,6 +1,33 @@
+import {
+	Button,
+	Card,
+	CardContent,
+	Checkbox,
+	FormControl,
+	FormHelperText,
+	Grid,
+	Input,
+	InputLabel,
+	Typography
+} from '@material-ui/core';
 import React, { Component } from 'react';
 
 import { Link } from 'react-router-dom';
+import { withStyles } from '@material-ui/core/styles';
+
+const styles = (theme) => ({
+	root: {
+		color: 'rgb(217, 217, 217) !important'
+	},
+	underline: {
+		'&:after': {
+			borderBottom: '2px solid rgb(217, 217, 217)'
+		},
+		'&:before': {
+			borderBottom: '2px solid #fff'
+		}
+	}
+});
 
 class Register extends Component {
 	state = {
@@ -56,128 +83,181 @@ class Register extends Component {
 		this.userSignup();
 	};
 	render() {
-		const { style } = this.props;
+		const { classes } = this.props;
 		return (
-			<div align="center" className="animated fadeInDown faster">
-				<div style={style.main}>
-					<form style={style.formStyle} align="left">
-						<h1 style={style.labelStyle}>Register Account</h1>
-						<hr style={style.hrStyle} />
-						<div className="form-group">
-							<label htmlFor="Email"> Email</label>
-							<input
-								className="form-control"
-								type="email"
-								onChange={(e) => {
-									this.setState({ email: e.target.value });
-								}}
-							/>
-							{!this.state.emailValid ? (
-								<div className="animated fadeInUp">
-									<p className="text-danger">Please enter a valid email address.</p>
-								</div>
-							) : (
-								''
-							)}
-							{this.state.emailExists ? (
-								<div className="animated fadeInUp">
-									<p className="text-danger">This email is already being used by another account</p>
-								</div>
-							) : (
-								''
-							)}
-						</div>
-						<div className="form-group">
-							<label htmlFor="username">Username</label>
-							<input
-								className="form-control"
-								type="text"
-								onChange={(e) => {
-									this.setState({ username: e.target.value });
-								}}
-							/>{' '}
-							{!this.state.usernameValid ? (
-								<div className="animated fadeInUp">
-									<p className="text-danger">
-										Username must be Alpha-numeric and over 8 characters long
-									</p>
-								</div>
-							) : (
-								''
-							)}
-							{this.state.userExists ? (
-								<div className="animated fadeInUp">
-									<p className="text-danger">This username already exists please try another</p>
-								</div>
-							) : (
-								''
-							)}
-						</div>
-						<div className="form-group">
-							<label htmlFor="password">Password</label>
-							<input
-								className="form-control"
-								type="password"
-								onChange={(e) => {
-									this.setState({ password: e.target.value });
-								}}
-							/>
-
-							{!this.state.passwordValid ? (
-								<div className="animated fadeInUp">
-									<p className="text-danger">
-										Password must be over 8 characters and contain a symbol, number and letter
-									</p>
-								</div>
-							) : (
-								''
-							)}
-						</div>
-						{this.state.password > '' && (
-							<div className="form-group">
-								<label htmlFor="repeatpassword"> Repeat Password</label>
-								<input
-									className="form-control"
-									type="password"
-									onChange={(e) => {
-										this.setState({ repeatPassword: e.target.value });
-									}}
-								/>
-								{!this.state.repeatPasswordValid ? (
-									<div className="animated fadeInUp">
-										<p className="text-danger">Your passwords must match.</p>
-									</div>
-								) : (
-									''
-								)}
-							</div>
-						)}
-
-						<button
-							type="submit"
-							className="btn btn-default float-right"
-							style={style.buttonStyle}
-							onClick={(e) => this.handleSubmit(e)}
+			<div className="animated fadeInDown faster">
+				<Grid container={true} justify={'center'}>
+					<Grid item={true} xs={12} sm={8} md={5} lg={5} xl={3}>
+						<Card
+							style={{
+								backgroundColor: 'rgba(24, 24, 24, .85)',
+								marginTop: 50,
+								padding: '25px 35px 60px 35px',
+								borderRadius: '25px',
+								color: '#fff'
+							}}
 						>
-							Register
-						</button>
-						<br />
-						<br />
-						<hr style={style.hrStyle} />
-						<p>
-							Have an account? <Link to="/login">Log in here!</Link>
-						</p>
+							<Typography
+								gutterBottom
+								variant="h4"
+								align="center"
+								style={{
+									fontFamily: 'Trade Winds',
+									color: 'rgb(217, 217, 217)'
+								}}
+							>
+								Register Account
+							</Typography>
 
-						<p>
-							Forgot your <Link to="/forgot_password">password?</Link>
-						</p>
+							<CardContent
+								style={{
+									border: 'solid 15px rgb(138, 3, 3)',
+									backgroundColor: '#181818',
+									borderRadius: '25px'
+								}}
+							>
+								<form>
+									<FormControl margin="normal" style={{ width: '75%' }}>
+										<InputLabel className={classes.root}>Email</InputLabel>
+										<Input
+											type="email"
+											fullWidth={true}
+											classes={{ underline: classes.underline, root: classes.root }}
+											onChange={(e) => {
+												this.setState({ email: e.target.value });
+											}}
+										/>
+										{!this.state.emailValid ? (
+											<div className="animated fadeInUp">
+												<FormHelperText error={true} variant="outlined">
+													Please enter a valid email address.
+												</FormHelperText>
+											</div>
+										) : (
+											''
+										)}
+										{this.state.emailExists ? (
+											<div className="animated fadeInUp">
+												<FormHelperText error={true} variant="outlined">
+													This email is already being used by another account
+												</FormHelperText>
+											</div>
+										) : (
+											''
+										)}
+									</FormControl>
+									<FormControl margin="normal" style={{ width: '75%' }}>
+										<InputLabel className={classes.root}>Username</InputLabel>
+										<Input
+											required={true}
+											classes={{ underline: classes.underline, root: classes.root }}
+											fullWidth={true}
+											type="text"
+											onChange={(e) => {
+												this.setState({ username: e.target.value });
+											}}
+										/>
+										{!this.state.usernameValid ? (
+											<div className="animated fadeInUp">
+												<FormHelperText error={true} variant="outlined">
+													Username must be Alpha-numeric and over 8 characters long
+												</FormHelperText>
+											</div>
+										) : (
+											''
+										)}
+										{this.state.userExists ? (
+											<div className="animated fadeInUp">
+												<FormHelperText error={true} variant="outlined">
+													This username already exists please try another
+												</FormHelperText>
+											</div>
+										) : (
+											''
+										)}
+									</FormControl>
+									<FormControl margin="normal" style={{ width: '75%' }}>
+										<InputLabel className={classes.root}>Password</InputLabel>
+										<Input
+											type="password"
+											required={true}
+											classes={{ underline: classes.underline, root: classes.root }}
+											fullWidth={true}
+											onChange={(e) => {
+												this.setState({ password: e.target.value });
+											}}
+										/>
 
-						<div align="right" />
-					</form>
-				</div>
+										{!this.state.passwordValid ? (
+											<div className="animated fadeInUp">
+												<FormHelperText error={true} variant="outlined">
+													Password must be over 8 characters and contain a symbol, number and
+													letter
+												</FormHelperText>
+											</div>
+										) : (
+											''
+										)}
+									</FormControl>
+									{this.state.password > '' && (
+										<FormControl margin="normal" style={{ width: '75%' }}>
+											<InputLabel className={classes.root}>Repeat Password</InputLabel>
+											<Input
+												type="password"
+												required={true}
+												classes={{ underline: classes.underline, root: classes.root }}
+												fullWidth={true}
+												onChange={(e) => {
+													this.setState({ repeatPassword: e.target.value });
+												}}
+											/>
+											{!this.state.repeatPasswordValid ? (
+												<div className="animated fadeInUp">
+													<FormHelperText error={true} variant="outlined">
+														Your passwords must match.
+													</FormHelperText>
+												</div>
+											) : (
+												''
+											)}
+										</FormControl>
+									)}
+
+									<br />
+									<br />
+									<Button
+										type="submit"
+										style={{
+											backgroundColor: 'rgb(217, 217, 217)',
+											color: '#181818',
+											width: 160
+										}}
+										onClick={(e) => this.handleSubmit(e)}
+									>
+										Log in
+									</Button>
+									<br />
+									<br />
+
+									<div>
+										<Typography gutterBottom={true} variant="caption">
+											Have an account? <Link to="/login">Log in here!</Link>
+										</Typography>
+									</div>
+									<div>
+										<Typography gutterBottom={true} variant="caption">
+											Forgot your <Link to="/forgot_password">password?</Link>
+										</Typography>
+									</div>
+									<div align="right" />
+								</form>
+							</CardContent>
+						</Card>
+					</Grid>
+				</Grid>
 			</div>
 		);
 	}
 }
 
-export { Register };
+export default withStyles(styles)(Register);
