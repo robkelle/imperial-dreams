@@ -2,7 +2,6 @@ import {
 	Button,
 	Card,
 	CardContent,
-	Checkbox,
 	FormControl,
 	FormHelperText,
 	Grid,
