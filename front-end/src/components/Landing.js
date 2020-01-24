@@ -68,8 +68,8 @@ const Landing = (props) => {
 					>
 						<Typography
 							gutterBottom
-							variant="h5"
-							component="h2"
+							variant="h4"
+							align="center"
 							style={{
 								fontFamily: 'Trade Winds',
 								color: 'rgb(217, 217, 217)'

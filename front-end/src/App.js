@@ -69,7 +69,11 @@ function App(props) {
 				<Navbar isAuthorized={isAuthorized} />
 				{/* Initialize all routes */}
 				<Route exact path="/" component={() => <Landing isAuthorized={isAuthorized} />} />
-				<Route exact path="/login" component={(e) => <Login style={classes} history={e.history} />} />
+				<Route
+					exact
+					path="/login"
+					component={(e) => <Login style={classes} history={e.history} cookies={props.cookies} />}
+				/>
 				<Route exact path="/register" component={(e) => <Register style={classes} history={e.history} />} />
 				<Route exact path="/forgot_password" component={() => <ForgotPassword style={classes} />} />
 				<Route

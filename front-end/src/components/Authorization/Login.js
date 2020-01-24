@@ -1,10 +1,38 @@
 // @flow
 
+import {
+	Button,
+	Card,
+	CardContent,
+	Checkbox,
+	FilledInput,
+	FormControl,
+	FormHelperText,
+	FormLabel,
+	Grid,
+	Input,
+	InputLabel,
+	Typography
+} from '@material-ui/core';
 import React, { Component } from 'react';
 
 import { Link } from 'react-router-dom';
 import config from '../../config.json';
-import { withCookies } from 'react-cookie';
+import { withStyles } from '@material-ui/core/styles';
+
+const styles = (theme) => ({
+	root: {
+		color: 'rgb(217, 217, 217) !important'
+	},
+	underline: {
+		'&:after': {
+			borderBottom: '2px solid rgb(217, 217, 217)'
+		},
+		'&:before': {
+			borderBottom: '2px solid #fff'
+		}
+	}
+});
 
 class Login extends Component {
 	constructor() {
@@ -73,90 +101,133 @@ class Login extends Component {
 	};
 
 	render() {
-		const { style } = this.props;
+		const { classes } = this.props;
 		return (
-			<div align="center" className="animated fadeInDown faster">
-				<div style={style.main}>
-					<form style={style.formStyle} align="left">
-						<h1 style={style.labelStyle}>Account Login</h1>
-						<hr style={style.hrStyle} />
-						<div className="form-group">
-							<label htmlFor="username">Username</label>
-							<input
-								className="form-control"
-								type="text"
-								onChange={(e) => {
-									this.setState({ username: e.target.value });
-								}}
-							/>
-							{!this.state.username && !this.state.isValid ? (
-								<div className="animated fadeInUp">
-									<p className="text-danger">
-										<strong>Please enter a valid username.</strong>
-									</p>
-								</div>
-							) : (
-								''
-							)}
-						</div>
-						<div className="form-group">
-							<label htmlFor="password">Password</label>
-							<input
-								className="form-control"
-								type="password"
-								onChange={(e) => {
-									this.setState({ password: e.target.value });
-								}}
-							/>
-
-							{!this.state.isPasswordValid ? (
-								<div className="animated fadeInUp">
-									<p className="text-danger">
-										<strong>The username or password you entered is incorrect.</strong>
-									</p>
-								</div>
-							) : (
-								''
-							)}
-
-							{!this.state.password && !this.state.isValid ? (
-								<div className="animated fadeInUp">
-									<p className="text-danger">
-										<strong>Please enter a valid password.</strong>
-									</p>
-								</div>
-							) : (
-								''
-							)}
-						</div>
-						<div className="form-check">
-							<input type="checkbox" className="form-check-input" id="rememberMe" />
-							<label className="form-check-label" htmlFor="rememberMe">
-								Remember Username
-							</label>
-						</div>
-						<button
-							type="submit"
-							className="btn btn-default float-right"
-							style={style.buttonStyle}
-							onClick={(e) => this.handleSubmit(e)}
+			<div className="animated fadeInDown faster">
+				<Grid container={true} justify={'center'}>
+					<Grid item={true} xs={12} sm={8} md={5} lg={5} xl={3}>
+						<Card
+							style={{
+								backgroundColor: 'rgba(24, 24, 24, .85)',
+								marginTop: 50,
+								padding: '25px 35px 60px 35px',
+								borderRadius: '25px',
+								color: '#fff'
+							}}
 						>
-							Log in
-						</button>
-						<br />
-						<br />
-						<hr style={style.hrStyle} />
-						<p>
-							Don't have an account? <Link to="/register">Sign up now!</Link>
-						</p>
-						{/* <p>
-						Forgot your <Link to="/forgot_username">username?</Link>
-					</p> */}
-						<p>
-							Forgot your <Link to="/forgot_password">password?</Link>
-						</p>
-					</form>
-				</div>
+							<Typography
+								gutterBottom
+								variant="h4"
+								align="center"
+								style={{
+									fontFamily: 'Trade Winds',
+									color: 'rgb(217, 217, 217)'
+								}}
+							>
+								Account Login
+							</Typography>
+
+							<CardContent
+								style={{
+									border: 'solid 15px rgb(138, 3, 3)',
+									backgroundColor: '#181818',
+									borderRadius: '25px'
+								}}
+							>
+								<form>
+									<div>
+										<FormControl margin="normal">
+											<InputLabel className={classes.root}>Username</InputLabel>
+											<Input
+												type="text"
+												required={true}
+												classes={{ underline: classes.underline, root: classes.root }}
+												fullWidth={true}
+												onChange={(e) => {
+													this.setState({ username: e.target.value });
+												}}
+											/>
+
+											{!this.state.username && !this.state.isValid ? (
+												<div className="animated fadeInUp">
+													<FormHelperText error={true} variant="outlined">
+														Please enter a valid username.
+													</FormHelperText>
+												</div>
+											) : (
+												''
+											)}
+										</FormControl>
+									</div>
+									<div>
+										<FormControl margin="normal">
+											<InputLabel className={classes.root}>Password</InputLabel>
+											<Input
+												type="password"
+												required={true}
+												classes={{ underline: classes.underline, root: classes.root }}
+												fullWidth={true}
+												onChange={(e) => {
+													this.setState({ password: e.target.value });
+												}}
+											/>
+											{!this.state.isPasswordValid ? (
+												<div className="animated fadeInUp">
+													<FormHelperText error={true} variant="outlined">
+														The username or password you entered is incorrect.
+													</FormHelperText>
+												</div>
+											) : (
+												''
+											)}
+
+											{!this.state.password && !this.state.isValid ? (
+												<div className="animated fadeInUp">
+													<FormHelperText error={true} variant="outlined">
+														Please enter a valid password.
+													</FormHelperText>
+												</div>
+											) : (
+												''
+											)}
+										</FormControl>
+									</div>
+
+									<br />
+									<div>
+										<Checkbox type="checkbox" className={classes.root} />
+										<label htmlFor="rememberMe">Remember Username</label>
+									</div>
+									<Button
+										type="submit"
+										style={{
+											backgroundColor: 'rgb(217, 217, 217)',
+											color: '#181818',
+											width: 160
+										}}
+										onClick={(e) => this.handleSubmit(e)}
+									>
+										Log in
+									</Button>
+								</form>
+
+								<br />
+								<br />
+
+								<div>
+									<Typography gutterBottom={true} variant="caption">
+										Don't have an account? <Link to="/register">Sign up now!</Link>
+									</Typography>
+								</div>
+								<div>
+									<Typography gutterBottom={true} variant="caption">
+										Forgot your <Link to="/forgot_password">password?</Link>
+									</Typography>
+								</div>
+							</CardContent>
+						</Card>
+					</Grid>
+				</Grid>
 			</div>
 		);
 	}
@@ -165,6 +236,6 @@ class Login extends Component {
 // Login.propTypes = {
 // 	formStyle: PropTypes.object.isRequired,
 // 	hrStyle: PropTypes.object.isRequired
-// };
+// };;
 
-export default withCookies(Login);
+export default withStyles(styles)(Login);
