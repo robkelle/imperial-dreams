@@ -8,7 +8,6 @@
 		"@material-ui/lab": "^4.0.0-alpha.39",
 		"@material-ui/styles": "^4.9.0",
 		"animate.css": "^3.7.2",
-		"bootstrap": "^4.3.1",
 		"flow-bin": "^0.112.0",
 		"lodash": "^4.17.15",
 		"moment": "^2.24.0",
@@ -18,12 +17,10 @@
 		"react-cookie": "^4.0.1",
 		"react-dom": "^16.11.0",
 		"react-giphy-component": "^1.0.5",
-		"react-google-login": "^5.0.7",
 		"react-infinite-scroller": "^1.2.4",
 		"react-router": "^5.1.2",
 		"react-router-dom": "^5.1.2",
 		"react-scripts": "3.2.0",
-		"recompose": "^0.30.0",
 		"socket.io-client": "^2.3.0"
 	},
 	"scripts": {

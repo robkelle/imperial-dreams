@@ -11,7 +11,7 @@ import Login from './Authentication/Login';
 import { Navbar } from './Navbar';
 import React from 'react';
 import Register from './Authentication/Register';
-import { ResetPassword } from './Authentication/ResetPassword';
+import ResetPassword from './Authentication/ResetPassword';
 import UserDashboard from './UserDashboard';
 import { withCookies } from 'react-cookie';
 
