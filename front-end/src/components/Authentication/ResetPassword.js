@@ -112,7 +112,6 @@ class ResetPassword extends Component {
 											classes={{ underline: classes.underline, root: classes.root }}
 											required={true}
 											fullWidth={true}
-											autoFocus={true}
 											onChange={(e) => {
 												this.setState({ confirmPassword: e.target.value });
 											}}

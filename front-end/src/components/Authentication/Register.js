@@ -63,13 +63,15 @@ class Register extends Component {
 				return res.json();
 			})
 			.then((res) => {
-				this.setState({ userExists: res.userExists });
-				this.setState({ usernameValid: res.usernameValid });
-				this.setState({ passwordValid: res.passwordValid });
-				this.setState({ repeatPasswordValid: res.repeatPasswordValid });
-				this.setState({ userCreated: res.userCreated });
-				this.setState({ emailExists: res.emailExists });
-				this.setState({ emailValid: res.emailValid });
+				this.setState({
+					userExists: res.userExists,
+					usernameValid: res.usernameValid,
+					passwordValid: res.passwordValid,
+					repeatPasswordValid: res.repeatPasswordValid,
+					userCreated: res.userCreated,
+					emailExists: res.emailExists,
+					emailValid: res.emailValid
+				});
 			})
 			.then((res) => {
 				if (this.state.userCreated === true) {
