@@ -83,7 +83,7 @@ const ForgotPassword = (props) => {
 							}}
 						>
 							<form>
-								<Typography gutterBottom variant="caption">
+								<Typography gutterBottom variant="overline" color="initial" style={{ fontSize: 11 }}>
 									Send a link to your email to reset your password
 								</Typography>
 
