@@ -4,7 +4,7 @@ import { Route, BrowserRouter as Router } from 'react-router-dom';
 
 import BorderBackground from '../images/borderBackground.jpg';
 import ButtonBackground from '../images/buttonBackground.jpg';
-import { ForgotPassword } from './Authentication/ForgotPassword';
+import ForgotPassword from './Authentication/ForgotPassword';
 import { Landing } from './Landing';
 import { LoadingScreen } from './LoadingScreen';
 import Login from './Authentication/Login';

@@ -367,7 +367,7 @@ class Chat extends Component {
 								id="message-input"
 								fullWidth={true}
 								autoFocus={true}
-								disableUnderline={true}
+								disableUnderline={false}
 								value={this.state.addMessage || ''}
 								multiline={false}
 								onChange={(e) => {
