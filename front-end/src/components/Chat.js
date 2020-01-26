@@ -67,7 +67,7 @@ class Chat extends Component {
 	// Event handling
 	handleKeyDown = (e) => {
 		if (e.key === 'Enter') {
-			this.addMessage(this.state.addMessage);
+			this.addMessage(this.state.addMessage, 'text');
 		}
 	};
 
@@ -197,7 +197,7 @@ class Chat extends Component {
 		}
 
 		// This needs to be refactored to remove duplicate method call
-		if (type) {
+		if (type === 'gif') {
 			// Adds the message into the database
 			this.socket.emit('postMessage', {
 				message: message,
@@ -377,7 +377,7 @@ class Chat extends Component {
 								endAdornment={
 									<InputAdornment position="end" style={{ marginBottom: 12 }}>
 										<Fab size={'small'} style={{ backgroundColor: this.chatColor, color: '#fff' }}>
-											<ArrowIcon onClick={() => this.addMessage(this.state.addMessage)} />
+											<ArrowIcon onClick={() => this.addMessage(this.state.addMessage, 'text')} />
 										</Fab>
 										<Fab
 											size={'small'}
