@@ -1,7 +1,18 @@
-import { Button, Card, CardContent, FormControl, Grid, Input, InputLabel, Typography } from '@material-ui/core';
+import {
+	Button,
+	Card,
+	CardContent,
+	FormControl,
+	FormHelperText,
+	Grid,
+	Input,
+	InputLabel,
+	Typography
+} from '@material-ui/core';
 import React, { useState } from 'react';
 
-import EmailIcon from '@material-ui/icons/MailOutline';
+import EmailIcon from '@material-ui/icons/Mail';
+import EmailOutlineIcon from '@material-ui/icons/MailOutline';
 import { Link } from 'react-router-dom';
 import config from '../../config.json';
 import { withStyles } from '@material-ui/core/styles';
@@ -23,6 +34,7 @@ const styles = (theme) => ({
 const ForgotPassword = (props) => {
 	// Set React Hooks
 	const [ email, setEmail ] = useState();
+	const [ emailSent, setEmailSent ] = useState();
 	const { classes } = props;
 
 	const handleSubmit = (e) => {
@@ -41,7 +53,10 @@ const ForgotPassword = (props) => {
 				return res.json();
 			})
 			.then((res) => {
-				setEmail('');
+				if (res.httpStatus === 200) {
+					setEmailSent(true);
+					setEmail('');
+				}
 			});
 	};
 
@@ -97,8 +112,18 @@ const ForgotPassword = (props) => {
 										autoFocus={true}
 										value={email}
 										onChange={(e) => setEmail(e.target.value)}
-										endAdornment={<EmailIcon />}
+										endAdornment={
+											!emailSent ? (
+												<EmailOutlineIcon />
+											) : (
+												<EmailIcon style={{ color: '#64dd17' }} />
+											)
+										}
 									/>
+
+									<FormHelperText variant="outlined" style={{ color: '#fff' }}>
+										{emailSent}
+									</FormHelperText>
 								</FormControl>
 
 								<br />
