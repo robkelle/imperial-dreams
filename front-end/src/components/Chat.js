@@ -326,9 +326,7 @@ class Chat extends Component {
 						</Typography>
 					</Grid>
 					<Grid item xs={2} sm={2} md={2} lg={2} xl={2} align="right">
-						<IconButton aria-label="settings" style={{ color: '#fff' }}>
-							<MoreVertIcon />
-						</IconButton>
+						{this.props.exit}
 					</Grid>
 				</Grid>
 				<div style={{ padding: 20, marginBottom: 30 }}>

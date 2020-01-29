@@ -27,11 +27,7 @@ const UserDashboard = () => {
 					}}
 				>
 					<AppBar>
-						<Toolbar style={{ backgroundColor: 'rgb(18,18,18)' }}>
-							<IconButton edge="start" color="inherit" aria-label="close" onClick={handleClose}>
-								<CloseIcon />
-							</IconButton>
-						</Toolbar>
+						<Toolbar style={{ backgroundColor: 'rgb(18,18,18)' }} />
 					</AppBar>
 					<div
 						className="animated fadeInDown faster"
@@ -42,7 +38,19 @@ const UserDashboard = () => {
 						<Grid container spacing={0} justify={'center'}>
 							<Grid item xs={12} sm={10} md={6} lg={6} xl={6}>
 								<Paper style={{ backgroundColor: 'rgb(18,18,18)', marginTop: 100 }}>
-									<Chat room={'General'} />
+									<Chat
+										room={'General'}
+										exit={
+											<IconButton
+												edge="start"
+												aria-label="close"
+												onClick={handleClose}
+												style={{ color: '#fff' }}
+											>
+												<CloseIcon />
+											</IconButton>
+										}
+									/>
 								</Paper>
 							</Grid>
 						</Grid>
