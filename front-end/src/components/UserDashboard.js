@@ -1,34 +1,53 @@
-import { Fab, Grid, Paper } from '@material-ui/core';
+import { AppBar, Button, Dialog, Fab, Grid, IconButton, Paper, Toolbar, Typography } from '@material-ui/core';
 import React, { Fragment, useState } from 'react';
 
 import Chat from './Chat';
 import ChatIcon from '@material-ui/icons/Chat';
+import CloseIcon from '@material-ui/icons/Close';
 
 const UserDashboard = () => {
-	const [ showChat, setShowChat ] = useState(0);
-	const fabFocused = {
-		backgroundColor: 'rgb(138, 3, 3)',
-		color: '#fff'
+	const [ open, setOpen ] = useState(0);
+
+	const handleClose = () => {
+		setOpen(false);
 	};
-	const fabUnfocused = {};
 
 	return (
 		<Fragment>
-			{showChat ? (
-				<div
-					className="animated fadeInDown faster"
-					style={{
-						marginTop: 20
+			{open ? (
+				<Dialog
+					open={open}
+					fullScreen={true}
+					fullWidth={true}
+					PaperProps={{
+						style: {
+							backgroundColor: 'transparent',
+							boxShadow: 'none'
+						}
 					}}
 				>
-					<Grid container spacing={0} justify={'center'}>
-						<Grid item xs={12} sm={10} md={6} lg={6} xl={6}>
-							<Paper style={{ backgroundColor: 'rgba(18,18,18,.85)', marginTop: 50 }}>
-								<Chat room={'General'} />
-							</Paper>
+					<AppBar>
+						<Toolbar style={{ backgroundColor: 'rgb(18,18,18)' }}>
+							<IconButton edge="start" color="inherit" aria-label="close" onClick={handleClose}>
+								<CloseIcon />
+							</IconButton>
+						</Toolbar>
+					</AppBar>
+					<div
+						className="animated fadeInDown faster"
+						style={{
+							marginTop: 20
+						}}
+					>
+						<Grid container spacing={0} justify={'center'}>
+							<Grid item xs={12} sm={10} md={6} lg={6} xl={6}>
+								<Paper style={{ backgroundColor: 'rgb(18,18,18)', marginTop: 100 }}>
+									<Chat room={'General'} />
+								</Paper>
+							</Grid>
 						</Grid>
-					</Grid>
-				</div>
+					</div>
+				</Dialog>
 			) : (
 				''
 			)}
@@ -51,13 +70,12 @@ const UserDashboard = () => {
 					<Fab
 						size="large"
 						onClick={() => {
-							if (showChat) {
-								setShowChat(false);
+							if (open) {
+								setOpen(false);
 							} else {
-								setShowChat(true);
+								setOpen(true);
 							}
 						}}
-						style={showChat == true ? fabFocused : fabUnfocused}
 					>
 						<ChatIcon />
 					</Fab>
