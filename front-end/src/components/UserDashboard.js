@@ -16,7 +16,7 @@ const UserDashboard = () => {
 		<Fragment>
 			{showChat ? (
 				<div
-					className="container animated fadeInDown faster"
+					className="animated fadeInDown faster"
 					style={{
 						marginTop: 20
 					}}
@@ -32,6 +32,7 @@ const UserDashboard = () => {
 			) : (
 				''
 			)}
+
 			<Grid container justify="flex-end">
 				<Grid
 					item
