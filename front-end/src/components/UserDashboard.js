@@ -1,4 +1,4 @@
-import { AppBar, Button, Dialog, Fab, Grid, IconButton, Paper, Toolbar, Typography } from '@material-ui/core';
+import { AppBar, Dialog, Fab, Grid, IconButton, Paper, Toolbar } from '@material-ui/core';
 import React, { Fragment, useState } from 'react';
 
 import Chat from './Chat';

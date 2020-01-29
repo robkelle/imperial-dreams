@@ -21,7 +21,6 @@ import ChatMessage from './ChatMessage';
 import CloseIcon from '@material-ui/icons/Close';
 import GifIcon from '@material-ui/icons/Gif';
 import InfiniteScroll from 'react-infinite-scroller';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Picker from 'react-giphy-component';
 import _ from 'lodash';
 import config from '../config.json';
