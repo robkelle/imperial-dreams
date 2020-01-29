@@ -12,7 +12,7 @@ import {
 	Paper,
 	Typography
 } from '@material-ui/core';
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 
 import ArrowIcon from '@material-ui/icons/ArrowForwardIos';
 import ChatGIFMessage from './ChatGIFMessage';
@@ -318,7 +318,7 @@ class Chat extends Component {
 		const loader = <ChatLoader />;
 
 		return (
-			<div>
+			<Fragment>
 				<Grid container spacing={2} justify={'flex-end'}>
 					<Grid item xs={8} sm={8} md={8} lg={8} xl={8} align="center">
 						<Typography variant="h4" style={{ color: 'rgb(217, 217, 217)' }}>
@@ -332,7 +332,7 @@ class Chat extends Component {
 					</Grid>
 				</Grid>
 				<div style={{ padding: 20, marginBottom: 30 }}>
-					<div className="overflow-auto side-bar" style={{ height: 500, overflow: 'auto', paddingTop: 20 }}>
+					<div className="overflow-auto side-bar" style={{ height: 400, overflow: 'auto', paddingTop: 20 }}>
 						<InfiniteScroll
 							pageStart={0}
 							threshold={250}
@@ -422,7 +422,7 @@ class Chat extends Component {
 						''
 					)}
 				</div>
-			</div>
+			</Fragment>
 		);
 	}
 }
