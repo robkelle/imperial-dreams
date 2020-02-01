@@ -1,4 +1,4 @@
-import { Divider, Grid, Paper, Typography } from '@material-ui/core';
+import { Divider, Grid, LinearProgress, Paper, Typography } from '@material-ui/core';
 
 import React from 'react';
 
@@ -18,11 +18,32 @@ class Character extends React.Component {
 				'Character',
 				'Character',
 				'Character',
-				'Character',
-				'Character',
-				'Character',
-				'Character',
 				'Character'
+			],
+			attributes: [
+				{ label: 'STRENGTH', value: 10 },
+				{ label: 'DEXTERITY', value: 20 },
+				{ label: 'SPIRIT', value: 26 },
+				{ label: 'INTELLECT', value: 18 },
+				{ label: 'ARMOR', value: 60 },
+				{ label: 'MOVEMENT', value: 54 }
+			],
+
+			stats: [
+				{ label: 'WEAPON DAMAGE', value: '15-25' },
+				{ label: 'WARMTH CONVERSION', value: '100%' },
+				{ label: 'CRITICAL HIT CHANCE', value: '5%' },
+				{ label: 'DASH COUNT', value: '2' },
+				{ label: 'CRITICAL HIT DAMAGE', value: '125%' },
+				{ label: 'LIFE ON HIT', value: '25' },
+				{ label: 'POWER DAMAGE', value: '120%' },
+				{ label: 'HEALTH REGEN', value: '10/s' },
+				{ label: 'POWER COOLDOWN', value: '-0.5/s' },
+				{ label: 'HUNGER RESISTANCE', value: '7%' },
+				{ label: 'FIRE DAMAGE', value: '15%' },
+				{ label: 'FIRE RESISTANCE', value: '5%' },
+				{ label: 'ICE DAMAGE', value: '35%' },
+				{ label: 'ICE RESISTANCE', value: '6%' }
 			]
 		};
 	}
@@ -63,7 +84,7 @@ class Character extends React.Component {
 							</Grid>
 							<Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
 								<Typography variant="h5" gutterBottom={true} style={{ color: '#fff' }}>
-									KNIGHT
+									INFO
 								</Typography>
 								<Paper style={{ backgroundColor: '#181818', color: '#fff' }} align="center">
 									<Grid container spacing={1} align="left" style={{ padding: 10 }}>
@@ -76,24 +97,21 @@ class Character extends React.Component {
 												style={{ backgroundColor: 'rgb(138, 3, 3)', marginBottom: 10 }}
 											/>
 										</Grid>
-										<Grid item xl={6}>
-											<Typography variant="overline">STRENGTH</Typography>
-										</Grid>
-										<Grid item xl={6}>
-											<Typography variant="overline">DEXTERITY</Typography>
-										</Grid>
-										<Grid item xl={6}>
-											<Typography variant="overline">SPIRIT</Typography>
-										</Grid>
-										<Grid item xl={6}>
-											<Typography variant="overline">INTELLECT</Typography>
-										</Grid>
-										<Grid item xl={6}>
-											<Typography variant="overline">ARMOR</Typography>
-										</Grid>
-										<Grid item xl={6}>
-											<Typography variant="overline">MOVEMENT</Typography>
-										</Grid>
+										{this.state.attributes.map((value) => {
+											return (
+												<Grid item xl={6}>
+													<Grid container spacing={5}>
+														<Grid item xl={2}>
+															<img src="https://place-hold.it/50/666" />
+														</Grid>
+														<Grid item xl={10}>
+															<Typography variant="overline">{value.label}</Typography>
+															<LinearProgress variant="determinate" value={value.value} />
+														</Grid>
+													</Grid>
+												</Grid>
+											);
+										})}
 										<Grid item xl={12}>
 											<Typography variant="h6" gutterBottom style={{ color: '#fff' }}>
 												STATISTICS
@@ -103,48 +121,20 @@ class Character extends React.Component {
 												style={{ backgroundColor: 'rgb(138, 3, 3)', marginBottom: 10 }}
 											/>
 										</Grid>
-										<Grid item xl={6}>
-											<Typography variant="overline">WEAPON DAMAGE</Typography>
-										</Grid>
-										<Grid item xl={6}>
-											<Typography variant="overline">WARMTH CONVERSION</Typography>
-										</Grid>
-										<Grid item xl={6}>
-											<Typography variant="overline">CRITICAL HIT CHANCE</Typography>
-										</Grid>
-										<Grid item xl={6}>
-											<Typography variant="overline">DASH COUNT</Typography>
-										</Grid>
-										<Grid item xl={6}>
-											<Typography variant="overline">CRITICAL HIT DAMAGE</Typography>
-										</Grid>
-										<Grid item xl={6}>
-											<Typography variant="overline">LIFE ON HIT</Typography>
-										</Grid>
-										<Grid item xl={6}>
-											<Typography variant="overline">POWER DAMAGE</Typography>
-										</Grid>
-										<Grid item xl={6}>
-											<Typography variant="overline">HEALTH REGEN</Typography>
-										</Grid>
-										<Grid item xl={6}>
-											<Typography variant="overline">POWER COOLDOWN</Typography>
-										</Grid>
-										<Grid item xl={6}>
-											<Typography variant="overline">HUNGER RESISTANCE</Typography>
-										</Grid>
-										<Grid item xl={6}>
-											<Typography variant="overline">FIRE DAMAGE</Typography>
-										</Grid>
-										<Grid item xl={6}>
-											<Typography variant="overline">FIRE RESISTANCE</Typography>
-										</Grid>
-										<Grid item xl={6}>
-											<Typography variant="overline">ICE DAMAGE</Typography>
-										</Grid>
-										<Grid item xl={6}>
-											<Typography variant="overline">ICE RESISTANCE</Typography>
-										</Grid>
+										{this.state.stats.map((key) => {
+											return (
+												<Grid item xl={6}>
+													<Grid container justify="space-evenly">
+														<Grid item xl={6}>
+															<Typography variant="overline">{key.label}</Typography>
+														</Grid>
+														<Grid item xl={2}>
+															<Typography variant="overline">{key.value}</Typography>
+														</Grid>
+													</Grid>
+												</Grid>
+											);
+										})}
 									</Grid>
 								</Paper>
 							</Grid>

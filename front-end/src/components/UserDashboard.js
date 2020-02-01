@@ -86,6 +86,7 @@ const UserDashboard = () => {
 								setOpen(true);
 							}
 						}}
+						style={{ backgroundColor: 'rgb(138, 3, 3)', color: '#fff' }}
 					>
 						<ChatIcon />
 					</Fab>
