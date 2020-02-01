@@ -89,7 +89,7 @@ class Character extends React.Component {
 								<Paper style={{ backgroundColor: '#181818', color: '#fff' }} align="center">
 									<Grid container spacing={1} align="left" style={{ padding: 10 }}>
 										<Grid item xs={12}>
-											<Typography variant="h6" gutterBottom style={{ color: '#fff' }}>
+											<Typography variant="subtitle1" gutterBottom style={{ color: '#fff' }}>
 												ATTRIBUTES
 											</Typography>
 											<Divider
@@ -100,7 +100,7 @@ class Character extends React.Component {
 										{this.state.attributes.map((value) => {
 											return (
 												<Grid item xl={6}>
-													<Grid container spacing={5} justify="space-evenly">
+													<Grid container spacing={5}>
 														<Grid item xl={2}>
 															<img src="https://place-hold.it/50/666" />
 														</Grid>
@@ -113,7 +113,7 @@ class Character extends React.Component {
 											);
 										})}
 										<Grid item xs={12}>
-											<Typography variant="h6" gutterBottom style={{ color: '#fff' }}>
+											<Typography variant="subtitle1" gutterBottom style={{ color: '#fff' }}>
 												STATISTICS
 											</Typography>
 											<Divider
