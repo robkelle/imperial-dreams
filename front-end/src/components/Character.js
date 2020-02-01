@@ -63,7 +63,7 @@ class Character extends React.Component {
 										{this.state.character.map((value, index) => {
 											return (
 												<Grid item xs={3} sm={3} md={3} lg={3} xl={3}>
-													<img src="https://place-hold.it/150x300/666" />
+													<img src="https://place-hold.it/150x250/666" />
 												</Grid>
 											);
 										})}
@@ -88,7 +88,7 @@ class Character extends React.Component {
 								</Typography>
 								<Paper style={{ backgroundColor: '#181818', color: '#fff' }} align="center">
 									<Grid container spacing={1} align="left" style={{ padding: 10 }}>
-										<Grid item xl={12}>
+										<Grid item xs={12}>
 											<Typography variant="h6" gutterBottom style={{ color: '#fff' }}>
 												ATTRIBUTES
 											</Typography>
@@ -100,11 +100,11 @@ class Character extends React.Component {
 										{this.state.attributes.map((value) => {
 											return (
 												<Grid item xl={6}>
-													<Grid container spacing={5}>
+													<Grid container spacing={5} justify="space-evenly">
 														<Grid item xl={2}>
 															<img src="https://place-hold.it/50/666" />
 														</Grid>
-														<Grid item xl={10}>
+														<Grid item xs={10}>
 															<Typography variant="overline">{value.label}</Typography>
 															<LinearProgress variant="determinate" value={value.value} />
 														</Grid>
@@ -112,7 +112,7 @@ class Character extends React.Component {
 												</Grid>
 											);
 										})}
-										<Grid item xl={12}>
+										<Grid item xs={12}>
 											<Typography variant="h6" gutterBottom style={{ color: '#fff' }}>
 												STATISTICS
 											</Typography>
