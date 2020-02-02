@@ -1,8 +1,8 @@
 import { AppBar, Dialog, Fab, Grid, IconButton, Paper, Toolbar } from '@material-ui/core';
 import React, { Fragment, useState } from 'react';
 
-import { Character } from './Character';
-import Chat from './Chat';
+import { Character } from './Character/Character';
+import Chat from './Chat/Chat';
 import ChatIcon from '@material-ui/icons/Chat';
 import CloseIcon from '@material-ui/icons/Close';
 

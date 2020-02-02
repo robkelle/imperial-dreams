@@ -23,7 +23,7 @@ import GifIcon from '@material-ui/icons/Gif';
 import InfiniteScroll from 'react-infinite-scroller';
 import Picker from 'react-giphy-component';
 import _ from 'lodash';
-import config from '../config.json';
+import config from '../../config.json';
 import io from 'socket.io-client';
 import { withCookies } from 'react-cookie';
 
