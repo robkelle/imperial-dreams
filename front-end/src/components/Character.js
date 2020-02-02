@@ -63,7 +63,7 @@ class Character extends React.Component {
 										{this.state.character.map((value, index) => {
 											return (
 												<Grid item xs={3} sm={3} md={3} lg={3} xl={3}>
-													<img src="https://place-hold.it/150x250/666" />
+													<img src="https://place-hold.it/150x250/666" alt="" />
 												</Grid>
 											);
 										})}
@@ -77,7 +77,7 @@ class Character extends React.Component {
 								<Paper style={{ backgroundColor: '#181818', color: '#fff' }} align="center">
 									<Grid container spacing={1}>
 										<Grid item xl={12}>
-											<img src="https://place-hold.it/600/666" />
+											<img src="https://place-hold.it/600/666" alt="" />
 										</Grid>
 									</Grid>
 								</Paper>
@@ -102,7 +102,7 @@ class Character extends React.Component {
 												<Grid item xl={6}>
 													<Grid container spacing={5}>
 														<Grid item xl={2}>
-															<img src="https://place-hold.it/50/666" />
+															<img src="https://place-hold.it/50/666" alt="" />
 														</Grid>
 														<Grid item xs={10}>
 															<Typography variant="overline">{value.label}</Typography>
