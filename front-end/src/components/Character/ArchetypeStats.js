@@ -12,7 +12,7 @@ const ArchetypeStats = (props) => {
 				<Grid container spacing={1} align="left" style={{ padding: 10 }}>
 					<Grid item xs={12}>
 						<Typography variant="subtitle1" gutterBottom style={{ color: '#fff' }}>
-							ATTRIBUTES
+							{props.title}
 						</Typography>
 						<Divider variant="fullWidth" style={{ backgroundColor: 'rgb(138, 3, 3)', marginBottom: 10 }} />
 					</Grid>
