@@ -16,9 +16,9 @@ const ArchetypeStats = (props) => {
 						</Typography>
 						<Divider variant="fullWidth" style={{ backgroundColor: 'rgb(138, 3, 3)', marginBottom: 10 }} />
 					</Grid>
-					{props.attributes.map((value) => {
+					{props.attributes.map((value, index) => {
 						return (
-							<Grid item xl={6}>
+							<Grid item xl={6} key={index}>
 								<Grid container spacing={5}>
 									<Grid item xl={2}>
 										<img src="https://place-hold.it/50/666" alt="" />
@@ -37,9 +37,9 @@ const ArchetypeStats = (props) => {
 						</Typography>
 						<Divider variant="fullWidth" style={{ backgroundColor: 'rgb(138, 3, 3)', marginBottom: 10 }} />
 					</Grid>
-					{props.stats.map((key) => {
+					{props.stats.map((key, index) => {
 						return (
-							<Grid item xl={6}>
+							<Grid item xl={6} key={index}>
 								<Grid container justify="space-evenly">
 									<Grid item xl={6}>
 										<Typography variant="overline">{key.label}</Typography>

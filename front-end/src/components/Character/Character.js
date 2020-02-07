@@ -1,8 +1,7 @@
-import { Divider, Grid, LinearProgress, Paper, Typography } from '@material-ui/core';
-
 import { Archetype } from './Archetype';
 import { ArchetypeSelection } from './ArchetypeSelection';
 import { ArchetypeStats } from './ArchetypeStats';
+import { Grid } from '@material-ui/core';
 import React from 'react';
 
 class Character extends React.Component {
@@ -10,18 +9,18 @@ class Character extends React.Component {
 		super();
 		this.state = {
 			characters: [
-				'Character',
-				'Character',
-				'Character',
-				'Character',
-				'Character',
-				'Character',
-				'Character',
-				'Character',
-				'Character',
-				'Character',
-				'Character',
-				'Character'
+				'Character1',
+				'Character2',
+				'Character3',
+				'Character4',
+				'Character5',
+				'Character6',
+				'Character7',
+				'Character8',
+				'Character9',
+				'Character10',
+				'Character11',
+				'Character12'
 			],
 			attributes: [
 				{ label: 'STRENGTH', value: 10 },
@@ -51,14 +50,27 @@ class Character extends React.Component {
 		};
 	}
 
+	selectedCharacter = (data) => {
+		this.setState({
+			selectedCharacter: data
+		});
+	};
+
 	render() {
 		return (
 			<React.Fragment>
 				<Grid container style={{ padding: 20 }}>
 					<Grid item xl={12}>
 						<Grid container spacing={2}>
-							<Archetype title="ARCHETYPES" characters={this.state.characters} />
-							<ArchetypeSelection title="ARCHETYPE SELECTION" />
+							<Archetype
+								title="ARCHETYPES"
+								characters={this.state.characters}
+								selectedCharacter={this.selectedCharacter}
+							/>
+							<ArchetypeSelection
+								title="ARCHETYPE SELECTION"
+								selectedCharacter={this.state.selectedCharacter}
+							/>
 							<ArchetypeStats
 								title="ATTRIBUTES"
 								stats={this.state.stats}
