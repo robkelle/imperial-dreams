@@ -63,7 +63,7 @@ class Character extends React.Component {
 					<Grid item xl={12}>
 						<Grid container spacing={2}>
 							<Archetype
-								title="ARCHETYPES"
+								title="ARCHETYPE CREATION"
 								characters={this.state.characters}
 								selectedCharacter={this.selectedCharacter}
 							/>
@@ -71,11 +71,7 @@ class Character extends React.Component {
 								title="ARCHETYPE SELECTION"
 								selectedCharacter={this.state.selectedCharacter}
 							/>
-							<ArchetypeStats
-								title="ATTRIBUTES"
-								stats={this.state.stats}
-								attributes={this.state.attributes}
-							/>
+							<ArchetypeStats title="STATS" stats={this.state.stats} attributes={this.state.attributes} />
 						</Grid>
 					</Grid>
 				</Grid>
