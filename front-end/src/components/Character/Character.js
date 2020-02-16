@@ -1,4 +1,4 @@
-import { FormControl, FormControlLabel, Grid, Paper, Radio, RadioGroup } from '@material-ui/core';
+import { FormControl, FormControlLabel, Grid, Radio, RadioGroup } from '@material-ui/core';
 
 import { Archetype } from './Archetype';
 import { ArchetypeSelection } from './ArchetypeSelection';
