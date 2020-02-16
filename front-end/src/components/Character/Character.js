@@ -132,10 +132,7 @@ class Character extends React.Component {
 								characters={this.handleArchetype(this.state.value)}
 								selectedArchetype={this.selectedAttributes}
 							/>
-							<ArchetypeSelection
-								title="ARCHETYPE SELECTION"
-								selectedArchetype={this.state.selectedAttributes}
-							/>
+							<ArchetypeSelection title="CHARACTER" selectedArchetype={this.state.selectedAttributes} />
 							<ArchetypeStats
 								title="STATS"
 								stats={this.state.stats}
