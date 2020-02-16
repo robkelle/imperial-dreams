@@ -69,11 +69,11 @@ const ArchetypeStats = (props) => {
 									</Typography>
 								</Grid>
 								<Grid item xl={6}>
-									<Typography variant="overline">RACE</Typography>
+									<Typography variant="overline">SKIN</Typography>
 								</Grid>
 								<Grid item xl={6}>
 									<Typography variant="overline">
-										{props.race !== undefined ? props.race.race : '---'}
+										{props.skin !== undefined ? props.skin.skin : '---'}
 									</Typography>
 								</Grid>
 								<Grid item xl={6}>

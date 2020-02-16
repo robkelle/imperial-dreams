@@ -9,9 +9,22 @@ class Character extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-			eyes: [ 'Green', 'Blue', 'Brown', 'Hazel' ],
+			eyes: [ 'Green', 'Blue', 'Brown', 'Hazel', 'Gray', 'Amber', 'Yellow', 'Purple', 'Red' ],
 			hair: [ 'Brown', 'Blonde' ],
-			race: [ 'White', 'Black' ],
+			skin: [
+				'Porcelain',
+				'Ivory',
+				'Warm Ivory',
+				'Sand',
+				'Beige',
+				'Warm Beige',
+				'Natural',
+				'Honey',
+				'Golden',
+				'Almond',
+				'Chestnut',
+				'Espresso'
+			],
 			mouth: [ 'Smile', 'Frown', 'Angry' ],
 			profession: [ 'Politician' ],
 			value: 'eyes',
@@ -62,8 +75,8 @@ class Character extends React.Component {
 			return this.state.eyes;
 		} else if (value === 'hair') {
 			return this.state.hair;
-		} else if (value === 'race') {
-			return this.state.race;
+		} else if (value === 'skin') {
+			return this.state.skin;
 		} else if (value === 'profession') {
 			return this.state.profession;
 		} else {
@@ -93,9 +106,9 @@ class Character extends React.Component {
 											style={{ color: '#fff' }}
 										/>
 										<FormControlLabel
-											label="Race"
+											label="Skin"
 											control={<Radio color="default" style={{ color: 'rgb(138, 3, 3)' }} />}
-											value="race"
+											value="skin"
 											style={{ color: '#fff' }}
 										/>
 										<FormControlLabel
@@ -129,7 +142,7 @@ class Character extends React.Component {
 								attributes={this.state.attributes}
 								eyes={this.state.eyesData}
 								hair={this.state.hairData}
-								race={this.state.raceData}
+								skin={this.state.skinData}
 								mouth={this.state.mouthData}
 								profession={this.state.professionData}
 							/>
