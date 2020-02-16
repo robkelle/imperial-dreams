@@ -1,6 +1,7 @@
 // Import API Web Application Framework
 
 import InitSockets from './sockets';
+import archetypeRoute from './routes/archetype.route';
 import bodyParser from 'body-parser';
 import config from './config.json';
 import cookieParser from 'cookie-parser';
@@ -50,6 +51,7 @@ app.use(cors(corsOptions));
 
 // API routes
 app.use('/api/user/', userRoute);
+app.use('/api/', archetypeRoute);
 
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
