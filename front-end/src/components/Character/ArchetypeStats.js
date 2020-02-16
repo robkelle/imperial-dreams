@@ -1,4 +1,4 @@
-import { Divider, Grid, LinearProgress, Paper, Typography } from '@material-ui/core';
+import { Collapse, Divider, Grid, LinearProgress, Paper, Typography } from '@material-ui/core';
 
 import React from 'react';
 
@@ -31,6 +31,57 @@ const ArchetypeStats = (props) => {
 							</Grid>
 						);
 					})}
+					<Grid item xs={12}>
+						<Typography variant="subtitle1" gutterBottom style={{ color: '#fff' }}>
+							CHARACTERISTICS
+						</Typography>
+						<Divider variant="fullWidth" style={{ backgroundColor: 'rgb(138, 3, 3)', marginBottom: 10 }} />
+					</Grid>
+					<Grid item xl={6}>
+						<Grid container justify="space-evenly">
+							<Grid item xl={6}>
+								<Typography variant="overline">EYES</Typography>
+							</Grid>
+							<Grid item xl={6}>
+								<Typography variant="overline">
+									{props.eyes !== undefined ? props.eyes.eyes : ''}
+								</Typography>
+							</Grid>
+							<Grid item xl={6}>
+								<Typography variant="overline">HAIR</Typography>
+							</Grid>
+							<Grid item xl={6}>
+								<Typography variant="overline">
+									{props.hair !== undefined ? props.hair.hair : ''}
+								</Typography>
+							</Grid>
+							<Grid item xl={6}>
+								<Typography variant="overline">RACE</Typography>
+							</Grid>
+							<Grid item xl={6}>
+								<Typography variant="overline">
+									{props.race !== undefined ? props.race.race : ''}
+								</Typography>
+							</Grid>
+							<Grid item xl={6}>
+								<Typography variant="overline">MOUTH</Typography>
+							</Grid>
+							<Grid item xl={6}>
+								<Typography variant="overline">
+									{props.mouth !== undefined ? props.mouth.mouth : ''}
+								</Typography>
+							</Grid>
+							<Grid item xl={6}>
+								<Typography variant="overline">PROFESSION</Typography>
+							</Grid>{' '}
+							<Grid item xl={6}>
+								<Typography variant="overline">
+									{props.profession !== undefined ? props.profession.profession : ''}
+								</Typography>
+							</Grid>
+						</Grid>
+					</Grid>
+
 					<Grid item xs={12}>
 						<Typography variant="subtitle1" gutterBottom style={{ color: '#fff' }}>
 							STATISTICS

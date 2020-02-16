@@ -23,7 +23,6 @@ class Character extends React.Component {
 				{ label: 'ARMOR', value: 60 },
 				{ label: 'MOVEMENT', value: 54 }
 			],
-
 			stats: [
 				{ label: 'WEAPON DAMAGE', value: '15-25' },
 				{ label: 'WARMTH CONVERSION', value: '100%' },
@@ -43,9 +42,12 @@ class Character extends React.Component {
 		};
 	}
 
-	selectedCharacter = (data) => {
+	selectedAttributes = (data) => {
 		this.setState({
-			selectedCharacter: data
+			selectedAttributes: data,
+			[`${this.state.value}Data`]: {
+				[this.state.value]: data
+			}
 		});
 	};
 
@@ -112,13 +114,22 @@ class Character extends React.Component {
 							<Archetype
 								title="ARCHETYPE"
 								characters={this.handleArchetype(this.state.value)}
-								selectedArchetype={this.selectedCharacter}
+								selectedArchetype={this.selectedAttributes}
 							/>
 							<ArchetypeSelection
 								title="ARCHETYPE SELECTION"
-								selectedArchetype={this.state.selectedCharacter}
+								selectedArchetype={this.state.selectedAttributes}
 							/>
-							<ArchetypeStats title="STATS" stats={this.state.stats} attributes={this.state.attributes} />
+							<ArchetypeStats
+								title="STATS"
+								stats={this.state.stats}
+								attributes={this.state.attributes}
+								eyes={this.state.eyesData}
+								hair={this.state.hairData}
+								race={this.state.raceData}
+								mouth={this.state.mouthData}
+								profession={this.state.professionData}
+							/>
 						</Grid>
 					</Grid>
 				</Grid>

@@ -9,9 +9,6 @@ const ArchetypeSelection = (props) => {
 				{props.title}
 			</Typography>
 			<Paper style={{ backgroundColor: '#181818', color: '#fff' }} align="center">
-				<Typography variant="h5" gutterBottom={true}>
-					{props.selectedArchetype}
-				</Typography>
 				<Grid container spacing={1}>
 					<Grid item xl={12}>
 						<img src="https://place-hold.it/400/666" alt="" />
