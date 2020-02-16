@@ -17,6 +17,8 @@ import {
 	withCookies
 } from './components/Imports';
 
+import { Authenticator } from './components/Authentication/AuthenticatorContext';
+
 const classes = {
 	main: {
 		borderRadius: '25px',
@@ -61,28 +63,42 @@ const classes = {
 };
 
 function App(props) {
-	const isAuthorized = props.cookies.get('isAuthorized');
+	const handleAuth = { isAuthorized: props.cookies.get('isAuthorized') };
 
 	return (
 		<div>
 			<Router basename="imperial">
-				<Navbar isAuthorized={isAuthorized} />
-				{/* Initialize all routes */}
-				<Route exact path="/" component={() => <Landing isAuthorized={isAuthorized} />} />
-				<Route exact path="/login" component={(e) => <Login style={classes} history={e.history} />} />
-				<Route exact path="/register" component={(e) => <Register style={classes} history={e.history} />} />
-				<Route exact path="/forgot_password" component={() => <ForgotPassword style={classes} />} />
-				<Route
-					exact
-					path="/reset_password"
-					component={(e) => <ResetPassword style={classes} location={e.location} />}
-				/>
-				<Route exact path="/loading" component={(e) => <LoadingScreen history={e.history} />} />
-				<Route
-					exact
-					path="/user_dashboard"
-					render={(e) => (isAuthorized ? <UserDashboard /> : <Login style={classes} history={e.history} />)}
-				/>
+				<Authenticator.Provider value={handleAuth}>
+					<Navbar />
+					{/* Initialize all routes */}
+
+					<Route exact path="/" component={() => <Landing />} />
+
+					<Route
+						exact
+						path="/login"
+						component={(e) => <Login history={e.history} cookies={props.cookies} />}
+					/>
+					<Route exact path="/register" component={(e) => <Register style={classes} history={e.history} />} />
+					<Route exact path="/forgot_password" component={() => <ForgotPassword style={classes} />} />
+					<Route
+						exact
+						path="/reset_password"
+						component={(e) => <ResetPassword style={classes} location={e.location} />}
+					/>
+					<Route exact path="/loading" component={(e) => <LoadingScreen history={e.history} />} />
+
+					<Route
+						exact
+						path="/user_dashboard"
+						render={(e) =>
+							handleAuth.isAuthorized ? (
+								<UserDashboard />
+							) : (
+								<Login history={e.history} cookies={props.cookies} />
+							)}
+					/>
+				</Authenticator.Provider>
 			</Router>
 		</div>
 	);

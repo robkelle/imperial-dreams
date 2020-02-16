@@ -1,65 +1,22 @@
 import '../App.css';
 
+import { Button, Card, CardContent, Grid, Typography } from '@material-ui/core';
 import React, { Component } from 'react';
 
-import BorderBackground from '../images/borderBackground.jpg';
-import ButtonBackground from '../images/buttonBackground.jpg';
+import Authenticator from './Authentication/AuthenticatorContext';
 import { Link } from 'react-router-dom';
 
 const classes = {
-	summaryStyle: {
-		display: 'inline-block',
-		borderRadius: '25px',
-		backgroundImage: `url(${BorderBackground})`,
-		padding: '25px 35px 60px 35px',
-		color: '#BEBEBE',
-		marginTop: 10,
-		width: '800px',
-		height: '800px'
-	},
-	labelStyle: {
-		fontFamily: 'Trade Winds',
-		color: 'rgb(255, 180, 59)',
-		fontSize: '44px'
-	},
-	box: {
-		backgroundColor: 'rgb(0, 51, 102)',
-		width: '650px',
-		borderStyle: 'solid',
-		borderColor: 'rgb(255, 180, 59)',
-		borderWidth: '15px',
-		height: '640px',
-		borderRadius: '25px'
-	},
-	centered: {
-		display: 'inline-block',
-		textAlign: 'center',
-		padding: '0px 0px 0px 0px'
-	},
 	paragraph: {
 		color: 'white',
 		fontFamily: 'Cinzel, sans-serif',
-		fontSize: '20px',
 		padding: '40px 7px 7px 7px'
 	},
 	role: {
 		fontFamily: 'Trade Winds',
-		color: 'rgb(255, 180, 59)',
+		color: 'rgb(217, 217, 217)',
 		fontSize: '33px',
 		padding: '30px 0px 30px 0px'
-	},
-
-	buttonStyle: {
-		backgroundImage: `url(${ButtonBackground})`,
-		backgroundPosition: 'center',
-		backgroundSize: 'cover',
-		backgroundRepeat: 'no-repeat',
-		color: '#fff',
-		width: 160
-	},
-	loginText: {
-		color: 'white',
-		textDecoration: 'none'
 	}
 };
 class ChangingText extends Component {
@@ -97,30 +54,66 @@ class ChangingText extends Component {
 const Landing = (props) => {
 	let summary =
 		'The continent of Acar is in tatters. A multi-generational war to exterminate the gods broke the world asunder. Society, culture and knowledge faded in the centuries following the apocalypse, with the world reverting back to its primeval origins. The land of Acar is a blank slate. Its history, cultures, religions and institutions will be formed at the hands of the characters that inhabit it.';
-	const { isAuthorized } = props;
 	return (
 		<div align="center" className="animated fadeInDown faster">
-			<div style={classes.summaryStyle}>
-				<h1 style={classes.labelStyle}>IMPERIAL DREAMS</h1>
-				<div style={classes.centered}>
-					<div style={classes.box}>
-						<p style={classes.paragraph}>{summary}</p>
-						<p style={classes.paragraph}>You will start as nothing, but what will you become?</p>
-						<p style={classes.role}>
-							<ChangingText textTimeout={2500} /> ?
-						</p>
-						{isAuthorized ? (
-							''
-						) : (
-							<Link style={classes.loginText} to="/register">
-								<button className="btn btn-default" style={classes.buttonStyle}>
-									Play Now!
-								</button>
-							</Link>
-						)}
-					</div>
-				</div>
-			</div>
+			<Grid container={true} justify={'center'}>
+				<Grid item={true} xs={12} sm={12} md={6} lg={5} xl={5}>
+					<Card
+						style={{
+							backgroundColor: 'rgba(24, 24, 24, .85)',
+							marginTop: 50,
+							padding: '25px 35px 60px 35px',
+							borderRadius: '25px'
+						}}
+					>
+						<Typography
+							gutterBottom
+							variant="h4"
+							align="center"
+							style={{
+								fontFamily: 'Trade Winds',
+								color: 'rgb(217, 217, 217)'
+							}}
+						>
+							IMPERIAL DREAMS
+						</Typography>
+						<CardContent
+							style={{
+								border: 'solid 15px rgb(138, 3, 3)',
+								backgroundColor: '#181818',
+								borderRadius: '25px'
+							}}
+						>
+							<Typography style={classes.paragraph}>{summary}</Typography>
+							<Typography style={classes.paragraph}>
+								You will start as nothing, but what will you become?
+							</Typography>
+							<Typography style={classes.role}>
+								<ChangingText textTimeout={2500} /> ?
+							</Typography>
+							<Authenticator.Consumer>
+								{(props) => {
+									if (!props.isAuthorized) {
+										return (
+											<Link to="/register" style={{ textDecoration: 'none' }}>
+												<Button
+													style={{
+														backgroundColor: 'rgb(217, 217, 217)',
+														color: '#181818',
+														width: 160
+													}}
+												>
+													Play Now!
+												</Button>
+											</Link>
+										);
+									}
+								}}
+							</Authenticator.Consumer>
+						</CardContent>
+					</Card>
+				</Grid>
+			</Grid>
 		</div>
 	);
 };

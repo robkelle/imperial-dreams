@@ -1,47 +1,67 @@
-import Favicon from '../images/favicon.ico';
+import AppBar from '@material-ui/core/AppBar';
+import { Authenticator } from './Authentication/AuthenticatorContext';
+import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
 import { Link } from 'react-router-dom';
-import Logout from './Authorization/Logout';
+import Logout from './Authentication/Logout';
+import MenuIcon from '@material-ui/icons/Menu';
 import React from 'react';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
 
-const Navbar = (props) => {
-	const { isAuthorized } = props;
+const useStyles = makeStyles((theme) => ({
+	root: {
+		flexGrow: 1
+	},
+	menuButton: {
+		marginRight: theme.spacing(2)
+	},
+	title: {
+		flexGrow: 1
+	}
+}));
+
+const Navbar = () => {
+	const classes = useStyles();
 	return (
-		<nav className="navbar navbar-expand-lg" id="custom-nav" style={{ backgroundColor: 'rgb(0, 51, 102)' }}>
-			<a className="navbar-brand" href="/imperial">
-				<img src={Favicon} height={35} alt="" />
-			</a>
-			<ul className="navbar-nav">
-				<li className="nav-item active">
-					<div className="nav-link" href="/">
-						<Link to="/">Home</Link>
-					</div>
-				</li>
-				{!isAuthorized ? (
-					<li className="nav-item">
-						<div className="nav-link" href="/login">
-							<Link to="/login">Login</Link>
-						</div>
-					</li>
-				) : (
-					<li className="nav-item">
-						<div className="nav-link" href="/login">
-							<Link to="/user_dashboard">Dashboard</Link>
-						</div>
-					</li>
-				)}
-			</ul>
-			{isAuthorized ? (
-				<ul className="nav navbar-nav ml-auto">
-					<li className="nav-item">
-						<div className="nav-link" href="/login">
-							<Logout />
-						</div>
-					</li>
-				</ul>
-			) : (
-				''
-			)}
-		</nav>
+		<div className={classes.root}>
+			<AppBar position="static" style={{ backgroundColor: '#181818' }}>
+				<Toolbar>
+					<IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+						<MenuIcon />
+					</IconButton>
+					<Typography variant="h6" className={classes.title}>
+						<Button color="inherit">
+							<Link to="/">Imperial Dreams</Link>
+						</Button>
+					</Typography>
+
+					<Authenticator.Consumer>
+						{(props) => {
+							if (props.isAuthorized) {
+								return (
+									<div>
+										<Button color="inherit">
+											<Link to="/user_dashboard">Dashboard</Link>
+										</Button>
+										<Button color="inherit">
+											<Logout />
+										</Button>
+									</div>
+								);
+							} else {
+								return (
+									<Button color="inherit">
+										<Link to="/login">Login</Link>
+									</Button>
+								);
+							}
+						}}
+					</Authenticator.Consumer>
+				</Toolbar>
+			</AppBar>
+		</div>
 	);
 };
 

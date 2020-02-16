@@ -9,26 +9,21 @@ import {
 	Input,
 	InputAdornment,
 	InputLabel,
-	List,
-	ListItem,
-	ListItemAvatar,
-	ListItemText,
 	Paper,
 	Typography
 } from '@material-ui/core';
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 
 import ArrowIcon from '@material-ui/icons/ArrowForwardIos';
 import ChatGIFMessage from './ChatGIFMessage';
+import ChatLoader from './ChatLoader';
 import ChatMessage from './ChatMessage';
 import CloseIcon from '@material-ui/icons/Close';
 import GifIcon from '@material-ui/icons/Gif';
 import InfiniteScroll from 'react-infinite-scroller';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Picker from 'react-giphy-component';
-import Skeleton from '@material-ui/lab/Skeleton';
 import _ from 'lodash';
-import config from '../config.json';
+import config from '../../config.json';
 import io from 'socket.io-client';
 import { withCookies } from 'react-cookie';
 
@@ -71,7 +66,7 @@ class Chat extends Component {
 	// Event handling
 	handleKeyDown = (e) => {
 		if (e.key === 'Enter') {
-			this.addMessage(this.state.addMessage);
+			this.addMessage(this.state.addMessage, 'text');
 		}
 	};
 
@@ -117,7 +112,7 @@ class Chat extends Component {
 				this.hasMore = true;
 				this.setState({
 					messages: res.message
-						.map((value, index) => {
+						.map((value) => {
 							if (value.messageType === 'gif') {
 								return (
 									<div key={value._id}>
@@ -200,7 +195,8 @@ class Chat extends Component {
 			this.setState({ addMessage: '', helperText: false });
 		}
 
-		if (type) {
+		// This needs to be refactored to remove duplicate method call
+		if (type === 'gif') {
 			// Adds the message into the database
 			this.socket.emit('postMessage', {
 				message: message,
@@ -318,47 +314,22 @@ class Chat extends Component {
 	}
 
 	render() {
-		const loader = (
-			<div className="loader" key={0} style={{ height: '100px' }}>
-				<Grid container spacing={5}>
-					<Grid item xs={12}>
-						<Paper elevation={10}>
-							<List>
-								<ListItem>
-									<ListItemAvatar>
-										<Skeleton variant="circle" width={40} height={40} />
-									</ListItemAvatar>
-									<ListItemText
-										primary={<Skeleton variant="rect" width={'100%'} height={50} />}
-										secondary={<Skeleton variant="text" width={'25%'} />}
-									/>
-								</ListItem>
-							</List>
-						</Paper>
-					</Grid>
-				</Grid>
-			</div>
-		);
+		const loader = <ChatLoader />;
 
 		return (
-			<div>
+			<Fragment>
 				<Grid container spacing={2} justify={'flex-end'}>
 					<Grid item xs={8} sm={8} md={8} lg={8} xl={8} align="center">
-						<Typography variant="h4" color={'error'}>
-							ROOM {this.props.room.toUpperCase()}
+						<Typography variant="h4" style={{ color: 'rgb(217, 217, 217)' }}>
+							{this.props.room}
 						</Typography>
 					</Grid>
 					<Grid item xs={2} sm={2} md={2} lg={2} xl={2} align="right">
-						<IconButton aria-label="settings" style={{ color: '#fff' }}>
-							<MoreVertIcon />
-						</IconButton>
+						{this.props.exit}
 					</Grid>
 				</Grid>
 				<div style={{ padding: 20, marginBottom: 30 }}>
-					<div
-						className="overflow-auto side-bar"
-						style={{ height: 500, overflow: 'auto', borderTop: 'solid 1px #f44336', paddingTop: 20 }}
-					>
+					<div className="overflow-auto side-bar" style={{ height: 400, overflow: 'auto', paddingTop: 20 }}>
 						<InfiniteScroll
 							pageStart={0}
 							threshold={250}
@@ -393,6 +364,7 @@ class Chat extends Component {
 								id="message-input"
 								fullWidth={true}
 								autoFocus={true}
+								disableUnderline={false}
 								value={this.state.addMessage || ''}
 								multiline={false}
 								onChange={(e) => {
@@ -402,7 +374,7 @@ class Chat extends Component {
 								endAdornment={
 									<InputAdornment position="end" style={{ marginBottom: 12 }}>
 										<Fab size={'small'} style={{ backgroundColor: this.chatColor, color: '#fff' }}>
-											<ArrowIcon onClick={() => this.addMessage(this.state.addMessage)} />
+											<ArrowIcon onClick={() => this.addMessage(this.state.addMessage, 'text')} />
 										</Fab>
 										<Fab
 											size={'small'}
@@ -447,7 +419,7 @@ class Chat extends Component {
 						''
 					)}
 				</div>
-			</div>
+			</Fragment>
 		);
 	}
 }

@@ -20,7 +20,7 @@ class LoadingScreen extends Component {
 		if (prevState.percent === 100) {
 			setTimeout(() => {
 				this.props.history.push('/user_dashboard');
-			}, 700);
+			}, 1500);
 
 			this.setState({
 				complete: true
@@ -40,14 +40,14 @@ class LoadingScreen extends Component {
 		return (
 			<div
 				align="center"
-				style={{ backgroundColor: '#000', height: '100%', width: '100%', position: 'absolute' }}
+				style={{ backgroundColor: '#181818', height: '100%', width: '100%', position: 'absolute' }}
 				className={this.state.complete === false ? '' : 'animated slideOutUp'}
 			>
 				<div
 					style={{
 						margin: 0,
 						position: 'absolute',
-						top: '50%',
+						top: '40%',
 						left: '50%',
 						width: 400,
 						transform: 'translate(-50%, -50%)'
@@ -59,7 +59,7 @@ class LoadingScreen extends Component {
 						<div
 							style={{
 								width: `${this.state.percent}%`,
-								backgroundColor: 'rgb(0, 51, 102)',
+								backgroundColor: '#8a0303',
 								height: 50
 							}}
 						/>
