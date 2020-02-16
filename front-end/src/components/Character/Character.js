@@ -78,37 +78,40 @@ class Character extends React.Component {
 					<Grid item xl={12}>
 						<Grid container spacing={2}>
 							<Grid item xs={12} sm={12} md={1} lg={2} xl={2}>
-								<Paper style={{ padding: 10 }}>
-									<FormControl onChange={this.handleChange}>
-										<RadioGroup value={this.state.value}>
-											<FormControlLabel
-												label="Eyes"
-												control={<Radio color="default" />}
-												value="eyes"
-											/>
-											<FormControlLabel
-												label="Hair"
-												control={<Radio color="default" />}
-												value="hair"
-											/>
-											<FormControlLabel
-												label="Race"
-												control={<Radio color="default" />}
-												value="race"
-											/>
-											<FormControlLabel
-												label="Mouth"
-												control={<Radio color="default" />}
-												value="mouth"
-											/>
-											<FormControlLabel
-												label="Profession"
-												control={<Radio color="default" />}
-												value="profession"
-											/>
-										</RadioGroup>
-									</FormControl>
-								</Paper>
+								<FormControl onChange={this.handleChange}>
+									<RadioGroup value={this.state.value}>
+										<FormControlLabel
+											label="Eyes"
+											control={<Radio color="default" style={{ color: 'rgb(138, 3, 3)' }} />}
+											value="eyes"
+											style={{ color: '#fff' }}
+										/>
+										<FormControlLabel
+											label="Hair"
+											control={<Radio color="default" style={{ color: 'rgb(138, 3, 3)' }} />}
+											value="hair"
+											style={{ color: '#fff' }}
+										/>
+										<FormControlLabel
+											label="Race"
+											control={<Radio color="default" style={{ color: 'rgb(138, 3, 3)' }} />}
+											value="race"
+											style={{ color: '#fff' }}
+										/>
+										<FormControlLabel
+											label="Mouth"
+											control={<Radio color="default" style={{ color: 'rgb(138, 3, 3)' }} />}
+											value="mouth"
+											style={{ color: '#fff' }}
+										/>
+										<FormControlLabel
+											label="Profession"
+											control={<Radio color="default" style={{ color: 'rgb(138, 3, 3)' }} />}
+											value="profession"
+											style={{ color: '#fff' }}
+										/>
+									</RadioGroup>
+								</FormControl>
 							</Grid>
 
 							<Archetype
