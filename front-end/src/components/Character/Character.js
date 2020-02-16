@@ -1,27 +1,20 @@
+import { FormControl, FormControlLabel, Grid, Paper, Radio, RadioGroup } from '@material-ui/core';
+
 import { Archetype } from './Archetype';
 import { ArchetypeSelection } from './ArchetypeSelection';
 import { ArchetypeStats } from './ArchetypeStats';
-import { Grid } from '@material-ui/core';
 import React from 'react';
 
 class Character extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-			characters: [
-				'Character1',
-				'Character2',
-				'Character3',
-				'Character4',
-				'Character5',
-				'Character6',
-				'Character7',
-				'Character8',
-				'Character9',
-				'Character10',
-				'Character11',
-				'Character12'
-			],
+			eyes: [ 'Green', 'Blue', 'Brown', 'Hazel' ],
+			hair: [ 'Brown', 'Blonde' ],
+			race: [ 'White', 'Black' ],
+			mouth: [ 'Smile', 'Frown', 'Angry' ],
+			profession: [ 'Politician' ],
+			value: 'eyes',
 			attributes: [
 				{ label: 'STRENGTH', value: 10 },
 				{ label: 'DEXTERITY', value: 20 },
@@ -56,20 +49,74 @@ class Character extends React.Component {
 		});
 	};
 
+	handleChange = (e) => {
+		this.setState({
+			value: e.target.value
+		});
+	};
+
+	handleArchetype = (value) => {
+		if (value === 'eyes') {
+			return this.state.eyes;
+		} else if (value === 'hair') {
+			return this.state.hair;
+		} else if (value === 'race') {
+			return this.state.race;
+		} else if (value === 'profession') {
+			return this.state.profession;
+		} else {
+			return this.state.mouth;
+		}
+	};
+
 	render() {
 		return (
 			<React.Fragment>
 				<Grid container style={{ padding: 20 }}>
 					<Grid item xl={12}>
 						<Grid container spacing={2}>
+							<Grid item xs={12} sm={12} md={1} lg={2} xl={2}>
+								<Paper style={{ padding: 10 }}>
+									<FormControl onChange={this.handleChange}>
+										<RadioGroup value={this.state.value}>
+											<FormControlLabel
+												label="Eyes"
+												control={<Radio color="default" />}
+												value="eyes"
+											/>
+											<FormControlLabel
+												label="Hair"
+												control={<Radio color="default" />}
+												value="hair"
+											/>
+											<FormControlLabel
+												label="Race"
+												control={<Radio color="default" />}
+												value="race"
+											/>
+											<FormControlLabel
+												label="Mouth"
+												control={<Radio color="default" />}
+												value="mouth"
+											/>
+											<FormControlLabel
+												label="Profession"
+												control={<Radio color="default" />}
+												value="profession"
+											/>
+										</RadioGroup>
+									</FormControl>
+								</Paper>
+							</Grid>
+
 							<Archetype
-								title="ARCHETYPE CREATION"
-								characters={this.state.characters}
-								selectedCharacter={this.selectedCharacter}
+								title="ARCHETYPE"
+								characters={this.handleArchetype(this.state.value)}
+								selectedArchetype={this.selectedCharacter}
 							/>
 							<ArchetypeSelection
 								title="ARCHETYPE SELECTION"
-								selectedCharacter={this.state.selectedCharacter}
+								selectedArchetype={this.state.selectedCharacter}
 							/>
 							<ArchetypeStats title="STATS" stats={this.state.stats} attributes={this.state.attributes} />
 						</Grid>

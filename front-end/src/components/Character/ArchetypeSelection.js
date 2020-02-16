@@ -4,15 +4,17 @@ import React from 'react';
 
 const ArchetypeSelection = (props) => {
 	return (
-		<Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
+		<Grid item xs={12} sm={12} md={3} lg={3} xl={3}>
 			<Typography variant="h5" gutterBottom={true} style={{ color: '#fff' }}>
 				{props.title}
 			</Typography>
 			<Paper style={{ backgroundColor: '#181818', color: '#fff' }} align="center">
+				<Typography variant="h5" gutterBottom={true}>
+					{props.selectedArchetype}
+				</Typography>
 				<Grid container spacing={1}>
 					<Grid item xl={12}>
-						{props.selectedCharacter}
-						<img src="https://place-hold.it/600/666" alt="" />
+						<img src="https://place-hold.it/400/666" alt="" />
 					</Grid>
 				</Grid>
 			</Paper>
