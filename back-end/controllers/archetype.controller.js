@@ -1,7 +1,14 @@
 import Archetype from '../models/archetype.model';
 import fs from 'fs';
+import fsExtra from 'fs-extra';
 
 exports.postArchetype = (req, res) => {
+	fsExtra.emptyDir('uploads', (err) => {
+		if (err) {
+			console.error(err);
+		}
+	});
+
 	const archetype = new Archetype({
 		type: req.body.type,
 		label: req.body.label,
