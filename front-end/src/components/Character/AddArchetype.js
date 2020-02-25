@@ -1,16 +1,31 @@
 import { Button, FormControl, Input, InputLabel, Paper } from '@material-ui/core';
-
-import React from 'react';
+import React, { useState } from 'react';
 
 const AddArchetype = () => {
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		console.log(e.target);
+		let formData = new FormData();
+		formData.append('archetypeImage', file);
+		formData.append('type', 'hairColor');
+		formData.append('label', 'brown');
+
+		fetch('http://localhost:4000/api/archetype', {
+			method: 'POST',
+			body: formData
+		})
+			.then((res) => {
+				return res.json();
+			})
+			.then((res) => {
+				console.log(res);
+			});
 	};
+
+	const [ file, setFile ] = useState();
 
 	return (
 		<Paper>
-			<form onSubmit={(e) => handleSubmit(e)}>
+			<form>
 				<FormControl>
 					<InputLabel id="type">Type</InputLabel>
 					<Input />
@@ -22,11 +37,17 @@ const AddArchetype = () => {
 				<FormControl>
 					<Button variant="contained" component="label">
 						Upload File
-						<input type="file" style={{ display: 'none' }} />
+						<input
+							type="file"
+							style={{ display: 'none' }}
+							onChange={(e) => {
+								setFile(e.target.files[0]);
+							}}
+						/>
 					</Button>
 				</FormControl>
 				<FormControl>
-					<Button variant="contained" type="submit">
+					<Button variant="contained" type="submit" onClick={(e) => handleSubmit(e)}>
 						Submit
 					</Button>
 				</FormControl>
