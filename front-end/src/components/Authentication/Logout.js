@@ -28,7 +28,7 @@ class Logout extends Component {
 
 	render() {
 		return (
-			<Link to="/" onClick={this.handleClick}>
+			<Link to="/" onClick={this.handleClick} style={{ textDecoration: 'none' }}>
 				Logout
 			</Link>
 		);

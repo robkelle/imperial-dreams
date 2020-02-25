@@ -29,6 +29,13 @@ const useStyles = makeStyles((theme) => ({
 	},
 	title: {
 		flexGrow: 1
+	},
+	paper: {
+		backgroundColor: '#181818',
+		color: '#fff'
+	},
+	dividerColor: {
+		backgroundColor: 'rgb(138, 3, 3)'
 	}
 }));
 
@@ -60,39 +67,56 @@ const Navbar = () => {
 						<MenuIcon />
 					</IconButton>
 					<Typography variant="h6" className={classes.title}>
-						<Button color="inherit">
-							<Link to="/">Imperial Dreams</Link>
-						</Button>
+						<Authenticator.Consumer>
+							{(props) => {
+								if (props.isAuthorized) {
+									return (
+										<Button color="inherit">
+											<Link to="/user_dashboard" style={{ textDecoration: 'none' }}>
+												Dashboard
+											</Link>
+										</Button>
+									);
+								} else {
+									return (
+										<Button color="inherit">
+											<Link to="/" style={{ textDecoration: 'none' }}>
+												Imperial Dreams
+											</Link>
+										</Button>
+									);
+								}
+							}}
+						</Authenticator.Consumer>
 					</Typography>
 					<Authenticator.Consumer>
 						{(props) => {
 							if (props.isAuthorized) {
 								return (
 									<div>
-										<Button color="inherit">
-											<Link to="/user_dashboard">Dashboard</Link>
-										</Button>
-										<Button color="inherit">
+										<Button color="inherit" style={{ backgroundColor: 'rgb(138, 3, 3)' }}>
 											<Logout />
 										</Button>
-										<Drawer anchor="left" open={state.open} onClose={toggleDrawer('open', false)}>
+										<Drawer
+											anchor="left"
+											open={state.open}
+											onClose={toggleDrawer('open', false)}
+											classes={{ paper: classes.paper }}
+										>
 											<List>
 												<ListItem>
-													<ListItemText>Administration</ListItemText>
+													<ListItemText>Settings</ListItemText>
 												</ListItem>
-												<Divider />
-												<ListItem
-													button
-													onClick={() => {
-														window.location.href = '/imperial/add_archetype';
-													}}
-												>
-													<ListItemText>
-														<ListItemIcon>
-															<AddCircleIcon />
-														</ListItemIcon>
-														Add Archetype
-													</ListItemText>
+												<Divider classes={{ root: classes.dividerColor }} />
+												<ListItem button>
+													<Link to="/add_archetype" style={{ textDecoration: 'none' }}>
+														<ListItemText>
+															<ListItemIcon>
+																<AddCircleIcon style={{ color: '#fff' }} />
+															</ListItemIcon>
+															Add Archetype
+														</ListItemText>
+													</Link>
 												</ListItem>
 											</List>
 										</Drawer>
@@ -100,8 +124,10 @@ const Navbar = () => {
 								);
 							} else {
 								return (
-									<Button color="inherit">
-										<Link to="/login">Login</Link>
+									<Button color="inherit" style={{ backgroundColor: 'rgb(138, 3, 3)' }}>
+										<Link to="/login" style={{ textDecoration: 'none' }}>
+											Login
+										</Link>
 									</Button>
 								);
 							}
