@@ -1,6 +1,8 @@
 import { Button, FormControl, Input, InputLabel, Paper } from '@material-ui/core';
 import React, { useState } from 'react';
 
+import config from '../../config.json';
+
 const AddArchetype = () => {
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -9,7 +11,7 @@ const AddArchetype = () => {
 		formData.append('type', 'hairColor');
 		formData.append('label', 'brown');
 
-		fetch('http://localhost:4000/api/archetype', {
+		fetch(`${config.API.DOMAIN}:${config.API.PORT}/api/archetype`, {
 			method: 'POST',
 			body: formData
 		})
