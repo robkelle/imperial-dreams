@@ -57,15 +57,24 @@ const Navbar = () => {
 		<div className={classes.root}>
 			<AppBar position="static" style={{ backgroundColor: '#181818' }}>
 				<Toolbar>
-					<IconButton
-						edge="start"
-						className={classes.menuButton}
-						onClick={toggleDrawer('open', true)}
-						color="inherit"
-						aria-label="menu"
-					>
-						<MenuIcon />
-					</IconButton>
+					<Authenticator.Consumer>
+						{(props) => {
+							if (props.isAuthorized) {
+								return (
+									<IconButton
+										edge="start"
+										className={classes.menuButton}
+										onClick={toggleDrawer('open', true)}
+										color="inherit"
+										aria-label="menu"
+									>
+										<MenuIcon />
+									</IconButton>
+								);
+							}
+						}}
+					</Authenticator.Consumer>
+
 					<Typography variant="h6" className={classes.title}>
 						<Authenticator.Consumer>
 							{(props) => {
