@@ -80,19 +80,15 @@ const Navbar = () => {
 							{(props) => {
 								if (props.isAuthorized) {
 									return (
-										<Button color="inherit">
-											<Link to="/user_dashboard" style={{ textDecoration: 'none' }}>
-												Dashboard
-											</Link>
-										</Button>
+										<Link to="/user_dashboard" style={{ textDecoration: 'none' }}>
+											<Button color="inherit">Dashboard</Button>
+										</Link>
 									);
 								} else {
 									return (
-										<Button color="inherit">
-											<Link to="/" style={{ textDecoration: 'none' }}>
-												Imperial Dreams
-											</Link>
-										</Button>
+										<Link to="/" style={{ textDecoration: 'none' }}>
+											<Button color="inherit">Imperial Dreams</Button>
+										</Link>
 									);
 								}
 							}}
@@ -133,11 +129,11 @@ const Navbar = () => {
 								);
 							} else {
 								return (
-									<Button color="inherit" style={{ backgroundColor: 'rgb(138, 3, 3)' }}>
-										<Link to="/login" style={{ textDecoration: 'none' }}>
+									<Link to="/login" style={{ textDecoration: 'none' }}>
+										<Button color="inherit" style={{ backgroundColor: 'rgb(138, 3, 3)' }}>
 											Login
-										</Link>
-									</Button>
+										</Button>
+									</Link>
 								);
 							}
 						}}
