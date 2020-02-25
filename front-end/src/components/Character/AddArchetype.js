@@ -2,10 +2,15 @@ import { Button, FormControl, Input, InputLabel, Paper } from '@material-ui/core
 
 import React from 'react';
 
-const AdminDashboard = () => {
+const AddArchetype = () => {
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		console.log(e.target);
+	};
+
 	return (
-		<div>
-			<Paper>
+		<Paper>
+			<form onSubmit={(e) => handleSubmit(e)}>
 				<FormControl>
 					<InputLabel id="type">Type</InputLabel>
 					<Input />
@@ -20,9 +25,14 @@ const AdminDashboard = () => {
 						<input type="file" style={{ display: 'none' }} />
 					</Button>
 				</FormControl>
-			</Paper>
-		</div>
+				<FormControl>
+					<Button variant="contained" type="submit">
+						Submit
+					</Button>
+				</FormControl>
+			</form>
+		</Paper>
 	);
 };
 
-export default AdminDashboard;
+export default AddArchetype;
