@@ -2,6 +2,7 @@
 
 import { Route, BrowserRouter as Router } from 'react-router-dom';
 
+import AddArchetype from './Character/AddArchetype';
 import BorderBackground from '../images/borderBackground.jpg';
 import ButtonBackground from '../images/buttonBackground.jpg';
 import ForgotPassword from './Authentication/ForgotPassword';
@@ -29,5 +30,6 @@ export {
 	withCookies,
 	ResetPassword,
 	ButtonBackground,
-	BorderBackground
+	BorderBackground,
+	AddArchetype
 };

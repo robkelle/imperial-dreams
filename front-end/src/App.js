@@ -1,6 +1,7 @@
 // Exported by the imports.js file
 
 import {
+	AddArchetype,
 	BorderBackground,
 	ButtonBackground,
 	ForgotPassword,
@@ -94,6 +95,17 @@ function App(props) {
 						render={(e) =>
 							handleAuth.isAuthorized ? (
 								<UserDashboard />
+							) : (
+								<Login history={e.history} cookies={props.cookies} />
+							)}
+					/>
+
+					<Route
+						exact
+						path="/add_archetype"
+						render={(e) =>
+							handleAuth.isAuthorized ? (
+								<AddArchetype />
 							) : (
 								<Login history={e.history} cookies={props.cookies} />
 							)}
