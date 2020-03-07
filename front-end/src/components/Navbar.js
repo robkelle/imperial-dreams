@@ -99,9 +99,7 @@ const Navbar = () => {
 							if (props.isAuthorized) {
 								return (
 									<div>
-										<Button color="inherit" style={{ backgroundColor: 'rgb(138, 3, 3)' }}>
-											<Logout />
-										</Button>
+										<Logout />
 										<Drawer
 											anchor="left"
 											open={state.open}

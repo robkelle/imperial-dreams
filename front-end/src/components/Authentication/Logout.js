@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+import { Button } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import config from '../../config.json';
 import { withCookies } from 'react-cookie';
@@ -28,9 +29,11 @@ class Logout extends Component {
 
 	render() {
 		return (
-			<Link to="/" onClick={this.handleClick} style={{ textDecoration: 'none' }}>
-				Logout
-			</Link>
+			<Button color="inherit" onClick={this.handleClick} style={{ backgroundColor: 'rgb(138, 3, 3)' }}>
+				<Link to="/" style={{ textDecoration: 'none' }}>
+					Logout
+				</Link>
+			</Button>
 		);
 	}
 }
