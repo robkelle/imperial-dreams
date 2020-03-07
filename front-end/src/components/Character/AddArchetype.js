@@ -1,9 +1,13 @@
-import { Button, FormControl, Grid, Input, InputLabel, Paper } from '@material-ui/core';
+import { Badge, Button, FormControl, Grid, Input, InputLabel, Paper, Typography } from '@material-ui/core';
 import React, { useState } from 'react';
 
 import config from '../../config.json';
 
 const AddArchetype = () => {
+	const [ file, setFile ] = useState();
+	const [ type, setType ] = useState();
+	const [ label, setLabel ] = useState();
+
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		let formData = new FormData();
@@ -19,56 +23,64 @@ const AddArchetype = () => {
 				return res.json();
 			})
 			.then((res) => {
-				console.log(res);
+				// Clear form values on submission
+				setLabel('');
+				setType('');
+				setFile(undefined);
 			});
 	};
 
-	const [ file, setFile ] = useState();
-	const [ type, setType ] = useState();
-	const [ label, setLabel ] = useState();
-
 	return (
-		<div width="100%" style={{ marginTop: 20 }}>
-			<Grid container justify="center">
-				<Grid item>
-					<Paper style={{ padding: 10 }}>
-						<form>
-							<div>
-								<FormControl>
-									<InputLabel id="type">Type</InputLabel>
-									<Input onChange={(e) => setType(e.target.value)} />
-								</FormControl>
-							</div>
-							<div>
-								<FormControl>
-									<InputLabel type="label">Label</InputLabel>
-									<Input onChange={(e) => setLabel(e.target.value)} />
-								</FormControl>
-							</div>
-							<br />
-							<FormControl>
-								<Button variant="contained" component="label">
-									Upload File
-									<input
-										type="file"
-										style={{ display: 'none' }}
-										onChange={(e) => {
-											setFile(e.target.files[0]);
-										}}
-									/>
-								</Button>
+		<Grid container justify="center" style={{ marginTop: 20 }}>
+			<Grid item xl={3} lg={3} md={3} sm={3} xs={3}>
+				<Paper style={{ padding: 10 }}>
+					<Typography variant="subtitle1">Add Archetype</Typography>
+					<form>
+						<div>
+							<FormControl fullWidth>
+								<InputLabel id="type">Type</InputLabel>
+								<Input onChange={(e) => setType(e.target.value)} value={type} />
 							</FormControl>
-
-							<FormControl>
-								<Button variant="contained" type="submit" onClick={(e) => handleSubmit(e)}>
-									Submit
-								</Button>
+						</div>
+						<div>
+							<FormControl fullWidth>
+								<InputLabel type="label">Label</InputLabel>
+								<Input onChange={(e) => setLabel(e.target.value)} value={label} />
 							</FormControl>
-						</form>
-					</Paper>
-				</Grid>
+						</div>
+						<FormControl fullWidth style={{ marginTop: 20 }}>
+							<Button variant="contained" component="label">
+								{file === undefined ? (
+									'Upload File'
+								) : (
+									<Badge badgeContent={1} color="primary">
+										Upload File
+									</Badge>
+								)}
+								<input
+									type="file"
+									style={{ display: 'none' }}
+									onChange={(e) => {
+										setFile(e.target.files[0]);
+									}}
+								/>
+							</Button>
+						</FormControl>
+						<FormControl fullWidth style={{ marginTop: 10 }}>
+							<Button
+								variant="contained"
+								color="primary"
+								type="submit"
+								onClick={(e) => handleSubmit(e)}
+								disabled={file === undefined ? true : false}
+							>
+								Submit
+							</Button>
+						</FormControl>
+					</form>
+				</Paper>
 			</Grid>
-		</div>
+		</Grid>
 	);
 };
 
