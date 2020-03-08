@@ -59,6 +59,8 @@ exports.signup = (req, res) => {
 				userValidate.emailExists === false &&
 				userValidate.emailValid === true
 			) {
+				user.email = user.email.toLowerCase()
+				user.username = user.username.toLowerCase()
 				user.save((error) => {
 					if (error) {
 						res.status(500).send({
@@ -120,7 +122,7 @@ exports.signup = (req, res) => {
 exports.signin = (req, res, next) => {
 	User.findOne(
 		{
-			username: req.body.username
+			username: req.body.username.toLowerCase()
 		},
 		(error, user) => {
 			if (error) {
@@ -171,7 +173,7 @@ exports.signin = (req, res, next) => {
 
 				// Updates the users access token in the database when the login API is hit
 				User.findOneAndUpdate(
-					{ username: req.body.username },
+					{ username: req.body.username.toLowerCase() },
 					{
 						accessToken: {
 							issuer: jwtTokenDecoded.username,
@@ -278,10 +280,10 @@ exports.forgotPassword = (req, res) => {
 		});
 	};
 
-	// Find a valid user
+	// Find a valid uscd
 	User.findOne(
 		{
-			email: req.body.email
+			email: req.body.email.toLowerCase()
 		},
 		(err, user) => {
 			if (err || !user) {
@@ -299,7 +301,7 @@ exports.forgotPassword = (req, res) => {
 
 		// Updates the users reset token in the database when the forgot password API is hit
 		User.findOneAndUpdate(
-			{ email: req.body.email },
+			{ email: req.body.email.toLowerCase() },
 			{
 				resetToken: token
 			},
