@@ -243,7 +243,7 @@ class Register extends Component {
 										}}
 										onClick={(e) => this.handleSubmit(e)}
 									>
-										Log in
+										Register
 									</Button>
 									<br />
 									<br />
