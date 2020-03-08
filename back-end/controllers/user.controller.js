@@ -280,7 +280,7 @@ exports.forgotPassword = (req, res) => {
 		});
 	};
 
-	// Find a valid uscd
+	// Find a valid user
 	User.findOne(
 		{
 			email: req.body.email.toLowerCase()
