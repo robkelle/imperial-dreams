@@ -51,48 +51,18 @@ const ArchetypeStats = (props) => {
 					</Grid>
 					<Grid item xl={6}>
 						<Collapse in={minimizeCharacteristis}>
-							<Grid container justify="space-evenly">
-								<Grid item xl={6}>
-									<Typography variant="overline">EYES</Typography>
-								</Grid>
-								<Grid item xl={6}>
-									<Typography variant="overline">
-										{props.eyes !== undefined ? props.eyes.eyes : '---'}
-									</Typography>
-								</Grid>
-								<Grid item xl={6}>
-									<Typography variant="overline">HAIR</Typography>
-								</Grid>
-								<Grid item xl={6}>
-									<Typography variant="overline">
-										{props.hair !== undefined ? props.hair.hair : '---'}
-									</Typography>
-								</Grid>
-								<Grid item xl={6}>
-									<Typography variant="overline">SKIN</Typography>
-								</Grid>
-								<Grid item xl={6}>
-									<Typography variant="overline">
-										{props.skin !== undefined ? props.skin.skin : '---'}
-									</Typography>
-								</Grid>
-								<Grid item xl={6}>
-									<Typography variant="overline">MOUTH</Typography>
-								</Grid>
-								<Grid item xl={6}>
-									<Typography variant="overline">
-										{props.mouth !== undefined ? props.mouth.mouth : '---'}
-									</Typography>
-								</Grid>
-								<Grid item xl={6}>
-									<Typography variant="overline">PROFESSION</Typography>
-								</Grid>{' '}
-								<Grid item xl={6}>
-									<Typography variant="overline">
-										{props.profession !== undefined ? props.profession.profession : '---'}
-									</Typography>
-								</Grid>
-							</Grid>
+							{props.selectedType.map((value, index) => {
+								return (
+									<Grid container justify="space-evenly" key={index}>
+										<Grid item xl={6}>
+											<Typography variant="overline">{value._id.type}</Typography>
+										</Grid>
+										<Grid item xl={6}>
+											<Typography variant="overline">{props.selectedArchetype}</Typography>
+										</Grid>
+									</Grid>
+								);
+							})}
 						</Collapse>
 					</Grid>
 

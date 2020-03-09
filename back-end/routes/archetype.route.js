@@ -1,4 +1,5 @@
 import archetypeController from '../controllers/archetype.controller';
+import checkAuthorization from '../middleware/checkAuthorization';
 import express from 'express';
 
 const router = express.Router();
@@ -10,6 +11,8 @@ const upload = multer({
 	dest: 'uploads/'
 });
 
-router.post('/archetype', upload.single('archetypeImage'), archetypeController.postArchetype);
+router.post('/archetype', upload.single('archetypeImage'), checkAuthorization, archetypeController.postArchetype);
+router.get('/archetype/groupByType', checkAuthorization, archetypeController.getArchetypeGroupByType);
+router.get('/archetype/:type', checkAuthorization, archetypeController.getArchetypeByType);
 
 module.exports = router;

@@ -1,6 +1,13 @@
 import { Button, Grid, Paper, Typography } from '@material-ui/core';
 import React, { Fragment } from 'react';
 
+const arrayBufferToBase64 = (buffer) => {
+	var binary = '';
+	var bytes = [].slice.call(new Uint8Array(buffer));
+	bytes.forEach((b) => (binary += String.fromCharCode(b)));
+	return window.btoa(binary);
+};
+
 const Archetype = (props) => {
 	return (
 		<Fragment>
@@ -10,15 +17,20 @@ const Archetype = (props) => {
 				</Typography>
 				<Paper style={{ backgroundColor: '#181818', color: '#fff' }} align="center">
 					<Grid container>
-						{props.characters.map((value, index) => {
+						{props.selectedType.map((value, index) => {
 							return (
 								<Grid item xs={3} sm={3} md={3} lg={3} xl={3} key={index}>
 									<Button
 										onClick={() => {
-											props.selectedArchetype(value);
+											props.selectedArchetype(value.label);
 										}}
 									>
-										<img src="https://place-hold.it/110x250/666" alt="" />
+										<img
+											src={'data:image/jpeg;base64,' + arrayBufferToBase64(value.image.data.data)}
+											width="110"
+											height="250"
+											alt=""
+										/>
 									</Button>
 								</Grid>
 							);

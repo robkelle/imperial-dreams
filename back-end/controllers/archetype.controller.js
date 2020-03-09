@@ -1,6 +1,7 @@
 import Archetype from '../models/archetype.model';
 import fs from 'fs';
 import fsExtra from 'fs-extra';
+import { request } from 'http';
 
 exports.postArchetype = (req, res) => {
 	fsExtra.emptyDir('uploads', (err) => {
@@ -23,6 +24,22 @@ exports.postArchetype = (req, res) => {
 			res.status(500).send('Something went wrong.');
 		} else {
 			res.status(200).send({ message: `${archetype.label} ${archetype.type} was created.` });
+		}
+	});
+};
+
+exports.getArchetypeGroupByType = (req, res) => {
+	Archetype.aggregate([ { $group: { _id: { type: '$type' } } } ], (err, archetype) => {
+		res.send(archetype);
+	});
+};
+
+exports.getArchetypeByType = (req, res) => {
+	Archetype.find({ type: req.params.type }, (err, data) => {
+		if (err) {
+			res.status(500).send('Error fetching archetype type.');
+		} else {
+			res.status(200).send(data);
 		}
 	});
 };

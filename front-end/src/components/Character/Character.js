@@ -4,30 +4,16 @@ import { Archetype } from './Archetype';
 import { ArchetypeSelection } from './ArchetypeSelection';
 import { ArchetypeStats } from './ArchetypeStats';
 import React from 'react';
+import config from '../../config.json';
 
 class Character extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-			eyes: [ 'Green', 'Blue', 'Brown', 'Hazel', 'Gray', 'Amber', 'Yellow', 'Purple', 'Red' ],
-			hair: [ 'Brown', 'Blonde' ],
-			skin: [
-				'Porcelain',
-				'Ivory',
-				'Warm Ivory',
-				'Sand',
-				'Beige',
-				'Warm Beige',
-				'Natural',
-				'Honey',
-				'Golden',
-				'Almond',
-				'Chestnut',
-				'Espresso'
-			],
-			mouth: [ 'Smile', 'Frown', 'Angry' ],
-			profession: [ 'Politician' ],
-			value: 'eyes',
+			types: [],
+			value: null,
+			selectedAttributes: null,
+			selected: null,
 			attributes: [
 				{ label: 'STRENGTH', value: 10 },
 				{ label: 'DEXTERITY', value: 20 },
@@ -55,33 +41,52 @@ class Character extends React.Component {
 		};
 	}
 
+	componentDidMount() {
+		fetch(`${config.API.DOMAIN}:${config.API.PORT}/api/archetype/groupByType`, {
+			method: 'GET',
+			mode: 'cors',
+			credentials: 'include',
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		})
+			.then((res) => {
+				return res.json();
+			})
+			.then((res) => {
+				this.setState({
+					types: res
+				});
+			});
+	}
+
 	selectedAttributes = (data) => {
 		this.setState({
-			selectedAttributes: data,
-			[`${this.state.value}Data`]: {
-				[this.state.value]: data
-			}
+			selectedAttributes: data
 		});
 	};
 
 	handleChange = (e) => {
+		fetch(`${config.API.DOMAIN}:${config.API.PORT}/api/archetype/${e.target.value}`, {
+			method: 'GET',
+			mode: 'cors',
+			credentials: 'include',
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		})
+			.then((res) => {
+				return res.json();
+			})
+			.then((res) => {
+				this.setState({
+					selected: res
+				});
+			});
+
 		this.setState({
 			value: e.target.value
 		});
-	};
-
-	handleArchetype = (value) => {
-		if (value === 'eyes') {
-			return this.state.eyes;
-		} else if (value === 'hair') {
-			return this.state.hair;
-		} else if (value === 'skin') {
-			return this.state.skin;
-		} else if (value === 'profession') {
-			return this.state.profession;
-		} else {
-			return this.state.mouth;
-		}
 	};
 
 	render() {
@@ -92,57 +97,44 @@ class Character extends React.Component {
 						<Grid container spacing={2}>
 							<Grid item xs={12} sm={12} md={1} lg={2} xl={2}>
 								<FormControl onChange={this.handleChange}>
-									<RadioGroup value={this.state.value}>
-										<FormControlLabel
-											label="Eyes"
-											control={<Radio color="default" style={{ color: 'rgb(138, 3, 3)' }} />}
-											value="eyes"
-											style={{ color: '#fff' }}
-										/>
-										<FormControlLabel
-											label="Hair"
-											control={<Radio color="default" style={{ color: 'rgb(138, 3, 3)' }} />}
-											value="hair"
-											style={{ color: '#fff' }}
-										/>
-										<FormControlLabel
-											label="Skin"
-											control={<Radio color="default" style={{ color: 'rgb(138, 3, 3)' }} />}
-											value="skin"
-											style={{ color: '#fff' }}
-										/>
-										<FormControlLabel
-											label="Mouth"
-											control={<Radio color="default" style={{ color: 'rgb(138, 3, 3)' }} />}
-											value="mouth"
-											style={{ color: '#fff' }}
-										/>
-										<FormControlLabel
-											label="Profession"
-											control={<Radio color="default" style={{ color: 'rgb(138, 3, 3)' }} />}
-											value="profession"
-											style={{ color: '#fff' }}
-										/>
+									<RadioGroup value={this.state.value || ''}>
+										{this.state.types.map((value, index) => {
+											return (
+												<FormControlLabel
+													key={index}
+													label={value._id.type}
+													control={
+														<Radio color="default" style={{ color: 'rgb(138, 3, 3)' }} />
+													}
+													value={value._id.type}
+													style={{ color: '#fff' }}
+												/>
+											);
+										})}
 									</RadioGroup>
 								</FormControl>
 							</Grid>
-
-							<Archetype
-								title="ARCHETYPE"
-								characters={this.handleArchetype(this.state.value)}
-								selectedArchetype={this.selectedAttributes}
-							/>
+							{this.state.selected === null ? (
+								''
+							) : (
+								<Archetype
+									title="ARCHETYPE"
+									selectedType={this.state.selected}
+									selectedArchetype={this.selectedAttributes}
+								/>
+							)}
 							<ArchetypeSelection title="CHARACTER" selectedArchetype={this.state.selectedAttributes} />
-							<ArchetypeStats
-								title="STATS"
-								stats={this.state.stats}
-								attributes={this.state.attributes}
-								eyes={this.state.eyesData}
-								hair={this.state.hairData}
-								skin={this.state.skinData}
-								mouth={this.state.mouthData}
-								profession={this.state.professionData}
-							/>
+							{this.state.selected === null ? (
+								''
+							) : (
+								<ArchetypeStats
+									title="STATS"
+									selectedType={this.state.types}
+									selectedArchetype={this.state.selectedAttributes}
+									stats={this.state.stats}
+									attributes={this.state.attributes}
+								/>
+							)}
 						</Grid>
 					</Grid>
 				</Grid>
