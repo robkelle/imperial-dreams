@@ -11,7 +11,7 @@ const ArchetypeSelection = (props) => {
 			<Paper style={{ backgroundColor: '#181818', color: '#fff' }} align="center">
 				<Grid container spacing={1}>
 					<Grid item xl={12}>
-						<img src="https://place-hold.it/400/666" alt="" />
+						<div style={{ width: 666, height: 400 }} />
 					</Grid>
 				</Grid>
 			</Paper>

@@ -23,7 +23,7 @@ const ArchetypeStats = (props) => {
 							<Grid item xl={6} key={index}>
 								<Grid container spacing={5}>
 									<Grid item xl={2}>
-										<img src="https://place-hold.it/50/666" alt="" />
+										<div style={{ height: 50, width: 50, backgroundColor: 'gray' }} />
 									</Grid>
 									<Grid item xs={10}>
 										<Typography variant="overline">{value.label}</Typography>

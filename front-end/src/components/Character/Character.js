@@ -114,27 +114,20 @@ class Character extends React.Component {
 									</RadioGroup>
 								</FormControl>
 							</Grid>
-							{this.state.selected === null ? (
-								''
-							) : (
-								<Archetype
-									title="ARCHETYPE"
-									selectedType={this.state.selected}
-									selectedArchetype={this.selectedAttributes}
-								/>
-							)}
+
+							<Archetype
+								title="ARCHETYPE"
+								selectedType={this.state.selected}
+								selectedArchetype={this.selectedAttributes}
+							/>
 							<ArchetypeSelection title="CHARACTER" selectedArchetype={this.state.selectedAttributes} />
-							{this.state.selected === null ? (
-								''
-							) : (
-								<ArchetypeStats
-									title="STATS"
-									selectedType={this.state.types}
-									selectedArchetype={this.state.selectedAttributes}
-									stats={this.state.stats}
-									attributes={this.state.attributes}
-								/>
-							)}
+							<ArchetypeStats
+								title="STATS"
+								selectedType={this.state.types}
+								selectedArchetype={this.state.selectedAttributes}
+								stats={this.state.stats}
+								attributes={this.state.attributes}
+							/>
 						</Grid>
 					</Grid>
 				</Grid>

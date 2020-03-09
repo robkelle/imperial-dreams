@@ -1,15 +1,4 @@
-import {
-	Badge,
-	Button,
-	FormControl,
-	Grid,
-	Input,
-	InputLabel,
-	MenuItem,
-	Paper,
-	Select,
-	Typography
-} from '@material-ui/core';
+import { Badge, Button, FormControl, Grid, Input, InputLabel, MenuItem, Paper, Select } from '@material-ui/core';
 import React, { useState } from 'react';
 
 import config from '../../config.json';
