@@ -87,7 +87,7 @@ const Navbar = () => {
 								} else {
 									return (
 										<Link to="/" style={{ textDecoration: 'none' }}>
-											<Button color="inherit">Imperial Dreams</Button>
+											<span style={{ fontFamily: 'Cinzel, sans-serif' }}>Imperial Dreams</span>
 										</Link>
 									);
 								}

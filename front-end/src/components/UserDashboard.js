@@ -14,7 +14,7 @@ const UserDashboard = () => {
 	};
 
 	return (
-		<div style={{ backgroundColor: 'rgba(24,24,24, 0.7)' }}>
+		<div>
 			<Fragment>
 				<Character />
 				{open ? (
