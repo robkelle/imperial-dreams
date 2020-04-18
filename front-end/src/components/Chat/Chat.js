@@ -14,7 +14,6 @@ import {
 } from '@material-ui/core';
 import React, { Component, Fragment } from 'react';
 
-import ArrowIcon from '@material-ui/icons/ArrowForwardIos';
 import ChatGIFMessage from './ChatGIFMessage';
 import ChatLoader from './ChatLoader';
 import ChatMessage from './ChatMessage';
@@ -22,6 +21,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import GifIcon from '@material-ui/icons/Gif';
 import InfiniteScroll from 'react-infinite-scroller';
 import Picker from 'react-giphy-component';
+import SendIcon from '@material-ui/icons/Send';
 import _ from 'lodash';
 import config from '../../config.json';
 import io from 'socket.io-client';
@@ -374,7 +374,7 @@ class Chat extends Component {
 								endAdornment={
 									<InputAdornment position="end" style={{ marginBottom: 12 }}>
 										<Fab size={'small'} style={{ backgroundColor: this.chatColor, color: '#fff' }}>
-											<ArrowIcon onClick={() => this.addMessage(this.state.addMessage, 'text')} />
+											<SendIcon onClick={() => this.addMessage(this.state.addMessage, 'text')} />
 										</Fab>
 										<Fab
 											size={'small'}
