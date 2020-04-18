@@ -101,13 +101,35 @@ const AddArchetype = () => {
 								/>
 							</Button>
 						</FormControl>
+						{file !== undefined ? (
+							<FormControl fullWidth style={{ marginTop: 20 }}>
+								<Button
+									variant="contained"
+									component="label"
+									onClick={(e) => {
+										setFile(undefined);
+									}}
+									style={{ backgroundColor: 'rgb(138, 3, 3)', color: '#fff' }}
+								>
+									Remove File
+								</Button>
+							</FormControl>
+						) : (
+							''
+						)}
 						<FormControl fullWidth style={{ marginTop: 10 }}>
 							<Button
 								variant="contained"
 								color="primary"
 								type="submit"
 								onClick={(e) => handleSubmit(e)}
-								disabled={file === undefined ? true : false}
+								disabled={
+									file === undefined || type === undefined || label === undefined || label === '' ? (
+										true
+									) : (
+										false
+									)
+								}
 							>
 								Submit
 							</Button>
