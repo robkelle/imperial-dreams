@@ -126,13 +126,6 @@ const Navbar = () => {
 									</div>
 								);
 							} else {
-								return (
-									<Link to="/login" style={{ textDecoration: 'none' }}>
-										<Button color="inherit" style={{ backgroundColor: 'rgb(138, 3, 3)' }}>
-											Login
-										</Button>
-									</Link>
-								);
 							}
 						}}
 					</Authenticator.Consumer>

@@ -6,6 +6,7 @@ import {
 	CardContent,
 	Checkbox,
 	FormControl,
+	FormControlLabel,
 	FormHelperText,
 	Grid,
 	Input,
@@ -41,6 +42,7 @@ class Login extends Component {
 			username: null,
 			password: null,
 			isValid: true,
+			checked: false,
 			isPasswordValid: true
 		};
 	}
@@ -105,7 +107,7 @@ class Login extends Component {
 		return (
 			<div className="animated fadeInDown faster">
 				<Grid container={true} justify={'center'}>
-					<Grid item={true} xs={12} sm={8} md={5} lg={5} xl={3}>
+					<Grid item={true} xs={12} sm={8} md={5} lg={4} xl={4}>
 						<Card
 							style={{
 								backgroundColor: 'rgba(24, 24, 24, .85)',
@@ -198,8 +200,18 @@ class Login extends Component {
 
 									<br />
 									<div>
-										<Checkbox type="checkbox" className={classes.root} />
-										<label htmlFor="rememberMe">Remember Username</label>
+										<FormControlLabel
+											control={
+												<Checkbox
+													className={classes.root}
+													name="checked"
+													checked={this.state.checked}
+													onClick={() =>
+														this.setState({ checked: !this.state.checked ? true : false })}
+												/>
+											}
+											label="Remember Username"
+										/>
 									</div>
 									<Button
 										type="submit"

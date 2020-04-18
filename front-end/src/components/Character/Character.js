@@ -14,6 +14,11 @@ class Character extends React.Component {
 			value: null,
 			selectedAttributes: null,
 			selected: null,
+			formControlStyle: {
+				root: {
+					fontSize: '2px'
+				}
+			},
 			attributes: [
 				{ label: 'STRENGTH', value: 10 },
 				{ label: 'DEXTERITY', value: 20 },
@@ -95,7 +100,7 @@ class Character extends React.Component {
 				<Grid container style={{ padding: 20 }}>
 					<Grid item xl={12}>
 						<Grid container spacing={2}>
-							<Grid item xs={12} sm={12} md={1} lg={2} xl={2}>
+							<Grid item xs={12} sm={12} md={1} lg={1} xl={1}>
 								<FormControl onChange={this.handleChange}>
 									<RadioGroup value={this.state.value || ''}>
 										{this.state.types.map((value, index) => {

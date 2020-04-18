@@ -95,7 +95,7 @@ const Landing = (props) => {
 								{(props) => {
 									if (!props.isAuthorized) {
 										return (
-											<Link to="/register" style={{ textDecoration: 'none' }}>
+											<Link to="/login" style={{ textDecoration: 'none' }}>
 												<Button
 													style={{
 														backgroundColor: 'rgb(217, 217, 217)',
