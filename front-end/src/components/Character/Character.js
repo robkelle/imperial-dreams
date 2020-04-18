@@ -66,6 +66,8 @@ class Character extends React.Component {
 	}
 
 	selectedAttributes = (data) => {
+		// Mark attribute selected via REST call
+
 		this.setState({
 			selectedAttributes: data
 		});
