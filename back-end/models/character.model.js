@@ -10,6 +10,18 @@ module.exports = mongoose.model(
 	new Schema({
 		type: String,
 		label: String,
-		userID: mongoose.Types.ObjectId
+		userID: mongoose.Types.ObjectId,
+		stats: {
+			strength: Number,
+			dexterity: Number,
+			spirit: Number,
+			intellect: Number,
+			armor: Number,
+			movement: Number
+		},
+		characteristics: {
+			type: String,
+			label: String
+		}
 	})
 );
