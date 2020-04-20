@@ -1,5 +1,8 @@
 import { Button, Grid, Paper, Typography } from '@material-ui/core';
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
+
+import { Authenticator } from '../Authentication/AuthenticatorContext';
+import config from '../../config.json';
 
 const arrayBufferToBase64 = (buffer) => {
 	var binary = '';
@@ -8,9 +11,30 @@ const arrayBufferToBase64 = (buffer) => {
 	return window.btoa(binary);
 };
 
+const addCharacterType = async (type, label, userID, props) => {
+	await fetch(`${config.API.DOMAIN}:${config.API.PORT}/api/character/${type}/${label}`, {
+		method: 'POST',
+		headers: {
+			Accept: 'application/json',
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({
+			userID: userID
+		})
+	}).then(async (res) => {
+		props.selectedArchetype(userID);
+	});
+};
+
 const Archetype = (props) => {
+	const [ userID, setUserID ] = useState(0);
 	return (
 		<Fragment>
+			<Authenticator.Consumer>
+				{(props) => {
+					setUserID(props.userID);
+				}}
+			</Authenticator.Consumer>
 			<Grid item xs={12} sm={12} md={3} lg={3} xl={3}>
 				<Typography variant="h5" gutterBottom={true} style={{ color: '#fff' }}>
 					{props.title}
@@ -23,7 +47,7 @@ const Archetype = (props) => {
 									<Grid item xs={3} sm={3} md={3} lg={3} xl={3} key={index}>
 										<Button
 											onClick={() => {
-												props.selectedArchetype(value.label);
+												addCharacterType(value.type, value.label, userID, props);
 											}}
 										>
 											<img

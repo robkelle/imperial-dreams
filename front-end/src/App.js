@@ -64,7 +64,7 @@ const classes = {
 };
 
 function App(props) {
-	const handleAuth = { isAuthorized: props.cookies.get('isAuthorized') };
+	const handleAuth = { isAuthorized: props.cookies.get('isAuthorized'), userID: props.cookies.get('_id') };
 
 	return (
 		<div>
@@ -94,7 +94,7 @@ function App(props) {
 						path="/user_dashboard"
 						render={(e) =>
 							handleAuth.isAuthorized ? (
-								<UserDashboard />
+								<UserDashboard cookies={props.cookies} />
 							) : (
 								<Login history={e.history} cookies={props.cookies} />
 							)}

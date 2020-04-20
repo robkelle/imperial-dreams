@@ -4,6 +4,7 @@ import express from 'express';
 
 const router = express.Router();
 
-router.get('/:type', characterController.postCharacterType);
+router.post('/:type/:label', characterController.postCharacterSettings);
+router.get('/:user', characterController.getCharacterSettings);
 
 module.exports = router;

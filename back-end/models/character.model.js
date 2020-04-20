@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+
 const Schema = mongoose.Schema;
 
 // Fix deprecation warnings
@@ -8,6 +9,7 @@ module.exports = mongoose.model(
 	'character',
 	new Schema({
 		type: String,
-		label: String
+		label: String,
+		userID: mongoose.Types.ObjectId
 	})
 );

@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-const UserDashboard = () => {
+const UserDashboard = (props) => {
 	const [ open, setOpen ] = useState(0);
 	const classes = useStyles();
 
@@ -28,7 +28,7 @@ const UserDashboard = () => {
 	return (
 		<div>
 			<Fragment>
-				<Character />
+				<Character cookies={props.cookies} />
 				{open ? (
 					<Drawer open={open} onClose={handleClose} anchor="bottom" classes={{ paper: classes.paper }}>
 						<AppBar>

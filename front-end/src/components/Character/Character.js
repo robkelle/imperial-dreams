@@ -12,6 +12,7 @@ class Character extends React.Component {
 		this.state = {
 			types: [],
 			value: null,
+			characteristics: [ { label: 'LOADING', type: 'LOADING' } ],
 			selectedAttributes: null,
 			selected: null,
 			formControlStyle: {
@@ -46,30 +47,44 @@ class Character extends React.Component {
 		};
 	}
 
-	componentDidMount() {
-		fetch(`${config.API.DOMAIN}:${config.API.PORT}/api/archetype/groupByType`, {
+	async componentDidMount() {
+		await fetch(`${config.API.DOMAIN}:${config.API.PORT}/api/archetype/groupByType`, {
 			method: 'GET',
 			mode: 'cors',
 			credentials: 'include',
 			headers: {
 				'Content-Type': 'application/json'
 			}
-		})
-			.then((res) => {
-				return res.json();
-			})
-			.then((res) => {
-				this.setState({
-					types: res
-				});
+		}).then(async (res) => {
+			this.setState({
+				types: await res.json()
 			});
+		});
+
+		await fetch(`${config.API.DOMAIN}:${config.API.PORT}/api/character/${this.props.cookies.cookies._id}`, {
+			method: 'GET',
+			headers: {
+				Accept: 'application/json',
+				'Content-Type': 'application/json'
+			}
+		}).then(async (res) => {
+			this.setState({
+				characteristics: await res.json()
+			});
+		});
 	}
 
-	selectedAttributes = (data) => {
-		// Mark attribute selected via REST call
-
-		this.setState({
-			selectedAttributes: data
+	selectedAttributes = async (userID) => {
+		await fetch(`${config.API.DOMAIN}:${config.API.PORT}/api/character/${userID}`, {
+			method: 'GET',
+			headers: {
+				Accept: 'application/json',
+				'Content-Type': 'application/json'
+			}
+		}).then(async (res) => {
+			this.setState({
+				characteristics: await res.json()
+			});
 		});
 	};
 
@@ -131,7 +146,7 @@ class Character extends React.Component {
 							<ArchetypeStats
 								title="STATS"
 								selectedType={this.state.types}
-								selectedArchetype={this.state.selectedAttributes}
+								characteristics={this.state.characteristics}
 								stats={this.state.stats}
 								attributes={this.state.attributes}
 							/>

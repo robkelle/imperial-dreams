@@ -51,14 +51,14 @@ const ArchetypeStats = (props) => {
 					</Grid>
 					<Grid item xl={6}>
 						<Collapse in={minimizeCharacteristis}>
-							{props.selectedType.map((value, index) => {
+							{props.characteristics.map((value, index) => {
 								return (
 									<Grid container justify="space-evenly" key={index}>
 										<Grid item xl={6}>
-											<Typography variant="overline">{value._id.type}</Typography>
+											<Typography variant="overline">{value.type}</Typography>
 										</Grid>
 										<Grid item xl={6}>
-											<Typography variant="overline">{props.selectedArchetype}</Typography>
+											<Typography variant="overline">{value.label}</Typography>
 										</Grid>
 									</Grid>
 								);
