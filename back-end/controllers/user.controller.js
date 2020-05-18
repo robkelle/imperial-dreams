@@ -83,7 +83,7 @@ exports.signup = (req, res) => {
 	function userCheckEmail(newUser) {
 		User.findOne(
 			{
-				email: user.email
+				email: user.email.toLowerCase()
 			},
 			(error, user) => {
 				if (user) {
@@ -98,7 +98,7 @@ exports.signup = (req, res) => {
 	function userCheckUsername(newUser) {
 		User.findOne(
 			{
-				username: user.username
+				username: user.username.toLowerCase()
 			},
 			(error, user) => {
 				if (user) {
@@ -275,6 +275,7 @@ exports.forgotPassword = (req, res) => {
 			if (err) {
 				console.log(err);
 			} else {
+				console
 				console.log(info);
 			}
 		});
@@ -283,7 +284,7 @@ exports.forgotPassword = (req, res) => {
 	// Find a valid user
 	User.findOne(
 		{
-			email: req.body.email.toLowerCase()
+			email: req.body.email
 		},
 		(err, user) => {
 			if (err || !user) {
