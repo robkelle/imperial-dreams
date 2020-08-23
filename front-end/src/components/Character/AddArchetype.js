@@ -120,7 +120,7 @@ const AddArchetype = () => {
 						<FormControl fullWidth style={{ marginTop: 10 }}>
 							<Button
 								variant="contained"
-								color="primary"
+								color="default"
 								type="submit"
 								onClick={(e) => handleSubmit(e)}
 								disabled={

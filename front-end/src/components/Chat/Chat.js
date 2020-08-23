@@ -15,7 +15,6 @@ import {
 import React, { Component, Fragment } from 'react';
 
 import ChatGIFMessage from './ChatGIFMessage';
-import ChatLoader from './ChatLoader';
 import ChatMessage from './ChatMessage';
 import CloseIcon from '@material-ui/icons/Close';
 import GifIcon from '@material-ui/icons/Gif';
@@ -26,6 +25,18 @@ import _ from 'lodash';
 import config from '../../config.json';
 import io from 'socket.io-client';
 import { withCookies } from 'react-cookie';
+
+//import ChatLoader from './ChatLoader';
+
+
+
+
+
+
+
+
+
+
 
 class Chat extends Component {
 	constructor() {
@@ -314,7 +325,7 @@ class Chat extends Component {
 	}
 
 	render() {
-		const loader = <ChatLoader />;
+		//const loader = <ChatLoader />;
 
 		return (
 			<Fragment>
@@ -338,7 +349,7 @@ class Chat extends Component {
 							loadMore={this.loadItems}
 							isReverse={true}
 							hasMore={this.hasMore}
-							loader={loader}
+							/*loader={loader}*/
 						>
 							{_.sortBy(this.state.messages, (o) => {
 								try {

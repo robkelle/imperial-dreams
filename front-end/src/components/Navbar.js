@@ -11,13 +11,13 @@ import {
 	Toolbar,
 	Typography
 } from '@material-ui/core';
+import React, { Fragment } from 'react';
 
-import AddCircleIcon from '@material-ui/icons/AddCircle';
 import { Authenticator } from './Authentication/AuthenticatorContext';
 import { Link } from 'react-router-dom';
 import Logout from './Authentication/Logout';
 import MenuIcon from '@material-ui/icons/Menu';
-import React from 'react';
+import Settings from '@material-ui/icons/Settings';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
@@ -80,9 +80,14 @@ const Navbar = () => {
 							{(props) => {
 								if (props.isAuthorized) {
 									return (
-										<Link to="/user_dashboard" style={{ textDecoration: 'none' }}>
-											<Button color="inherit">Dashboard</Button>
-										</Link>
+										<Fragment>
+											<Link to="/user_dashboard" style={{ textDecoration: 'none' }} selected>
+												<Button color="inherit">Dashboard</Button>
+											</Link>
+											<Link to="/" style={{ textDecoration: 'none' }}>
+												<Button color="secondary">Play</Button>
+											</Link>
+										</Fragment>
 									);
 								} else {
 									return (
@@ -111,16 +116,14 @@ const Navbar = () => {
 													<ListItemText>Settings</ListItemText>
 												</ListItem>
 												<Divider classes={{ root: classes.dividerColor }} />
-												<ListItem button>
-													<Link to="/add_archetype" style={{ textDecoration: 'none' }}>
-														<ListItemText>
-															<ListItemIcon>
-																<AddCircleIcon style={{ color: '#fff' }} />
-															</ListItemIcon>
-															Add Archetype
-														</ListItemText>
-													</Link>
-												</ListItem>
+												<Link to="/add_archetype" style={{ textDecoration: 'none' }}>
+													<ListItem button>
+														<ListItemIcon>
+															<Settings style={{ color: '#fff' }} />
+														</ListItemIcon>
+														<ListItemText primary="Site Management" />
+													</ListItem>
+												</Link>
 											</List>
 										</Drawer>
 									</div>
