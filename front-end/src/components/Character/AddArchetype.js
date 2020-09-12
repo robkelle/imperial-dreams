@@ -19,6 +19,7 @@ import {
 } from '@material-ui/core';
 import React, { useState } from 'react';
 
+import { BufferToBase64 } from './BufferImage';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import config from '../../config.json';
 import { makeStyles } from '@material-ui/core/styles';
@@ -29,12 +30,6 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-const arrayBufferToBase64 = (buffer) => {
-	var binary = '';
-	var bytes = [].slice.call(new Uint8Array(buffer));
-	bytes.forEach((b) => (binary += String.fromCharCode(b)));
-	return window.btoa(binary);
-};
 
 const AddArchetype = () => {
 	const [ file, setFile ] = useState();
@@ -230,7 +225,7 @@ const RemoveArchetype = (props) => {
 											<img
 												src={
 													'data:image/jpeg;base64,' +
-													arrayBufferToBase64(value.image.data.data)
+													BufferToBase64(value.image.data.data)
 												}
                         alt="Archetype"
 											/>

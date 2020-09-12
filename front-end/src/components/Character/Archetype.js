@@ -2,14 +2,8 @@ import { Button, Grid, Paper, Typography } from '@material-ui/core';
 import React, { Fragment, useState } from 'react';
 
 import { Authenticator } from '../Authentication/AuthenticatorContext';
+import { BufferToBase64 } from './BufferImage';
 import config from '../../config.json';
-
-const arrayBufferToBase64 = (buffer) => {
-	var binary = '';
-	var bytes = [].slice.call(new Uint8Array(buffer));
-	bytes.forEach((b) => (binary += String.fromCharCode(b)));
-	return window.btoa(binary);
-};
 
 const addCharacterType = async (type, label, userID, props) => {
 	await fetch(`${config.API.DOMAIN}:${config.API.PORT}/api/character/${type}/${label}`, {
@@ -51,10 +45,7 @@ const Archetype = (props) => {
 											}}
 										>
 											<img
-												src={
-													'data:image/jpeg;base64,' +
-													arrayBufferToBase64(value.image.data.data)
-												}
+												src={'data:image/jpeg;base64,' + BufferToBase64(value.image.data.data)}
 												width="110"
 												height="250"
 												alt=""
