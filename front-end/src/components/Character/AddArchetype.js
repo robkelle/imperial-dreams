@@ -247,7 +247,7 @@ const RemoveArchetype = (props) => {
 					})}
 					{props.label.length === 0 ? (
 						<Typography gutterBottom={true} variant="caption" color="error">
-							You need to enter a label for this type before you can view or remove.
+							<strong>You need to enter a label for this type before you can view or remove.</strong>
 						</Typography>
 					) : (
 						''
