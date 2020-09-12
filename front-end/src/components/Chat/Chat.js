@@ -28,16 +28,6 @@ import { withCookies } from 'react-cookie';
 
 //import ChatLoader from './ChatLoader';
 
-
-
-
-
-
-
-
-
-
-
 class Chat extends Component {
 	constructor() {
 		super();

@@ -84,7 +84,7 @@ const Navbar = () => {
 											<Link to="/user_dashboard" style={{ textDecoration: 'none' }} selected>
 												<Button color="inherit">Dashboard</Button>
 											</Link>
-											<Link to="/" style={{ textDecoration: 'none' }}>
+											<Link to="/map" style={{ textDecoration: 'none' }}>
 												<Button color="secondary">Play</Button>
 											</Link>
 										</Fragment>
@@ -116,7 +116,13 @@ const Navbar = () => {
 													<ListItemText>Settings</ListItemText>
 												</ListItem>
 												<Divider classes={{ root: classes.dividerColor }} />
-												<Link to="/add_archetype" style={{ textDecoration: 'none' }}>
+												<Link
+													to="/add_archetype"
+													style={{ textDecoration: 'none' }}
+													onClick={(e) => {
+														setState('open', false);
+													}}
+												>
 													<ListItem button>
 														<ListItemIcon>
 															<Settings style={{ color: '#fff' }} />

@@ -1,12 +1,36 @@
-import { Badge, Button, FormControl, Grid, Input, InputLabel, MenuItem, Paper, Select } from '@material-ui/core';
+import {
+	Badge,
+	Button,
+	FormControl,
+	Grid,
+	IconButton,
+	Input,
+	InputLabel,
+	List,
+	ListItem,
+	ListItemSecondaryAction,
+	ListItemText,
+	MenuItem,
+	Paper,
+	Select
+} from '@material-ui/core';
 import React, { useState } from 'react';
 
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import config from '../../config.json';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+	root: {
+		backgroundColor: theme.palette.background.paper
+	}
+}));
 
 const AddArchetype = () => {
 	const [ file, setFile ] = useState();
 	const [ type, setType ] = useState();
 	const [ label, setLabel ] = useState();
+	const [ labelValues, setLabelValues ] = useState(null);
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -32,6 +56,20 @@ const AddArchetype = () => {
 			});
 	};
 
+	const getTypes = (e) => {
+		fetch(`${config.API.DOMAIN}:${config.API.PORT}/api/archetype/${e}`, {
+			method: 'GET',
+			mode: 'cors',
+			credentials: 'include'
+		})
+			.then((res) => {
+				return res.json();
+			})
+			.then((res) => {
+				setLabelValues(res);
+			});
+	};
+
 	const ITEM_HEIGHT = 48;
 	const ITEM_PADDING_TOP = 8;
 	const MenuProps = {
@@ -49,7 +87,7 @@ const AddArchetype = () => {
 		'Skin Color',
 		'Face Structure',
 		'Nose',
-		'Mouth / Lips',
+		'Mouth',
 		'Facial Hair',
 		'Hair Color',
 		'Body Type',
@@ -57,7 +95,7 @@ const AddArchetype = () => {
 	];
 
 	return (
-		<Grid container justify="center" style={{ marginTop: 20 }}>
+		<Grid container justify="center" style={{ marginTop: 20 }} spacing={2}>
 			<Grid item xl={3} lg={3} md={3} sm={3} xs={3}>
 				<Paper style={{ padding: 10 }}>
 					<form>
@@ -65,7 +103,10 @@ const AddArchetype = () => {
 							<FormControl fullWidth>
 								<InputLabel id="type">Type</InputLabel>
 								<Select
-									onChange={(e) => setType(e.target.value)}
+									onChange={(e) => {
+										setType(e.target.value);
+										getTypes(e.target.value);
+									}}
 									value={type || ''}
 									MenuProps={MenuProps}
 								>
@@ -137,6 +178,37 @@ const AddArchetype = () => {
 					</form>
 				</Paper>
 			</Grid>
+
+			<RemoveArchetype label={labelValues} />
+		</Grid>
+	);
+};
+
+const RemoveArchetype = (props) => {
+	const classes = useStyles();
+
+	return (
+		<Grid item xl={3} lg={3} md={3} sm={3} xs={3}>
+			{props.label !== null ? (
+				<Paper style={{ padding: 10 }}>
+					{props.label.map((value, index) => {
+						return (
+							<List key={index} className={classes.root}>
+								<ListItem>
+									<ListItemText primary={value.label} />
+									<ListItemSecondaryAction>
+										<IconButton edge="end" aria-label="delete">
+											<DeleteForeverIcon />
+										</IconButton>
+									</ListItemSecondaryAction>
+								</ListItem>
+							</List>
+						);
+					})}
+				</Paper>
+			) : (
+				''
+			)}
 		</Grid>
 	);
 };

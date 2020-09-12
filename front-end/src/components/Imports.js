@@ -9,6 +9,7 @@ import ForgotPassword from './Authentication/ForgotPassword';
 import { Landing } from './Landing';
 import { LoadingScreen } from './LoadingScreen';
 import Login from './Authentication/Login';
+import Map from './Map';
 import { Navbar } from './Navbar';
 import React from 'react';
 import Register from './Authentication/Register';
@@ -26,6 +27,7 @@ export {
 	Landing,
 	Register,
 	UserDashboard,
+	Map,
 	LoadingScreen,
 	withCookies,
 	ResetPassword,

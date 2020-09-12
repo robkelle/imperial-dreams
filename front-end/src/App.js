@@ -8,6 +8,7 @@ import {
 	Landing,
 	LoadingScreen,
 	Login,
+	Map,
 	Navbar,
 	React,
 	Register,
@@ -95,6 +96,17 @@ function App(props) {
 						render={(e) =>
 							handleAuth.isAuthorized ? (
 								<UserDashboard cookies={props.cookies} />
+							) : (
+								<Login history={e.history} cookies={props.cookies} />
+							)}
+					/>
+
+					<Route
+						exact
+						path="/map"
+						render={(e) =>
+							handleAuth.isAuthorized ? (
+								<Map cookies={props.cookies} />
 							) : (
 								<Login history={e.history} cookies={props.cookies} />
 							)}
