@@ -15,7 +15,8 @@ import {
 	ListItemText,
 	MenuItem,
 	Paper,
-	Select
+	Select,
+	Typography
 } from '@material-ui/core';
 import React, { useState } from 'react';
 
@@ -29,7 +30,6 @@ const useStyles = makeStyles((theme) => ({
 		backgroundColor: theme.palette.background.paper
 	}
 }));
-
 
 const AddArchetype = () => {
 	const [ file, setFile ] = useState();
@@ -206,14 +206,14 @@ const RemoveArchetype = (props) => {
 				return res.json();
 			})
 			.then((res) => {
-        props.get(value.type);
-      });
+				props.get(value.type);
+			});
 	};
 
 	const classes = useStyles();
 
 	return (
-		<Grid item xl={3} lg={3} md={3} sm={3} xs={3} style={{marginLeft: 12}}>
+		<Grid item xl={3} lg={3} md={3} sm={3} xs={3} style={{ marginLeft: 12 }}>
 			{props.label !== null ? (
 				<Paper style={{ padding: 10 }}>
 					{props.label.map((value, index) => {
@@ -223,11 +223,8 @@ const RemoveArchetype = (props) => {
 									<ListItemAvatar>
 										<Avatar variant="square">
 											<img
-												src={
-													'data:image/jpeg;base64,' +
-													BufferToBase64(value.image.data.data)
-												}
-                        alt="Archetype"
+												src={'data:image/jpeg;base64,' + BufferToBase64(value.image.data.data)}
+												alt="Archetype"
 											/>
 										</Avatar>
 									</ListItemAvatar>
@@ -248,6 +245,13 @@ const RemoveArchetype = (props) => {
 							</List>
 						);
 					})}
+					{props.label.length === 0 ? (
+						<Typography gutterBottom={true} variant="caption" color="error">
+							You need to enter a label for this type before you can view or remove.
+						</Typography>
+					) : (
+						''
+					)}
 				</Paper>
 			) : (
 				''
