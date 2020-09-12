@@ -43,3 +43,9 @@ exports.getArchetypeByType = (req, res) => {
 		}
 	});
 };
+
+exports.deleteArchetype = (req, res) => {
+	Archetype.deleteOne({ _id: req.params.id }, (err, data) => {
+		res.status(200).send(data);
+	});
+};

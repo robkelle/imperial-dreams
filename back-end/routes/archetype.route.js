@@ -14,5 +14,6 @@ const upload = multer({
 router.post('/archetype', upload.single('archetypeImage'), checkAuthorization, archetypeController.postArchetype);
 router.get('/archetype/groupByType', checkAuthorization, archetypeController.getArchetypeGroupByType);
 router.get('/archetype/:type', checkAuthorization, archetypeController.getArchetypeByType);
+router.delete('/archetype/:id', checkAuthorization, archetypeController.deleteArchetype);
 
 module.exports = router;

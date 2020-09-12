@@ -1,6 +1,8 @@
 import {
+	Avatar,
 	Badge,
 	Button,
+	Divider,
 	FormControl,
 	Grid,
 	IconButton,
@@ -8,6 +10,7 @@ import {
 	InputLabel,
 	List,
 	ListItem,
+	ListItemAvatar,
 	ListItemSecondaryAction,
 	ListItemText,
 	MenuItem,
@@ -25,6 +28,13 @@ const useStyles = makeStyles((theme) => ({
 		backgroundColor: theme.palette.background.paper
 	}
 }));
+
+const arrayBufferToBase64 = (buffer) => {
+	var binary = '';
+	var bytes = [].slice.call(new Uint8Array(buffer));
+	bytes.forEach((b) => (binary += String.fromCharCode(b)));
+	return window.btoa(binary);
+};
 
 const AddArchetype = () => {
 	const [ file, setFile ] = useState();
@@ -49,6 +59,7 @@ const AddArchetype = () => {
 				return res.json();
 			})
 			.then((res) => {
+				getTypes(type);
 				// Clear form values on submission
 				setLabel('');
 				setType('');
@@ -179,12 +190,31 @@ const AddArchetype = () => {
 				</Paper>
 			</Grid>
 
-			<RemoveArchetype label={labelValues} />
+			<RemoveArchetype
+				label={labelValues}
+				get={() => {
+					getTypes(type);
+				}}
+			/>
 		</Grid>
 	);
 };
 
 const RemoveArchetype = (props) => {
+	let deleteArchetype = (value) => {
+		fetch(`${config.API.DOMAIN}:${config.API.PORT}/api/archetype/${value._id}`, {
+			method: 'DELETE',
+			mode: 'cors',
+			credentials: 'include'
+		})
+			.then((res) => {
+				return res.json();
+			})
+			.then((res) => {
+        props.get()
+      });
+	};
+
 	const classes = useStyles();
 
 	return (
@@ -195,13 +225,31 @@ const RemoveArchetype = (props) => {
 						return (
 							<List key={index} className={classes.root}>
 								<ListItem>
+									<ListItemAvatar>
+										<Avatar variant="square">
+											<img
+												src={
+													'data:image/jpeg;base64,' +
+													arrayBufferToBase64(value.image.data.data)
+												}
+                        alt="Archetype"
+											/>
+										</Avatar>
+									</ListItemAvatar>
 									<ListItemText primary={value.label} />
 									<ListItemSecondaryAction>
-										<IconButton edge="end" aria-label="delete">
+										<IconButton
+											edge="end"
+											aria-label="delete"
+											onClick={() => {
+												deleteArchetype(value);
+											}}
+										>
 											<DeleteForeverIcon />
 										</IconButton>
 									</ListItemSecondaryAction>
 								</ListItem>
+								{index === props.label.length - 1 || props.label.length === 1 ? '' : <Divider />}
 							</List>
 						);
 					})}
