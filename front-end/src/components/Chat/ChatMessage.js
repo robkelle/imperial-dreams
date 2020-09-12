@@ -5,7 +5,7 @@ import React from 'react';
 
 const ChatMessage = (props) => {
 	return (
-		<Grid container spacing={5} justify={props.action}>
+		<Grid container style={{ margin: '12px 0px 12px 0px' }} justify={props.action}>
 			<Grid item xs={'auto'} sm={'auto'} md={'auto'} lg={'auto'} xl={'auto'}>
 				<Paper style={props.style} elevation={10}>
 					<List>

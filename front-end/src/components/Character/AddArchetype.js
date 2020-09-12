@@ -101,7 +101,7 @@ const AddArchetype = () => {
 	];
 
 	return (
-		<Grid container justify="center" style={{ marginTop: 20 }} spacing={2}>
+		<Grid container justify="center" style={{ marginTop: 20 }}>
 			<Grid item xl={3} lg={3} md={3} sm={3} xs={3}>
 				<Paper style={{ padding: 10 }}>
 					<form>
@@ -187,8 +187,8 @@ const AddArchetype = () => {
 
 			<RemoveArchetype
 				label={labelValues}
-				get={() => {
-					getTypes(type);
+				get={(props) => {
+					getTypes(props);
 				}}
 			/>
 		</Grid>
@@ -206,14 +206,14 @@ const RemoveArchetype = (props) => {
 				return res.json();
 			})
 			.then((res) => {
-        props.get()
+        props.get(value.type);
       });
 	};
 
 	const classes = useStyles();
 
 	return (
-		<Grid item xl={3} lg={3} md={3} sm={3} xs={3}>
+		<Grid item xl={3} lg={3} md={3} sm={3} xs={3} style={{marginLeft: 12}}>
 			{props.label !== null ? (
 				<Paper style={{ padding: 10 }}>
 					{props.label.map((value, index) => {
