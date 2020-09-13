@@ -11,17 +11,5 @@ module.exports = mongoose.model(
 		type: String,
 		label: String,
 		userID: mongoose.Types.ObjectId,
-		stats: {
-			strength: Number,
-			dexterity: Number,
-			spirit: Number,
-			intellect: Number,
-			armor: Number,
-			movement: Number
-		},
-		characteristics: {
-			type: String,
-			label: String
-		}
 	})
 );
