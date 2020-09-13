@@ -1,8 +1,9 @@
-import { FormControl, FormControlLabel, Grid, Radio, RadioGroup } from '@material-ui/core';
+import { FormControl, FormControlLabel, Grid, Paper, Radio, RadioGroup, Tab, Tabs } from '@material-ui/core';
 
 import { Archetype } from './Archetype';
 import { ArchetypeSelection } from './ArchetypeSelection';
 import { ArchetypeStats } from './ArchetypeStats';
+import { Inventory } from '../Inventory/inventory';
 import React from 'react';
 import config from '../../config.json';
 
@@ -12,6 +13,7 @@ class Character extends React.Component {
 		this.state = {
 			types: [],
 			value: null,
+			tabValue: 0,
 			characteristics: [ { label: 'LOADING', type: 'LOADING' } ],
 			selectedAttributes: null,
 			selected: null,
@@ -111,48 +113,78 @@ class Character extends React.Component {
 		});
 	};
 
+	handleTabChange = (e, newValue) => {
+		this.setState({
+			tabValue: newValue
+		});
+
+		console.log(newValue);
+	};
+
 	render() {
 		return (
 			<React.Fragment>
-				<Grid container style={{ padding: 20 }}>
-					<Grid item xl={12}>
-						<Grid container spacing={2}>
-							<Grid item xs={12} sm={12} md={1} lg={1} xl={1}>
-								<FormControl onChange={this.handleChange}>
-									<RadioGroup value={this.state.value || ''}>
-										{this.state.types.map((value, index) => {
-											return (
-												<FormControlLabel
-													key={index}
-													label={value._id.type}
-													control={
-														<Radio color="default" style={{ color: 'rgb(138, 3, 3)' }} />
-													}
-													value={value._id.type}
-													style={{ color: '#fff' }}
-												/>
-											);
-										})}
-									</RadioGroup>
-								</FormControl>
-							</Grid>
+				<Paper square style={{ backgroundColor: 'rgb(138, 3, 3)' }}>
+					<Tabs
+						value={this.state.tabValue}
+						indicatorColor="secondary"
+						textColor="inherit"
+						onChange={this.handleTabChange}
+					>
+						<Tab label="Character" style={{ color: '#fff' }} />
+						<Tab label="Inventory" style={{ color: '#fff' }} />
+					</Tabs>
+				</Paper>
 
-							<Archetype
-								title="ARCHETYPE"
-								selectedType={this.state.selected}
-								selectedArchetype={this.selectedAttributes}
-							/>
-							<ArchetypeSelection title="CHARACTER" selectedArchetype={this.state.selectedAttributes} />
-							<ArchetypeStats
-								title="STATS"
-								selectedType={this.state.types}
-								characteristics={this.state.characteristics}
-								stats={this.state.stats}
-								attributes={this.state.attributes}
-							/>
+				{this.state.tabValue === 0 ? (
+					<Grid container style={{ padding: 20 }} className="animated slideInLeft faster">
+						<Grid item xl={12}>
+							<Grid container spacing={2}>
+								<Grid item xs={12} sm={12} md={1} lg={1} xl={1}>
+									<FormControl onChange={this.handleChange}>
+										<RadioGroup value={this.state.value || ''}>
+											{this.state.types.map((value, index) => {
+												return (
+													<FormControlLabel
+														key={index}
+														label={value._id.type}
+														control={
+															<Radio
+																color="default"
+																style={{ color: 'rgb(138, 3, 3)' }}
+															/>
+														}
+														value={value._id.type}
+														style={{ color: '#fff' }}
+													/>
+												);
+											})}
+										</RadioGroup>
+									</FormControl>
+								</Grid>
+
+								<Archetype
+									title="ARCHETYPE"
+									selectedType={this.state.selected}
+									selectedArchetype={this.selectedAttributes}
+								/>
+								<ArchetypeSelection
+									title="CHARACTER"
+									selectedArchetype={this.state.selectedAttributes}
+								/>
+								<ArchetypeStats
+									title="STATS"
+									selectedType={this.state.types}
+									characteristics={this.state.characteristics}
+									stats={this.state.stats}
+									attributes={this.state.attributes}
+								/>
+							</Grid>
 						</Grid>
 					</Grid>
-				</Grid>
+				) : (
+					<Inventory />
+				)}
 			</React.Fragment>
 		);
 	}
