@@ -1,4 +1,4 @@
-import characterController from '../controllers/character.controller';
+import characterController from '../controllers/characterArchetype.controller';
 import checkAuthorization from '../middleware/checkAuthorization';
 import express from 'express';
 

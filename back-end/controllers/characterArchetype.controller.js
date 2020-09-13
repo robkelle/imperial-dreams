@@ -1,4 +1,4 @@
-import Character from '../models/character.model';
+import Character from '../models/characterArchetype.model';
 
 exports.postCharacterSettings = (req, res) => {
 	class CharacterSettings {

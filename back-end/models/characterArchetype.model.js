@@ -6,7 +6,7 @@ const Schema = mongoose.Schema;
 mongoose.set('useFindAndModify', false);
 
 module.exports = mongoose.model(
-	'character',
+	'character_archetypes',
 	new Schema({
 		type: String,
 		label: String,
