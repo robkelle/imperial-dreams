@@ -55,7 +55,7 @@ const Landing = (props) => {
 	let summary =
 		'The continent of Acar is in tatters. A multi-generational war to exterminate the gods broke the world asunder. Society, culture and knowledge faded in the centuries following the apocalypse, with the world reverting back to its primeval origins. The land of Acar is a blank slate. Its history, cultures, religions and institutions will be formed at the hands of the characters that inhabit it.';
 	return (
-		<div align="center" className="animated fadeInDown faster">
+		<div align="center" className="animate__animated animate__slideInDown">
 			<Grid container={true} justify={'center'}>
 				<Grid item={true} xs={12} sm={12} md={6} lg={5} xl={5}>
 					<Card

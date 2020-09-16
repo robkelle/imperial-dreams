@@ -105,7 +105,7 @@ class Login extends Component {
 	render() {
 		const { classes } = this.props;
 		return (
-			<div className="animated fadeInDown faster">
+			<div className="animate__animated animate__slideInDown">
 				<Grid container={true} justify={'center'}>
 					<Grid item={true} xs={12} sm={8} md={5} lg={4} xl={4}>
 						<Card
@@ -153,7 +153,7 @@ class Login extends Component {
 											/>
 
 											{!this.state.username && !this.state.isValid ? (
-												<div className="animated fadeInUp">
+												<div className="animate__animated animate__slideInUp">
 													<FormHelperText error={true} variant="outlined">
 														Please enter a valid username.
 													</FormHelperText>
@@ -177,7 +177,7 @@ class Login extends Component {
 												endAdornment={<PasswordIcon />}
 											/>
 											{!this.state.isPasswordValid ? (
-												<div className="animated fadeInUp">
+												<div className="animate__animated animate__slideInUp">
 													<FormHelperText error={true} variant="outlined">
 														The username or password you entered is incorrect.
 													</FormHelperText>
@@ -187,7 +187,7 @@ class Login extends Component {
 											)}
 
 											{!this.state.password && !this.state.isValid ? (
-												<div className="animated fadeInUp">
+												<div className="animate__animated animate__slideInUp">
 													<FormHelperText error={true} variant="outlined">
 														Please enter a valid password.
 													</FormHelperText>

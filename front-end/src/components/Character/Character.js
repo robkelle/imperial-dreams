@@ -136,7 +136,7 @@ class Character extends React.Component {
 				</Paper>
 
 				{this.state.tabValue === 0 ? (
-					<Grid container style={{ padding: 20 }} className="animated slideInLeft faster">
+					<Grid container style={{ padding: 20 }} className="animate__animated animate__slideInLeft">
 						<Grid item xl={12}>
 							<Grid container spacing={2}>
 								<Grid item xs={12} sm={12} md={1} lg={1} xl={1}>

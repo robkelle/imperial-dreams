@@ -43,7 +43,7 @@ const inventory = [
 export class Inventory extends Component {
 	render() {
 		return (
-			<Grid container spacing={0} className="animated slideInRight faster" justify="center">
+			<Grid container spacing={0} className="animate__animated animate__backInDown" justify="center">
 				{inventory.map((value) => {
 					return (
 						<Grid lg={1} item style={{ margin: 5 }}>

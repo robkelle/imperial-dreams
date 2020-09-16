@@ -89,7 +89,7 @@ class Register extends Component {
 	render() {
 		const { classes } = this.props;
 		return (
-			<div className="animated fadeInDown faster">
+			<div className="animate__animated animate__slideInDown">
 				<Grid container={true} justify={'center'}>
 					<Grid item={true} xs={12} sm={8} md={5} lg={4} xl={4}>
 						<Card
@@ -134,7 +134,7 @@ class Register extends Component {
 											endAdornment={<EmailIcon />}
 										/>
 										{!this.state.emailValid ? (
-											<div className="animated fadeInUp">
+											<div className="animate__animated animate__slideInUp">
 												<FormHelperText error={true} variant="outlined">
 													Please enter a valid email address.
 												</FormHelperText>
@@ -143,7 +143,7 @@ class Register extends Component {
 											''
 										)}
 										{this.state.emailExists ? (
-											<div className="animated fadeInUp">
+											<div className="animate__animated animate__slideInUp">
 												<FormHelperText error={true} variant="outlined">
 													This email is already being used by another account
 												</FormHelperText>
@@ -165,7 +165,7 @@ class Register extends Component {
 											endAdornment={<UserIcon />}
 										/>
 										{!this.state.usernameValid ? (
-											<div className="animated fadeInUp">
+											<div className="animate__animated animate__slideInUp">
 												<FormHelperText error={true} variant="outlined">
 													Username must be Alpha-numeric and over 8 characters long
 												</FormHelperText>
@@ -174,7 +174,7 @@ class Register extends Component {
 											''
 										)}
 										{this.state.userExists ? (
-											<div className="animated fadeInUp">
+											<div className="animate__animated animate__slideInUp">
 												<FormHelperText error={true} variant="outlined">
 													This username already exists please try another
 												</FormHelperText>
@@ -197,7 +197,7 @@ class Register extends Component {
 										/>
 
 										{!this.state.passwordValid ? (
-											<div className="animated fadeInUp">
+											<div className="animate__animated animate__slideInUp">
 												<FormHelperText error={true} variant="outlined">
 													Password must be over 8 characters and contain a symbol, number and
 													letter
@@ -221,7 +221,7 @@ class Register extends Component {
 												endAdornment={<PasswordIcon />}
 											/>
 											{!this.state.repeatPasswordValid ? (
-												<div className="animated fadeInUp">
+												<div className="animate__animated animate__slideInUp">
 													<FormHelperText error={true} variant="outlined">
 														Your passwords must match.
 													</FormHelperText>

@@ -50,7 +50,7 @@ class ResetPassword extends Component {
 	render() {
 		const { classes } = this.props;
 		return (
-			<div className="animated fadeInDown faster">
+			<div className="animate__animated animate__slideInDown">
 				<Grid container={true} justify={'center'}>
 					<Grid item={true} xs={12} sm={8} md={5} lg={4} xl={4}>
 						<Card

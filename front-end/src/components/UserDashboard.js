@@ -34,7 +34,7 @@ const UserDashboard = (props) => {
 						<AppBar>
 							<Toolbar style={{ backgroundColor: 'rgb(18,18,18)' }} />
 						</AppBar>
-						<div className="animated fadeInDown faster">
+						<div className="animate__animated animate__backInDown">
 							<Grid container spacing={0} justify="flex-end">
 								<Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
 									<Paper style={{ backgroundColor: 'rgb(18,18,18)' }}>
