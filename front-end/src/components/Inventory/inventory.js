@@ -44,9 +44,9 @@ export class Inventory extends Component {
 	render() {
 		return (
 			<Grid container spacing={0} className="animate__animated animate__backInDown" justify="center">
-				{inventory.map((value) => {
+				{inventory.map((value, index) => {
 					return (
-						<Grid lg={1} item style={{ margin: 5 }}>
+						<Grid lg={1} item style={{ margin: 5 }} key={index}>
 							<Card style={{ backgroundColor: 'rgba(24,24,24, .75)', color: '#fff' }}>
 								<CardContent>
 									<Typography variant="overline">{value.name}</Typography>
