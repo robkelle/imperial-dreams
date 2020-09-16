@@ -12,7 +12,7 @@ class Character extends React.Component {
 		super();
 		this.state = {
 			types: [],
-			value: null,
+			defaultRadioValue: 'Eye Color',
 			tabValue: 0,
 			characteristics: [ { label: 'LOADING', type: 'LOADING' } ],
 			selectedAttributes: null,
@@ -63,17 +63,22 @@ class Character extends React.Component {
 			});
 		});
 
-		await fetch(`${config.API.DOMAIN}:${config.API.PORT}/api/characterArchetype/${this.props.cookies.cookies._id}`, {
-			method: 'GET',
-			headers: {
-				Accept: 'application/json',
-				'Content-Type': 'application/json'
+		await fetch(
+			`${config.API.DOMAIN}:${config.API.PORT}/api/characterArchetype/${this.props.cookies.cookies._id}`,
+			{
+				method: 'GET',
+				headers: {
+					Accept: 'application/json',
+					'Content-Type': 'application/json'
+				}
 			}
-		}).then(async (res) => {
+		).then(async (res) => {
 			this.setState({
 				characteristics: await res.json()
 			});
 		});
+
+		this.handleChange(null, this.state.defaultRadioValue);
 	}
 
 	selectedAttributes = async (userID) => {
@@ -90,8 +95,8 @@ class Character extends React.Component {
 		});
 	};
 
-	handleChange = (e) => {
-		fetch(`${config.API.DOMAIN}:${config.API.PORT}/api/archetype/${e.target.value}`, {
+	handleChange = (e, data) => {
+		fetch(`${config.API.DOMAIN}:${config.API.PORT}/api/archetype/${data || e.target.value}`, {
 			method: 'GET',
 			mode: 'cors',
 			credentials: 'include',
@@ -109,7 +114,7 @@ class Character extends React.Component {
 			});
 
 		this.setState({
-			value: e.target.value
+			defaultRadioValue: data || e.target.value
 		});
 	};
 
@@ -117,7 +122,6 @@ class Character extends React.Component {
 		this.setState({
 			tabValue: newValue
 		});
-
 	};
 
 	render() {
@@ -141,7 +145,7 @@ class Character extends React.Component {
 							<Grid container spacing={2}>
 								<Grid item xs={12} sm={12} md={1} lg={1} xl={1}>
 									<FormControl onChange={this.handleChange}>
-										<RadioGroup value={this.state.value || ''}>
+										<RadioGroup value={this.state.defaultRadioValue}>
 											{this.state.types.map((value, index) => {
 												return (
 													<FormControlLabel
@@ -164,17 +168,13 @@ class Character extends React.Component {
 
 								<Characteristics
 									title="CUSTOMIZE"
-									selectedType={this.state.selected}
-									selectedArchetype={this.selectedAttributes}
+									types={this.state.selected}
+									selectedType={this.selectedAttributes}
+									characteristics={this.state.characteristics}
 								/>
-								<CharacterProfile
-									title="PROFILE"
-									selectedArchetype={this.state.selectedAttributes}
-                  cookies={this.props.cookies}
-								/>
+								<CharacterProfile title="PROFILE" cookies={this.props.cookies} />
 								<CharacterStats
 									title="STATS"
-									selectedType={this.state.types}
 									characteristics={this.state.characteristics}
 									stats={this.state.stats}
 									attributes={this.state.attributes}

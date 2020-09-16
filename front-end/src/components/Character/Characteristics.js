@@ -1,5 +1,5 @@
 import { Button, Grid, Paper, Typography } from '@material-ui/core';
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 
 import { Authenticator } from '../Authentication/AuthenticatorContext';
 import { BufferToBase64 } from './BufferImage';
@@ -16,12 +16,39 @@ const addCharacterType = async (type, label, userID, props) => {
 			userID: userID
 		})
 	}).then(async (res) => {
-		props.selectedArchetype(userID);
+		props.selectedType(userID);
 	});
+};
+
+const getSelected = (props, setSelectedType) => {
+	if (props.types) {
+		props.types.forEach((value, index) => {
+			props.characteristics.forEach((characteristic) => {
+				if (value.type === characteristic.type && value.label === characteristic.label) {
+					setSelectedType(index);
+				}
+			});
+		});
+	}
 };
 
 const Characteristics = (props) => {
 	const [ userID, setUserID ] = useState(0);
+	const [ selectedType, setSelectedType ] = useState(null);
+
+	const characteristicStyle = (index) => {
+		if (index === selectedType) {
+			return { border: 'solid 5px rgb(138, 3, 3)', borderRadius: 8 };
+		}
+	};
+
+	useEffect(
+		() => {
+			getSelected(props, setSelectedType);
+		},
+		[ props ]
+	);
+
 	return (
 		<Fragment>
 			<Authenticator.Consumer>
@@ -35,20 +62,22 @@ const Characteristics = (props) => {
 				</Typography>
 				<Paper style={{ backgroundColor: '#181818', color: '#fff' }} align="center">
 					<Grid container>
-						{props.selectedType ? (
-							props.selectedType.map((value, index) => {
+						{props.types ? (
+							props.types.map((value, index) => {
 								return (
-									<Grid item xs={3} sm={3} md={3} lg={3} xl={3} key={index}>
+									<Grid item xs={3} sm={3} md={3} lg={3} xl={3} key={index} style={{ margin: 8 }}>
 										<Button
 											onClick={() => {
 												addCharacterType(value.type, value.label, userID, props);
 											}}
+											color="default"
 										>
 											<img
 												src={'data:image/jpeg;base64,' + BufferToBase64(value.image.data.data)}
 												width="110"
 												height="250"
 												alt=""
+												style={characteristicStyle(index)}
 											/>
 										</Button>
 									</Grid>
