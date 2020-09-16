@@ -20,7 +20,7 @@ const addCharacterType = async (type, label, userID, props) => {
 	});
 };
 
-const Archetype = (props) => {
+const Characteristics = (props) => {
 	const [ userID, setUserID ] = useState(0);
 	return (
 		<Fragment>
@@ -66,4 +66,4 @@ const Archetype = (props) => {
 	);
 };
 
-export { Archetype };
+export { Characteristics };

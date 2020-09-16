@@ -6,7 +6,7 @@ import AttachFileIcon from '@material-ui/icons/Attachment';
 import { BufferToBase64 } from './BufferImage';
 import config from '../../config.json';
 
-class ArchetypeSelection extends Component {
+class CharacterProfile extends Component {
 	constructor() {
 		super();
 		this.state = {
@@ -95,4 +95,4 @@ class ArchetypeSelection extends Component {
 	}
 }
 
-export { ArchetypeSelection };
+export { CharacterProfile };

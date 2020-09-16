@@ -1,7 +1,7 @@
 import { Button, Collapse, Divider, Grid, LinearProgress, Paper, Typography } from '@material-ui/core';
 import React, { useState } from 'react';
 
-const ArchetypeStats = (props) => {
+const CharacterStats = (props) => {
 	const [ minimizeCharacteristis, setMinimizeCharacteristics ] = useState(true);
 	const [ minimizeStatistics, setminimizeStatistics ] = useState(false);
 
@@ -101,4 +101,4 @@ const ArchetypeStats = (props) => {
 	);
 };
 
-export { ArchetypeStats };
+export { CharacterStats };

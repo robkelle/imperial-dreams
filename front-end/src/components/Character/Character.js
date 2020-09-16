@@ -1,8 +1,8 @@
 import { FormControl, FormControlLabel, Grid, Paper, Radio, RadioGroup, Tab, Tabs } from '@material-ui/core';
 
-import { Archetype } from './Archetype';
-import { ArchetypeSelection } from './ArchetypeSelection';
-import { ArchetypeStats } from './ArchetypeStats';
+import { CharacterProfile } from './CharacterProfile';
+import { CharacterStats } from './CharacterStats';
+import { Characteristics } from './Characteristics';
 import { Inventory } from '../Inventory/Inventory';
 import React from 'react';
 import config from '../../config.json';
@@ -162,17 +162,17 @@ class Character extends React.Component {
 									</FormControl>
 								</Grid>
 
-								<Archetype
-									title="ARCHETYPE"
+								<Characteristics
+									title="CUSTOMIZE"
 									selectedType={this.state.selected}
 									selectedArchetype={this.selectedAttributes}
 								/>
-								<ArchetypeSelection
-									title="CHARACTER"
+								<CharacterProfile
+									title="PROFILE"
 									selectedArchetype={this.state.selectedAttributes}
                   cookies={this.props.cookies}
 								/>
-								<ArchetypeStats
+								<CharacterStats
 									title="STATS"
 									selectedType={this.state.types}
 									characteristics={this.state.characteristics}
