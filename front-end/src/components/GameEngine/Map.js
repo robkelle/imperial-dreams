@@ -28,7 +28,7 @@ export class Map extends Component {
 		app.stage.addChild(container);
 
 		// Create a new texture
-		const texture = PIXI.Texture.from(require('../images/sampleImage.png'));
+		const texture = PIXI.Texture.from(require('../../images/sampleImage.png'));
 
 		for (let i = 0; i < 25; i++) {
 			const sampleImage = new PIXI.Sprite(texture);
