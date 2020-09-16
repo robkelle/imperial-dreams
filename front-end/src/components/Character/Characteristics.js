@@ -38,7 +38,7 @@ const Characteristics = (props) => {
 
 	const characteristicStyle = (index) => {
 		if (index === selectedType) {
-			return { border: 'solid 5px rgb(138, 3, 3)', borderRadius: 8 };
+			return { border: 'solid 8px rgb(138, 3, 3)', borderRadius: 8 };
 		}
 	};
 
@@ -65,7 +65,7 @@ const Characteristics = (props) => {
 						{props.types ? (
 							props.types.map((value, index) => {
 								return (
-									<Grid item xs={3} sm={3} md={3} lg={3} xl={3} key={index} style={{ margin: 8 }}>
+									<Grid item xs={3} sm={3} md={3} lg={3} xl={3} key={index}>
 										<Button
 											onClick={() => {
 												addCharacterType(value.type, value.label, userID, props);
@@ -74,10 +74,10 @@ const Characteristics = (props) => {
 										>
 											<img
 												src={'data:image/jpeg;base64,' + BufferToBase64(value.image.data.data)}
-												width="110"
-												height="250"
+												width="90"
+												height="180"
 												alt=""
-												style={characteristicStyle(index)}
+                        style={characteristicStyle(index)}
 											/>
 										</Button>
 									</Grid>
