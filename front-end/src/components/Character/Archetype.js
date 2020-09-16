@@ -6,7 +6,7 @@ import { BufferToBase64 } from './BufferImage';
 import config from '../../config.json';
 
 const addCharacterType = async (type, label, userID, props) => {
-	await fetch(`${config.API.DOMAIN}:${config.API.PORT}/api/character/${type}/${label}`, {
+	await fetch(`${config.API.DOMAIN}:${config.API.PORT}/api/characterArchetype/${type}/${label}`, {
 		method: 'POST',
 		headers: {
 			Accept: 'application/json',

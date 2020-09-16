@@ -3,7 +3,7 @@ import { FormControl, FormControlLabel, Grid, Paper, Radio, RadioGroup, Tab, Tab
 import { Archetype } from './Archetype';
 import { ArchetypeSelection } from './ArchetypeSelection';
 import { ArchetypeStats } from './ArchetypeStats';
-import { Inventory } from '../Inventory/inventory';
+import { Inventory } from '../Inventory/Inventory';
 import React from 'react';
 import config from '../../config.json';
 
@@ -63,7 +63,7 @@ class Character extends React.Component {
 			});
 		});
 
-		await fetch(`${config.API.DOMAIN}:${config.API.PORT}/api/character/${this.props.cookies.cookies._id}`, {
+		await fetch(`${config.API.DOMAIN}:${config.API.PORT}/api/characterArchetype/${this.props.cookies.cookies._id}`, {
 			method: 'GET',
 			headers: {
 				Accept: 'application/json',
@@ -77,7 +77,7 @@ class Character extends React.Component {
 	}
 
 	selectedAttributes = async (userID) => {
-		await fetch(`${config.API.DOMAIN}:${config.API.PORT}/api/character/${userID}`, {
+		await fetch(`${config.API.DOMAIN}:${config.API.PORT}/api/characterArchetype/${userID}`, {
 			method: 'GET',
 			headers: {
 				Accept: 'application/json',
@@ -118,7 +118,6 @@ class Character extends React.Component {
 			tabValue: newValue
 		});
 
-		console.log(newValue);
 	};
 
 	render() {
@@ -171,6 +170,7 @@ class Character extends React.Component {
 								<ArchetypeSelection
 									title="CHARACTER"
 									selectedArchetype={this.state.selectedAttributes}
+                  cookies={this.props.cookies}
 								/>
 								<ArchetypeStats
 									title="STATS"

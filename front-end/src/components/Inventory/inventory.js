@@ -31,13 +31,19 @@ const inventory = [
 		name: 'Steel',
 		quantity: 27,
 		image: ''
+  },
+  {
+		type: 'Material',
+		name: 'Diamond',
+		quantity: 1,
+		image: 'ALttP_Bow_&_Arrows_Sprite.png'
 	}
 ];
 
 export class Inventory extends Component {
 	render() {
 		return (
-			<Grid container spacing={0} className="animated slideInRight faster">
+			<Grid container spacing={0} className="animated slideInRight faster" justify="center">
 				{inventory.map((value) => {
 					return (
 						<Grid lg={1} item style={{ margin: 5 }}>

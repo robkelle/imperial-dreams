@@ -3,7 +3,8 @@
 import InitSockets from './sockets';
 import archetypeRoute from './routes/archetype.route';
 import bodyParser from 'body-parser';
-import characterRoute from './routes/characterArchetype.route';
+import character from './routes/character.route';
+import characterArchetype from './routes/characterArchetype.route';
 import config from './config.json';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
@@ -53,7 +54,8 @@ app.use(cors(corsOptions));
 // API routes
 app.use('/api/user/', userRoute);
 app.use('/api/', archetypeRoute);
-app.use('/api/character/', characterRoute);
+app.use('/api/characterArchetype/', characterArchetype);
+app.use('/api/character/', character);
 
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
