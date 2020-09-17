@@ -1,46 +1,43 @@
-import { AppBar, Dialog, Fab, Grid, IconButton, Paper, Toolbar } from '@material-ui/core';
+import { AppBar, Drawer, Fab, Grid, IconButton, Paper, Toolbar } from '@material-ui/core';
 import React, { Fragment, useState } from 'react';
 
 import { Character } from './Character/Character';
 import Chat from './Chat/Chat';
 import ChatIcon from '@material-ui/icons/Chat';
 import CloseIcon from '@material-ui/icons/Close';
+import { makeStyles } from '@material-ui/core/styles';
 
-const UserDashboard = () => {
+const useStyles = makeStyles((theme) => ({
+	paper: {
+		backgroundColor: '#181818',
+		color: '#fff',
+		width: 600,
+		marginLeft: 'auto',
+		marginRight: 0
+	}
+}));
+
+const UserDashboard = (props) => {
 	const [ open, setOpen ] = useState(0);
+	const classes = useStyles();
 
 	const handleClose = () => {
 		setOpen(false);
 	};
 
 	return (
-		<div style={{ backgroundColor: 'rgba(24,24,24, 0.7)' }}>
+		<div>
 			<Fragment>
-				<Character />
+				<Character cookies={props.cookies} />
 				{open ? (
-					<Dialog
-						open={open}
-						fullScreen={true}
-						fullWidth={true}
-						PaperProps={{
-							style: {
-								backgroundColor: 'transparent',
-								boxShadow: 'none'
-							}
-						}}
-					>
+					<Drawer open={open} onClose={handleClose} anchor="bottom" classes={{ paper: classes.paper }}>
 						<AppBar>
 							<Toolbar style={{ backgroundColor: 'rgb(18,18,18)' }} />
 						</AppBar>
-						<div
-							className="animated fadeInDown faster"
-							style={{
-								marginTop: 20
-							}}
-						>
-							<Grid container spacing={0} justify={'center'}>
-								<Grid item xs={12} sm={10} md={6} lg={6} xl={6}>
-									<Paper style={{ backgroundColor: 'rgb(18,18,18)', marginTop: 100 }}>
+						<div className="animate__animated animate__backInDown">
+							<Grid container spacing={0} justify="flex-end">
+								<Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+									<Paper style={{ backgroundColor: 'rgb(18,18,18)' }}>
 										<Chat
 											room={'General'}
 											exit={
@@ -58,7 +55,7 @@ const UserDashboard = () => {
 								</Grid>
 							</Grid>
 						</div>
-					</Dialog>
+					</Drawer>
 				) : (
 					''
 				)}

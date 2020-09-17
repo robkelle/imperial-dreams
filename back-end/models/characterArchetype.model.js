@@ -6,13 +6,10 @@ const Schema = mongoose.Schema;
 mongoose.set('useFindAndModify', false);
 
 module.exports = mongoose.model(
-	'archetypes',
+	'character_archetypes',
 	new Schema({
 		type: String,
 		label: String,
-		image: {
-			data: Buffer,
-			contentType: String
-		}
+		userID: mongoose.Types.ObjectId
 	})
 );

@@ -1,12 +1,14 @@
 // Exported by the imports.js file
 
 import {
+	AddArchetype,
 	BorderBackground,
 	ButtonBackground,
 	ForgotPassword,
 	Landing,
 	LoadingScreen,
 	Login,
+	Map,
 	Navbar,
 	React,
 	Register,
@@ -63,7 +65,7 @@ const classes = {
 };
 
 function App(props) {
-	const handleAuth = { isAuthorized: props.cookies.get('isAuthorized') };
+	const handleAuth = { isAuthorized: props.cookies.get('isAuthorized'), userID: props.cookies.get('_id') };
 
 	return (
 		<div>
@@ -93,7 +95,29 @@ function App(props) {
 						path="/user_dashboard"
 						render={(e) =>
 							handleAuth.isAuthorized ? (
-								<UserDashboard />
+								<UserDashboard cookies={props.cookies} />
+							) : (
+								<Login history={e.history} cookies={props.cookies} />
+							)}
+					/>
+
+					<Route
+						exact
+						path="/map"
+						render={(e) =>
+							handleAuth.isAuthorized ? (
+								<Map cookies={props.cookies} />
+							) : (
+								<Login history={e.history} cookies={props.cookies} />
+							)}
+					/>
+
+					<Route
+						exact
+						path="/add_archetype"
+						render={(e) =>
+							handleAuth.isAuthorized ? (
+								<AddArchetype />
 							) : (
 								<Login history={e.history} cookies={props.cookies} />
 							)}

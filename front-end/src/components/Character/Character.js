@@ -1,33 +1,27 @@
-import { FormControl, FormControlLabel, Grid, Radio, RadioGroup } from '@material-ui/core';
+import { FormControl, FormControlLabel, Grid, Paper, Radio, RadioGroup, Tab, Tabs } from '@material-ui/core';
 
-import { Archetype } from './Archetype';
-import { ArchetypeSelection } from './ArchetypeSelection';
-import { ArchetypeStats } from './ArchetypeStats';
+import { CharacterProfile } from './CharacterProfile';
+import { CharacterStats } from './CharacterStats';
+import { Characteristics } from './Characteristics';
+import { Inventory } from '../Inventory/Inventory';
 import React from 'react';
+import config from '../../config.json';
 
 class Character extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-			eyes: [ 'Green', 'Blue', 'Brown', 'Hazel', 'Gray', 'Amber', 'Yellow', 'Purple', 'Red' ],
-			hair: [ 'Brown', 'Blonde' ],
-			skin: [
-				'Porcelain',
-				'Ivory',
-				'Warm Ivory',
-				'Sand',
-				'Beige',
-				'Warm Beige',
-				'Natural',
-				'Honey',
-				'Golden',
-				'Almond',
-				'Chestnut',
-				'Espresso'
-			],
-			mouth: [ 'Smile', 'Frown', 'Angry' ],
-			profession: [ 'Politician' ],
-			value: 'eyes',
+			types: [],
+			defaultRadioValue: 'Eye Color',
+			tabValue: 0,
+			characteristics: [ { label: 'LOADING', type: 'LOADING' } ],
+			selectedAttributes: null,
+			selected: null,
+			formControlStyle: {
+				root: {
+					fontSize: '2px'
+				}
+			},
 			attributes: [
 				{ label: 'STRENGTH', value: 10 },
 				{ label: 'DEXTERITY', value: 20 },
@@ -55,97 +49,142 @@ class Character extends React.Component {
 		};
 	}
 
-	selectedAttributes = (data) => {
-		this.setState({
-			selectedAttributes: data,
-			[`${this.state.value}Data`]: {
-				[this.state.value]: data
+	async componentDidMount() {
+		await fetch(`${config.API.DOMAIN}:${config.API.PORT}/api/archetype/groupByType`, {
+			method: 'GET',
+			mode: 'cors',
+			credentials: 'include',
+			headers: {
+				'Content-Type': 'application/json'
 			}
+		}).then(async (res) => {
+			this.setState({
+				types: await res.json()
+			});
+		});
+
+		await fetch(
+			`${config.API.DOMAIN}:${config.API.PORT}/api/characterArchetype/${this.props.cookies.cookies._id}`,
+			{
+				method: 'GET',
+				headers: {
+					Accept: 'application/json',
+					'Content-Type': 'application/json'
+				}
+			}
+		).then(async (res) => {
+			this.setState({
+				characteristics: await res.json()
+			});
+		});
+
+		this.handleChange(null, this.state.defaultRadioValue);
+	}
+
+	selectedAttributes = async (userID) => {
+		await fetch(`${config.API.DOMAIN}:${config.API.PORT}/api/characterArchetype/${userID}`, {
+			method: 'GET',
+			headers: {
+				Accept: 'application/json',
+				'Content-Type': 'application/json'
+			}
+		}).then(async (res) => {
+			this.setState({
+				characteristics: await res.json()
+			});
 		});
 	};
 
-	handleChange = (e) => {
+	handleChange = (e, data) => {
+		fetch(`${config.API.DOMAIN}:${config.API.PORT}/api/archetype/${data || e.target.value}`, {
+			method: 'GET',
+			mode: 'cors',
+			credentials: 'include',
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		})
+			.then((res) => {
+				return res.json();
+			})
+			.then((res) => {
+				this.setState({
+					selected: res
+				});
+			});
+
 		this.setState({
-			value: e.target.value
+			defaultRadioValue: data || e.target.value
 		});
 	};
 
-	handleArchetype = (value) => {
-		if (value === 'eyes') {
-			return this.state.eyes;
-		} else if (value === 'hair') {
-			return this.state.hair;
-		} else if (value === 'skin') {
-			return this.state.skin;
-		} else if (value === 'profession') {
-			return this.state.profession;
-		} else {
-			return this.state.mouth;
-		}
+	handleTabChange = (e, newValue) => {
+		this.setState({
+			tabValue: newValue
+		});
 	};
 
 	render() {
 		return (
 			<React.Fragment>
-				<Grid container style={{ padding: 20 }}>
-					<Grid item xl={12}>
-						<Grid container spacing={2}>
-							<Grid item xs={12} sm={12} md={1} lg={2} xl={2}>
-								<FormControl onChange={this.handleChange}>
-									<RadioGroup value={this.state.value}>
-										<FormControlLabel
-											label="Eyes"
-											control={<Radio color="default" style={{ color: 'rgb(138, 3, 3)' }} />}
-											value="eyes"
-											style={{ color: '#fff' }}
-										/>
-										<FormControlLabel
-											label="Hair"
-											control={<Radio color="default" style={{ color: 'rgb(138, 3, 3)' }} />}
-											value="hair"
-											style={{ color: '#fff' }}
-										/>
-										<FormControlLabel
-											label="Skin"
-											control={<Radio color="default" style={{ color: 'rgb(138, 3, 3)' }} />}
-											value="skin"
-											style={{ color: '#fff' }}
-										/>
-										<FormControlLabel
-											label="Mouth"
-											control={<Radio color="default" style={{ color: 'rgb(138, 3, 3)' }} />}
-											value="mouth"
-											style={{ color: '#fff' }}
-										/>
-										<FormControlLabel
-											label="Profession"
-											control={<Radio color="default" style={{ color: 'rgb(138, 3, 3)' }} />}
-											value="profession"
-											style={{ color: '#fff' }}
-										/>
-									</RadioGroup>
-								</FormControl>
-							</Grid>
+				<Paper square style={{ backgroundColor: 'rgb(138, 3, 3)' }}>
+					<Tabs
+						value={this.state.tabValue}
+						indicatorColor="secondary"
+						textColor="inherit"
+						onChange={this.handleTabChange}
+					>
+						<Tab label="Character" style={{ color: '#fff' }} />
+						<Tab label="Inventory" style={{ color: '#fff' }} />
+					</Tabs>
+				</Paper>
 
-							<Archetype
-								title="ARCHETYPE"
-								characters={this.handleArchetype(this.state.value)}
-								selectedArchetype={this.selectedAttributes}
-							/>
-							<ArchetypeSelection title="CHARACTER" selectedArchetype={this.state.selectedAttributes} />
-							<ArchetypeStats
-								title="STATS"
-								stats={this.state.stats}
-								attributes={this.state.attributes}
-								eyes={this.state.eyesData}
-								hair={this.state.hairData}
-								skin={this.state.skinData}
-								mouth={this.state.mouthData}
-								profession={this.state.professionData}
-							/>
+				{this.state.tabValue === 0 ? (
+					<Grid container style={{ padding: 20 }} className="animate__animated animate__slideInLeft">
+						<Grid item xl={12}>
+							<Grid container spacing={2}>
+								<Grid item xs={12} sm={12} md={1} lg={1} xl={1}>
+									<FormControl onChange={this.handleChange}>
+										<RadioGroup value={this.state.defaultRadioValue}>
+											{this.state.types.map((value, index) => {
+												return (
+													<FormControlLabel
+														key={index}
+														label={value._id.type}
+														control={
+															<Radio
+																color="default"
+																style={{ color: 'rgb(138, 3, 3)' }}
+															/>
+														}
+														value={value._id.type}
+														style={{ color: '#fff' }}
+													/>
+												);
+											})}
+										</RadioGroup>
+									</FormControl>
+								</Grid>
+
+								<Characteristics
+									title="CUSTOMIZE"
+									types={this.state.selected}
+									selectedType={this.selectedAttributes}
+									characteristics={this.state.characteristics}
+								/>
+								<CharacterProfile title="PROFILE" cookies={this.props.cookies} />
+								<CharacterStats
+									title="STATS"
+									characteristics={this.state.characteristics}
+									stats={this.state.stats}
+									attributes={this.state.attributes}
+								/>
+							</Grid>
 						</Grid>
 					</Grid>
-				</Grid>
+				) : (
+					<Inventory />
+				)}
 			</React.Fragment>
 		);
 	}

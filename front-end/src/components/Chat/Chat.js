@@ -14,18 +14,19 @@ import {
 } from '@material-ui/core';
 import React, { Component, Fragment } from 'react';
 
-import ArrowIcon from '@material-ui/icons/ArrowForwardIos';
 import ChatGIFMessage from './ChatGIFMessage';
-import ChatLoader from './ChatLoader';
 import ChatMessage from './ChatMessage';
 import CloseIcon from '@material-ui/icons/Close';
 import GifIcon from '@material-ui/icons/Gif';
 import InfiniteScroll from 'react-infinite-scroller';
 import Picker from 'react-giphy-component';
+import SendIcon from '@material-ui/icons/Send';
 import _ from 'lodash';
 import config from '../../config.json';
 import io from 'socket.io-client';
 import { withCookies } from 'react-cookie';
+
+//import ChatLoader from './ChatLoader';
 
 class Chat extends Component {
 	constructor() {
@@ -314,11 +315,11 @@ class Chat extends Component {
 	}
 
 	render() {
-		const loader = <ChatLoader />;
+		//const loader = <ChatLoader />;
 
 		return (
 			<Fragment>
-				<Grid container spacing={2} justify={'flex-end'}>
+				<Grid container spacing={0} justify={'flex-end'}>
 					<Grid item xs={8} sm={8} md={8} lg={8} xl={8} align="center">
 						<Typography variant="h4" style={{ color: 'rgb(217, 217, 217)' }}>
 							{this.props.room}
@@ -338,7 +339,7 @@ class Chat extends Component {
 							loadMore={this.loadItems}
 							isReverse={true}
 							hasMore={this.hasMore}
-							loader={loader}
+							/*loader={loader}*/
 						>
 							{_.sortBy(this.state.messages, (o) => {
 								try {
@@ -374,7 +375,7 @@ class Chat extends Component {
 								endAdornment={
 									<InputAdornment position="end" style={{ marginBottom: 12 }}>
 										<Fab size={'small'} style={{ backgroundColor: this.chatColor, color: '#fff' }}>
-											<ArrowIcon onClick={() => this.addMessage(this.state.addMessage, 'text')} />
+											<SendIcon onClick={() => this.addMessage(this.state.addMessage, 'text')} />
 										</Fab>
 										<Fab
 											size={'small'}

@@ -40,8 +40,8 @@ class LoadingScreen extends Component {
 		return (
 			<div
 				align="center"
-				style={{ backgroundColor: '#181818', height: '100%', width: '100%', position: 'absolute' }}
-				className={this.state.complete === false ? '' : 'animated slideOutUp'}
+				style={{ backgroundColor: '#181818', height: '100%', width: '100%', position: 'fixed' }}
+				className={this.state.complete === false ? '' : 'animate__animated animate__slideOutUp'}
 			>
 				<div
 					style={{
