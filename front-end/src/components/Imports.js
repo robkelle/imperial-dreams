@@ -11,6 +11,7 @@ import { LoadingScreen } from './LoadingScreen';
 import Login from './Authentication/Login';
 import Map from './GameEngine/Map';
 import { Navbar } from './Navbar';
+import {Profile} from './Profile';
 import React from 'react';
 import Register from './Authentication/Register';
 import ResetPassword from './Authentication/ResetPassword';
@@ -33,5 +34,6 @@ export {
 	ResetPassword,
 	ButtonBackground,
 	BorderBackground,
-	AddArchetype
+  AddArchetype,
+  Profile
 };

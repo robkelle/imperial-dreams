@@ -10,6 +10,7 @@ import {
 	Login,
 	Map,
 	Navbar,
+	Profile,
 	React,
 	Register,
 	ResetPassword,
@@ -65,7 +66,7 @@ const classes = {
 };
 
 function App(props) {
-  const handleAuth = { isAuthorized: props.cookies.get('isAuthorized'), userID: props.cookies.get('_id') };
+	const handleAuth = { isAuthorized: props.cookies.get('isAuthorized'), userID: props.cookies.get('_id') };
 
 	return (
 		<div>
@@ -107,6 +108,17 @@ function App(props) {
 						render={(e) =>
 							handleAuth.isAuthorized ? (
 								<Map cookies={props.cookies} />
+							) : (
+								<Login history={e.history} cookies={props.cookies} />
+							)}
+					/>
+
+					<Route
+						exact
+						path="/profile"
+						render={(e) =>
+							handleAuth.isAuthorized ? (
+								<Profile cookies={props.cookies} />
 							) : (
 								<Login history={e.history} cookies={props.cookies} />
 							)}
