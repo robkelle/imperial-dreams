@@ -43,9 +43,9 @@ const MenuType = (props) => {
 
 const addCharacterType = async (type, label, props) => {
 	await fetch(`${config.API.DOMAIN}:${config.API.PORT}/api/characterArchetype/${type}/${label}`, {
-    method: 'POST',
-    mode: 'cors',
-    credentials: 'include',
+		method: 'POST',
+		mode: 'cors',
+		credentials: 'include',
 		headers: {
 			Accept: 'application/json',
 			'Content-Type': 'application/json'
@@ -126,7 +126,7 @@ const Characteristics = (props) => {
 
 	const characteristicStyle = (index) => {
 		if (index === selectedType) {
-			return { border: 'solid 8px rgb(138, 3, 3)', borderRadius: 8 };
+			return { backgroundColor: 'rgb(138, 3, 3)', width: '100%', height: '200' };
 		}
 	};
 
@@ -140,7 +140,17 @@ const Characteristics = (props) => {
 	return (
 		<Fragment>
 			<Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
-				<Typography variant="h5" gutterBottom={true} style={{ color: '#fff' }}>
+				<Typography
+					variant="h5"
+					gutterBottom={true}
+					style={{
+						color: '#FFFAF0',
+						backgroundColor: 'rgba(24, 24, 24, 0.75)',
+						border: 'solid 4px #3CB371',
+						borderRadius: 500
+					}}
+					align="center"
+				>
 					{props.title}
 				</Typography>
 				<Paper style={{ backgroundColor: '#181818', color: '#fff' }} align="right">
@@ -163,14 +173,13 @@ const Characteristics = (props) => {
 											onClick={() => {
 												addCharacterType(value.type, value.label, props);
 											}}
-											color="default"
+											style={characteristicStyle(index)}
 										>
 											<img
 												src={'data:image/jpeg;base64,' + BufferToBase64(value.image.data.data)}
-												width="125"
+												width="100%"
 												height="200"
 												alt=""
-												style={characteristicStyle(index)}
 											/>
 										</Button>
 									</Grid>

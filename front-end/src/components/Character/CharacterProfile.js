@@ -76,7 +76,17 @@ class CharacterProfile extends Component {
 		return (
 			<Fragment>
 				<Grid item xs={12} sm={12} md={3} lg={3} xl={3}>
-					<Typography variant="h5" gutterBottom={true} style={{ color: '#fff' }}>
+					<Typography
+						variant="h5"
+						gutterBottom={true}
+						style={{
+							color: '#FFFAF0',
+							backgroundColor: 'rgba(24, 24, 24, 0.75)',
+							border: 'solid 4px #3CB371',
+							borderRadius: 500
+						}}
+						align="center"
+					>
 						{this.props.title}
 					</Typography>
 					<Paper style={{ backgroundColor: '#181818', color: '#fff' }} align="center">
@@ -95,11 +105,11 @@ class CharacterProfile extends Component {
 								</IconButton>
 							</ThemeProvider>
 						</div>
-						<Grid container spacing={1}>
+						<Grid container spacing={1} justify="center">
 							<Grid item xl={12}>
 								{this.state.image ? (
 									<Avatar
-										style={{ width: 400, height: 350 }}
+										style={{ width: '100%', height: 'auto' }}
 										src={'data:image/jpeg;base64,' + BufferToBase64(this.state.image.data.data)}
 									/>
 								) : (

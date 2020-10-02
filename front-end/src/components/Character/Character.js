@@ -40,7 +40,7 @@ class Character extends React.Component {
 				{ label: 'SPIRIT', value: 26, image: require('../../images/spirit.png') },
 				{ label: 'INTELLECT', value: 18, image: require('../../images/intellect.png') },
 				{ label: 'ARMOR', value: 60, image: require('../../images/armor.png') },
-				{ label: 'MOVEMENT', value: 54, image: require('../../images/movement.png') }
+				{ label: 'MOVEMENT', value: 90, image: require('../../images/movement.png') }
 			],
 			stats: [
 				{ label: 'WEAPON DAMAGE', value: '15-25' },
@@ -154,8 +154,8 @@ class Character extends React.Component {
 				</ThemeProvider>
 
 				{this.state.tabValue === 0 ? (
-					<Grid container style={{ padding: 20 }} className="animate__animated animate__slideInLeft">
-						<Grid item xl={12}>
+					<Grid container style={{ padding: 10 }} className="animate__animated animate__slideInLeft">
+						<Grid item xl={12} style={{marginTop: 15}}>
 							<Grid container spacing={2}>
 								<Characteristics
 									title="CUSTOMIZE"

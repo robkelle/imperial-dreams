@@ -20,8 +20,18 @@ const CharacterStats = (props) => {
 	const [ minimizeStatistics, setMinimizeStatistics ] = useState(false);
 
 	return (
-		<Grid item xs={12} sm={12} md={3} lg={4} xl={4}>
-			<Typography variant="h5" gutterBottom={true} style={{ color: '#fff' }}>
+		<Grid item xs={12} sm={12} md={5} lg={5} xl={5} style={{ padding: 5 }}>
+			<Typography
+				variant="h5"
+				gutterBottom={true}
+				style={{
+					color: '#FFFAF0',
+					backgroundColor: 'rgba(24, 24, 24, 0.75)',
+					border: 'solid 4px #3CB371',
+					borderRadius: 500
+				}}
+				align="center"
+			>
 				{props.title}
 			</Typography>
 			<Paper style={{ backgroundColor: '#181818', color: '#fff' }} align="center">
@@ -35,12 +45,14 @@ const CharacterStats = (props) => {
 					{props.attributes.map((value, index) => {
 						return (
 							<Grid item xl={6} key={index}>
-								<Grid container spacing={5}>
+								<Grid container spacing={0}>
 									<Grid item xl={2}>
 										<img src={value.image} alt="stats" style={{ height: 50, width: 50 }} />
 									</Grid>
 									<Grid item xs={10}>
-										<Typography variant="overline">{value.label}</Typography>
+										<Typography variant="overline" style={{ marginLeft: 5 }}>
+											{value.label}
+										</Typography>
 										<ThemeProvider theme={theme}>
 											<LinearProgress variant="determinate" color="primary" value={value.value} />
 										</ThemeProvider>
@@ -51,7 +63,7 @@ const CharacterStats = (props) => {
 					})}
 					<Grid item xs={12}>
 						<Button
-							style={{ color: '#fff', backgroundColor: 'rgb(138, 3, 3)' }}
+							style={{ color: '#fff', backgroundColor: 'rgb(138, 3, 3)', marginTop: 15 }}
 							onClick={() => {
 								minimizeCharacteristics
 									? setMinimizeCharacteristics(false)
