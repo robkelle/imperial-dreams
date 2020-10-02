@@ -5,7 +5,20 @@ import { CharacterStats } from './CharacterStats';
 import { Characteristics } from './Characteristics';
 import { Inventory } from '../Inventory/Inventory';
 import React from 'react';
+import { ThemeProvider } from '@material-ui/styles';
 import config from '../../config.json';
+import { createMuiTheme } from '@material-ui/core/styles';
+
+const theme = createMuiTheme({
+	palette: {
+		primary: {
+			main: 'rgb(138, 3, 3)'
+		},
+		secondary: {
+			main: '#fff'
+		}
+	}
+});
 
 class Character extends React.Component {
 	constructor() {
@@ -126,17 +139,19 @@ class Character extends React.Component {
 	render() {
 		return (
 			<React.Fragment>
-				<Paper square style={{ backgroundColor: 'rgb(138, 3, 3)' }}>
-					<Tabs
-						value={this.state.tabValue}
-						indicatorColor="secondary"
-						textColor="inherit"
-						onChange={this.handleTabChange}
-					>
-						<Tab label="Character" style={{ color: '#fff' }} />
-						<Tab label="Inventory" style={{ color: '#fff' }} />
-					</Tabs>
-				</Paper>
+				<ThemeProvider theme={theme}>
+					<Paper square style={{ backgroundColor: 'rgb(138, 3, 3)' }}>
+						<Tabs
+							value={this.state.tabValue}
+							indicatorColor="secondary"
+							textColor="inherit"
+							onChange={this.handleTabChange}
+						>
+							<Tab label="Character" style={{ color: '#fff' }} />
+							<Tab label="Inventory" style={{ color: '#fff' }} />
+						</Tabs>
+					</Paper>
+				</ThemeProvider>
 
 				{this.state.tabValue === 0 ? (
 					<Grid container style={{ padding: 20 }} className="animate__animated animate__slideInLeft">

@@ -1,6 +1,20 @@
 import { Button, Collapse, Divider, Grid, LinearProgress, Paper, Typography } from '@material-ui/core';
 import React, { useState } from 'react';
 
+import { ThemeProvider } from '@material-ui/styles';
+import { createMuiTheme } from '@material-ui/core/styles';
+
+const theme = createMuiTheme({
+	palette: {
+		primary: {
+			main: 'rgb(138, 3, 3)'
+		},
+		secondary: {
+			main: '#fff'
+		}
+	}
+});
+
 const CharacterStats = (props) => {
 	const [ minimizeCharacteristics, setMinimizeCharacteristics ] = useState(true);
 	const [ minimizeStatistics, setMinimizeStatistics ] = useState(false);
@@ -23,11 +37,13 @@ const CharacterStats = (props) => {
 							<Grid item xl={6} key={index}>
 								<Grid container spacing={5}>
 									<Grid item xl={2}>
-										<img src={value.image} alt='stats' style={{ height: 50, width: 50 }} />
+										<img src={value.image} alt="stats" style={{ height: 50, width: 50 }} />
 									</Grid>
 									<Grid item xs={10}>
 										<Typography variant="overline">{value.label}</Typography>
-										<LinearProgress variant="determinate" value={value.value} />
+										<ThemeProvider theme={theme}>
+											<LinearProgress variant="determinate" color="primary" value={value.value} />
+										</ThemeProvider>
 									</Grid>
 								</Grid>
 							</Grid>

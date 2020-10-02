@@ -3,6 +3,7 @@ import {
 	Button,
 	Divider,
 	Drawer,
+	Grid,
 	IconButton,
 	List,
 	ListItem,
@@ -11,6 +12,7 @@ import {
 	Toolbar,
 	Typography
 } from '@material-ui/core';
+import { MuiThemeProvider, createMuiTheme, makeStyles } from '@material-ui/core/styles';
 import React, { Fragment } from 'react';
 
 import { Authenticator } from './Authentication/AuthenticatorContext';
@@ -18,7 +20,17 @@ import { Link } from 'react-router-dom';
 import Logout from './Authentication/Logout';
 import MenuIcon from '@material-ui/icons/Menu';
 import Settings from '@material-ui/icons/Settings';
-import { makeStyles } from '@material-ui/core/styles';
+
+const theme = createMuiTheme({
+	palette: {
+		primary: {
+			main: '#3CB371'
+		},
+		secondary: {
+			main: '#fff'
+		}
+	}
+});
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -81,12 +93,28 @@ const Navbar = () => {
 								if (props.isAuthorized) {
 									return (
 										<Fragment>
-											<Link to="/user_dashboard" style={{ textDecoration: 'none' }} selected>
-												<Button color="inherit">Dashboard</Button>
-											</Link>
-											<Link to="/map" style={{ textDecoration: 'none' }}>
-												<Button color="secondary">Play</Button>
-											</Link>
+											<Grid container spacing={2}>
+												<Grid item>
+													<Link
+														to="/user_dashboard"
+														style={{ textDecoration: 'none' }}
+														selected
+													>
+														<Button color="secondary" variant="outlined">
+															Dashboard
+														</Button>
+													</Link>
+												</Grid>
+												<Grid item>
+													<Link to="/map" style={{ textDecoration: 'none' }}>
+														<MuiThemeProvider theme={theme}>
+															<Button color="primary" variant="outlined">
+																Play
+															</Button>
+														</MuiThemeProvider>
+													</Link>
+												</Grid>
+											</Grid>
 										</Fragment>
 									);
 								} else {

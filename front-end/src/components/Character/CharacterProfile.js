@@ -4,7 +4,20 @@ import React, { Component, Fragment } from 'react';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import AttachFileIcon from '@material-ui/icons/Attachment';
 import { BufferToBase64 } from './BufferImage';
+import { ThemeProvider } from '@material-ui/styles';
 import config from '../../config.json';
+import { createMuiTheme } from '@material-ui/core/styles';
+
+const theme = createMuiTheme({
+	palette: {
+		primary: {
+			main: 'rgb(138, 3, 3)'
+		},
+		secondary: {
+			main: '#fff'
+		}
+	}
+});
 
 class CharacterProfile extends Component {
 	constructor() {
@@ -68,17 +81,19 @@ class CharacterProfile extends Component {
 					</Typography>
 					<Paper style={{ backgroundColor: '#181818', color: '#fff' }} align="center">
 						<div align="right">
-							<IconButton variant="contained" component="label" color="secondary">
-								<AttachFileIcon />
+							<ThemeProvider theme={theme}>
+								<IconButton variant="contained" component="label" color="primary">
+									<AttachFileIcon />
 
-								<input
-									type="file"
-									style={{ display: 'none' }}
-									onChange={(e) => {
-										this.addProfileImage(e.target.files[0], this.props.cookies.cookies._id);
-									}}
-								/>
-							</IconButton>
+									<input
+										type="file"
+										style={{ display: 'none' }}
+										onChange={(e) => {
+											this.addProfileImage(e.target.files[0], this.props.cookies.cookies._id);
+										}}
+									/>
+								</IconButton>
+							</ThemeProvider>
 						</div>
 						<Grid container spacing={1}>
 							<Grid item xl={12}>
