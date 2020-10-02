@@ -12,6 +12,7 @@ import {
 	Paper,
 	Typography
 } from '@material-ui/core';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import React, { Component, Fragment } from 'react';
 
 import ChatGIFMessage from './ChatGIFMessage';
@@ -27,6 +28,18 @@ import io from 'socket.io-client';
 import { withCookies } from 'react-cookie';
 
 //import ChatLoader from './ChatLoader';
+
+
+const theme = createMuiTheme({
+	palette: {
+		primary: {
+			main: 'rgb(18, 18, 18)'
+		},
+		secondary: {
+			main: '#fff'
+		}
+	}
+});
 
 class Chat extends Component {
 	constructor() {
@@ -358,45 +371,56 @@ class Chat extends Component {
 				</div>
 
 				<div style={{ margin: '10px 0px 10px 0px' }} width={'100%'}>
-					<Paper style={{ padding: 20 }}>
-						<FormControl fullWidth={true} hiddenLabel={true}>
-							<InputLabel htmlFor="message-input">Type a message</InputLabel>
-							<Input
-								id="message-input"
-								fullWidth={true}
-								autoFocus={true}
-								disableUnderline={false}
-								value={this.state.addMessage || ''}
-								multiline={false}
-								onChange={(e) => {
-									this.setState({ addMessage: e.target.value });
-								}}
-								onKeyDown={this.handleKeyDown}
-								endAdornment={
-									<InputAdornment position="end" style={{ marginBottom: 12 }}>
-										<Fab size={'small'} style={{ backgroundColor: this.chatColor, color: '#fff' }}>
-											<SendIcon onClick={() => this.addMessage(this.state.addMessage, 'text')} />
-										</Fab>
-										<Fab
-											size={'small'}
-											style={{ backgroundColor: this.chatColor, color: '#fff', marginLeft: 5 }}
-										>
-											<GifIcon
-												onClick={() => this.setState({ displayGif: true, gifyOpen: true })}
-											/>
-										</Fab>
-									</InputAdornment>
-								}
-							/>
-							{this.state.helperText ? (
-								<FormHelperText error={true} style={{ color: this.chatColor }}>
-									<strong>Please type a message to continue.</strong>
-								</FormHelperText>
-							) : (
-								''
-							)}
-						</FormControl>
-					</Paper>
+					<MuiThemeProvider theme={theme}>
+						<Paper style={{ padding: 20 }}>
+							<FormControl fullWidth={true} hiddenLabel={true}>
+								<InputLabel htmlFor="message-input">Type a message</InputLabel>
+								<Input
+									id="message-input"
+									fullWidth={true}
+									autoFocus={true}
+									disableUnderline={false}
+									value={this.state.addMessage || ''}
+									multiline={false}
+									onChange={(e) => {
+										this.setState({ addMessage: e.target.value });
+									}}
+									onKeyDown={this.handleKeyDown}
+									endAdornment={
+										<InputAdornment position="end" style={{ marginBottom: 12 }}>
+											<Fab
+												size={'small'}
+												style={{ backgroundColor: this.chatColor, color: '#fff' }}
+											>
+												<SendIcon
+													onClick={() => this.addMessage(this.state.addMessage, 'text')}
+												/>
+											</Fab>
+											<Fab
+												size={'small'}
+												style={{
+													backgroundColor: this.chatColor,
+													color: '#fff',
+													marginLeft: 5
+												}}
+											>
+												<GifIcon
+													onClick={() => this.setState({ displayGif: true, gifyOpen: true })}
+												/>
+											</Fab>
+										</InputAdornment>
+									}
+								/>
+								{this.state.helperText ? (
+									<FormHelperText error={true} style={{ color: this.chatColor }}>
+										<strong>Please type a message to continue.</strong>
+									</FormHelperText>
+								) : (
+									''
+								)}
+							</FormControl>
+						</Paper>
+					</MuiThemeProvider>
 				</div>
 				<div align="right">
 					{this.state.displayGif ? (

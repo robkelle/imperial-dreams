@@ -1,4 +1,4 @@
-import { Avatar, Grid, List, ListItem, ListItemAvatar, ListItemText, Paper } from '@material-ui/core';
+import { Avatar, Grid, List, ListItem, ListItemAvatar, ListItemText, Paper, Typography } from '@material-ui/core';
 
 import Moment from 'moment';
 import React from 'react';
@@ -15,7 +15,11 @@ const ChatMessage = (props) => {
 							</ListItemAvatar>
 							<ListItemText
 								primary={props.message}
-								secondary={`${props.user} posted on ${Moment(props.posted).format('llll')}`}
+								secondary={
+									<Typography variant="caption" display="block">
+										{props.user} posted on {Moment(props.posted).format('llll')}
+									</Typography>
+								}
 							/>
 						</ListItem>
 					</List>
