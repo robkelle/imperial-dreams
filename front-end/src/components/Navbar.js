@@ -19,6 +19,7 @@ import { Authenticator } from './Authentication/AuthenticatorContext';
 import { Link } from 'react-router-dom';
 import Logout from './Authentication/Logout';
 import MenuIcon from '@material-ui/icons/Menu';
+import Particles from 'react-particles-js';
 import Settings from '@material-ui/icons/Settings';
 
 const theme = createMuiTheme({
@@ -68,6 +69,20 @@ const Navbar = () => {
 	return (
 		<div className={classes.root}>
 			<AppBar position="static" style={{ backgroundColor: '#181818' }}>
+				<Particles
+					style={{ position: 'absolute', zIndex: -100 }}
+					params={{
+						particles: {
+							line_linked: {
+								enable: false
+							},
+							color: '#fff',
+							size: {
+								value: 1
+							}
+						}
+					}}
+				/>
 				<Toolbar>
 					<Authenticator.Consumer>
 						{(props) => {
