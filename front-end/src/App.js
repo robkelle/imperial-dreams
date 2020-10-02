@@ -65,7 +65,7 @@ const classes = {
 };
 
 function App(props) {
-	const handleAuth = { isAuthorized: props.cookies.get('isAuthorized'), userID: props.cookies.get('_id') };
+  const handleAuth = { isAuthorized: props.cookies.get('isAuthorized'), userID: props.cookies.get('_id') };
 
 	return (
 		<div>

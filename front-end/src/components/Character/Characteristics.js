@@ -1,28 +1,66 @@
-import { Button, Grid, Paper, Typography } from '@material-ui/core';
+import { Button, Grid, IconButton, Menu, MenuItem, Paper, Typography } from '@material-ui/core';
 import React, { Fragment, useEffect, useState } from 'react';
 
-import { Authenticator } from '../Authentication/AuthenticatorContext';
 import { BufferToBase64 } from './BufferImage';
+import MoreHorizontal from '@material-ui/icons/MoreHoriz';
 import config from '../../config.json';
 
-const addCharacterType = async (type, label, userID, props) => {
+const MenuType = (props) => {
+	const ITEM_HEIGHT = 48;
+	const open = Boolean(props.anchorEl);
+
+	return (
+		<div>
+			<IconButton aria-label="more" aria-controls="long-menu" aria-haspopup="true" onClick={props.handleClick}>
+				<MoreHorizontal style={{ color: '#fff' }} />
+			</IconButton>
+			<Menu
+				id="long-menu"
+				anchorEl={props.anchorEl}
+				keepMounted
+				open={open}
+				onClose={props.handleClose}
+				PaperProps={{
+					style: {
+						maxHeight: ITEM_HEIGHT * 4.5,
+						width: '20ch'
+					}
+				}}
+			>
+				{props.options !== null ? (
+					props.options.map((option, index) => (
+						<MenuItem key={index} onClick={props.handleClose}>
+							{option._id.type}
+						</MenuItem>
+					))
+				) : (
+					''
+				)}
+			</Menu>
+		</div>
+	);
+};
+
+const addCharacterType = async (type, label, props) => {
 	await fetch(`${config.API.DOMAIN}:${config.API.PORT}/api/characterArchetype/${type}/${label}`, {
-		method: 'POST',
+    method: 'POST',
+    mode: 'cors',
+    credentials: 'include',
 		headers: {
 			Accept: 'application/json',
 			'Content-Type': 'application/json'
 		},
 		body: JSON.stringify({
-			userID: userID
+			userID: props.cookies.cookies._id
 		})
 	}).then(async (res) => {
-		props.selectedType(userID);
+		props.selectedType(props.cookies.cookies._id);
 	});
 };
 
-const getSelected = (props, setSelectedType) => {
-	if (props.types) {
-		props.types.forEach((value, index) => {
+const getSelected = (types, props, setSelectedType) => {
+	if (types) {
+		types.forEach((value, index) => {
 			props.characteristics.forEach((characteristic) => {
 				if (value.type === characteristic.type && value.label === characteristic.label) {
 					setSelectedType(index);
@@ -33,8 +71,58 @@ const getSelected = (props, setSelectedType) => {
 };
 
 const Characteristics = (props) => {
-	const [ userID, setUserID ] = useState(0);
-	const [ selectedType, setSelectedType ] = useState(null);
+	const [ selectedType, setSelectedType ] = useState(0);
+	const [ options, setOptions ] = useState(null);
+	const [ anchorEl, setAnchorEl ] = useState(null);
+	const [ types, setTypes ] = useState(null);
+
+	// Gets group of types
+	const handleClick = (event, props) => {
+		fetch(`${config.API.DOMAIN}:${config.API.PORT}/api/archetype/groupByType`, {
+			method: 'GET',
+			mode: 'cors',
+			credentials: 'include',
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		})
+			.then((res) => {
+				return res.json();
+			})
+			.then((res) => {
+				if (res.httpStatus === 401) {
+					props.cookies.remove('isAuthorized', { path: '/' });
+				} else {
+					setOptions(res);
+				}
+			});
+
+		setAnchorEl(event.currentTarget);
+	};
+
+	// Gets all characteristics based on type
+	const handleClose = (e, props) => {
+		fetch(`${config.API.DOMAIN}:${config.API.PORT}/api/archetype/${e.nativeEvent.target.outerText}`, {
+			method: 'GET',
+			mode: 'cors',
+			credentials: 'include',
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		})
+			.then((res) => {
+				return res.json();
+			})
+			.then((res) => {
+				if (res.httpStatus === 401) {
+					props.cookies.remove('isAuthorized', { path: '/' });
+				} else {
+					setTypes(res);
+				}
+			});
+
+		setAnchorEl(null);
+	};
 
 	const characteristicStyle = (index) => {
 		if (index === selectedType) {
@@ -44,40 +132,45 @@ const Characteristics = (props) => {
 
 	useEffect(
 		() => {
-			getSelected(props, setSelectedType);
+			getSelected(types, props, setSelectedType);
 		},
-		[ props ]
+		[ props, types ]
 	);
 
 	return (
 		<Fragment>
-			<Authenticator.Consumer>
-				{(props) => {
-					setUserID(props.userID);
-				}}
-			</Authenticator.Consumer>
-			<Grid item xs={12} sm={12} md={3} lg={3} xl={3}>
+			<Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
 				<Typography variant="h5" gutterBottom={true} style={{ color: '#fff' }}>
 					{props.title}
 				</Typography>
-				<Paper style={{ backgroundColor: '#181818', color: '#fff' }} align="center">
+				<Paper style={{ backgroundColor: '#181818', color: '#fff' }} align="right">
+					<MenuType
+						handleClick={(e) => {
+							handleClick(e, props);
+						}}
+						anchorEl={anchorEl}
+						handleClose={(e) => {
+							handleClose(e, props);
+						}}
+						options={options}
+					/>
 					<Grid container>
-						{props.types ? (
-							props.types.map((value, index) => {
+						{types ? (
+							types.map((value, index) => {
 								return (
 									<Grid item xs={3} sm={3} md={3} lg={3} xl={3} key={index}>
 										<Button
 											onClick={() => {
-												addCharacterType(value.type, value.label, userID, props);
+												addCharacterType(value.type, value.label, props);
 											}}
 											color="default"
 										>
 											<img
 												src={'data:image/jpeg;base64,' + BufferToBase64(value.image.data.data)}
-												width="90"
-												height="180"
+												width="125"
+												height="200"
 												alt=""
-                        style={characteristicStyle(index)}
+												style={characteristicStyle(index)}
 											/>
 										</Button>
 									</Grid>

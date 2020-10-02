@@ -150,6 +150,7 @@ class Login extends Component {
 													this.setState({ username: e.target.value });
 												}}
 												endAdornment={<UserIcon />}
+                        autoComplete="username"
 											/>
 
 											{!this.state.username && !this.state.isValid ? (
@@ -175,6 +176,7 @@ class Login extends Component {
 													this.setState({ password: e.target.value });
 												}}
 												endAdornment={<PasswordIcon />}
+                        autoComplete="current-password"
 											/>
 											{!this.state.isPasswordValid ? (
 												<div className="animate__animated animate__slideInUp">

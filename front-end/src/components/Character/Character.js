@@ -1,4 +1,4 @@
-import { FormControl, FormControlLabel, Grid, Paper, Radio, RadioGroup, Tab, Tabs } from '@material-ui/core';
+import { Grid, Paper, Tab, Tabs } from '@material-ui/core';
 
 import { CharacterProfile } from './CharacterProfile';
 import { CharacterStats } from './CharacterStats';
@@ -12,7 +12,6 @@ class Character extends React.Component {
 		super();
 		this.state = {
 			types: [],
-			defaultRadioValue: 'Eye Color',
 			tabValue: 0,
 			characteristics: [ { label: 'LOADING', type: 'LOADING' } ],
 			selectedAttributes: null,
@@ -49,54 +48,8 @@ class Character extends React.Component {
 		};
 	}
 
-	async componentDidMount() {
-		await fetch(`${config.API.DOMAIN}:${config.API.PORT}/api/archetype/groupByType`, {
-			method: 'GET',
-			mode: 'cors',
-			credentials: 'include',
-			headers: {
-				'Content-Type': 'application/json'
-			}
-		}).then(async (res) => {
-			this.setState({
-				types: await res.json()
-			});
-		});
-
-		await fetch(
-			`${config.API.DOMAIN}:${config.API.PORT}/api/characterArchetype/${this.props.cookies.cookies._id}`,
-			{
-				method: 'GET',
-				headers: {
-					Accept: 'application/json',
-					'Content-Type': 'application/json'
-				}
-			}
-		).then(async (res) => {
-			this.setState({
-				characteristics: await res.json()
-			});
-		});
-
-		this.handleChange(null, this.state.defaultRadioValue);
-	}
-
-	selectedAttributes = async (userID) => {
-		await fetch(`${config.API.DOMAIN}:${config.API.PORT}/api/characterArchetype/${userID}`, {
-			method: 'GET',
-			headers: {
-				Accept: 'application/json',
-				'Content-Type': 'application/json'
-			}
-		}).then(async (res) => {
-			this.setState({
-				characteristics: await res.json()
-			});
-		});
-	};
-
-	handleChange = (e, data) => {
-		fetch(`${config.API.DOMAIN}:${config.API.PORT}/api/archetype/${data || e.target.value}`, {
+	componentDidMount() {
+		fetch(`${config.API.DOMAIN}:${config.API.PORT}/api/archetype/groupByType`, {
 			method: 'GET',
 			mode: 'cors',
 			credentials: 'include',
@@ -108,14 +61,60 @@ class Character extends React.Component {
 				return res.json();
 			})
 			.then((res) => {
-				this.setState({
-					selected: res
-				});
+				if (res.httpStatus === 401) {
+					this.props.cookies.remove('isAuthorized', { path: '/' });
+				} else {
+					this.setState({
+						types: res
+					});
+				}
 			});
 
-		this.setState({
-			defaultRadioValue: data || e.target.value
-		});
+		fetch(`${config.API.DOMAIN}:${config.API.PORT}/api/characterArchetype/${this.props.cookies.cookies._id}`, {
+			method: 'GET',
+			mode: 'cors',
+			credentials: 'include',
+			headers: {
+				Accept: 'application/json',
+				'Content-Type': 'application/json'
+			}
+		})
+			.then((res) => {
+				return res.json();
+			})
+			.then((res) => {
+				if (res.httpStatus === 401) {
+					this.props.cookies.remove('isAuthorized', { path: '/' });
+				} else {
+					this.setState({
+						characteristics: res
+					});
+				}
+			});
+	}
+
+	selectedAttributes = (userID) => {
+		fetch(`${config.API.DOMAIN}:${config.API.PORT}/api/characterArchetype/${userID}`, {
+			method: 'GET',
+			mode: 'cors',
+			credentials: 'include',
+			headers: {
+				Accept: 'application/json',
+				'Content-Type': 'application/json'
+			}
+		})
+			.then((res) => {
+				return res.json();
+			})
+			.then((res) => {
+				if (res.httpStatus === 401) {
+					this.props.cookies.remove('isAuthorized', { path: '/' });
+				} else {
+					this.setState({
+						characteristics: res
+					});
+				}
+			});
 	};
 
 	handleTabChange = (e, newValue) => {
@@ -143,34 +142,12 @@ class Character extends React.Component {
 					<Grid container style={{ padding: 20 }} className="animate__animated animate__slideInLeft">
 						<Grid item xl={12}>
 							<Grid container spacing={2}>
-								<Grid item xs={12} sm={12} md={1} lg={1} xl={1}>
-									<FormControl onChange={this.handleChange}>
-										<RadioGroup value={this.state.defaultRadioValue}>
-											{this.state.types.map((value, index) => {
-												return (
-													<FormControlLabel
-														key={index}
-														label={value._id.type}
-														control={
-															<Radio
-																color="default"
-																style={{ color: 'rgb(138, 3, 3)' }}
-															/>
-														}
-														value={value._id.type}
-														style={{ color: '#fff' }}
-													/>
-												);
-											})}
-										</RadioGroup>
-									</FormControl>
-								</Grid>
-
 								<Characteristics
 									title="CUSTOMIZE"
 									types={this.state.selected}
 									selectedType={this.selectedAttributes}
 									characteristics={this.state.characteristics}
+									cookies={this.props.cookies}
 								/>
 								<CharacterProfile title="PROFILE" cookies={this.props.cookies} />
 								<CharacterStats
@@ -178,6 +155,7 @@ class Character extends React.Component {
 									characteristics={this.state.characteristics}
 									stats={this.state.stats}
 									attributes={this.state.attributes}
+									cookies={this.props.cookies}
 								/>
 							</Grid>
 						</Grid>

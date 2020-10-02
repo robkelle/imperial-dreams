@@ -2,8 +2,8 @@ import { Button, Collapse, Divider, Grid, LinearProgress, Paper, Typography } fr
 import React, { useState } from 'react';
 
 const CharacterStats = (props) => {
-	const [ minimizeCharacteristis, setMinimizeCharacteristics ] = useState(true);
-	const [ minimizeStatistics, setminimizeStatistics ] = useState(false);
+	const [ minimizeCharacteristics, setMinimizeCharacteristics ] = useState(true);
+	const [ minimizeStatistics, setMinimizeStatistics ] = useState(false);
 
 	return (
 		<Grid item xs={12} sm={12} md={3} lg={4} xl={4}>
@@ -37,7 +37,7 @@ const CharacterStats = (props) => {
 						<Button
 							style={{ color: '#fff', backgroundColor: 'rgb(138, 3, 3)' }}
 							onClick={() => {
-								minimizeCharacteristis
+								minimizeCharacteristics
 									? setMinimizeCharacteristics(false)
 									: setMinimizeCharacteristics(true);
 							}}
@@ -50,7 +50,7 @@ const CharacterStats = (props) => {
 						<Divider variant="fullWidth" style={{ backgroundColor: 'rgb(138, 3, 3)', marginBottom: 10 }} />
 					</Grid>
 					<Grid item xl={6}>
-						<Collapse in={minimizeCharacteristis}>
+						<Collapse in={minimizeCharacteristics}>
 							{props.characteristics.map((value, index) => {
 								return (
 									<Grid container justify="space-evenly" key={index}>
@@ -70,7 +70,7 @@ const CharacterStats = (props) => {
 						<Button
 							style={{ color: '#fff', backgroundColor: 'rgb(138, 3, 3)' }}
 							onClick={() => {
-								minimizeStatistics ? setminimizeStatistics(false) : setminimizeStatistics(true);
+								minimizeStatistics ? setMinimizeStatistics(false) : setMinimizeStatistics(true);
 							}}
 						>
 							<Typography variant="subtitle1" gutterBottom style={{ color: '#fff' }}>

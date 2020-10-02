@@ -53,6 +53,12 @@ class CharacterProfile extends Component {
 		this.getProfileImage();
 	}
 
+	componentWillUnmount() {
+		this.setState({
+			image: null
+		});
+	}
+
 	render() {
 		return (
 			<Fragment>

@@ -215,7 +215,6 @@ exports.signin = (req, res, next) => {
 				// Sends client response
 				res.cookie('accessToken', token, cookieOptions);
 				res.status(200).send({
-					refreshToken: refreshToken,
 					username: user.username,
 					_id: user._id,
 					isLoggedIn: true
@@ -275,7 +274,6 @@ exports.forgotPassword = (req, res) => {
 			if (err) {
 				console.log(err);
 			} else {
-				console
 				console.log(info);
 			}
 		});
