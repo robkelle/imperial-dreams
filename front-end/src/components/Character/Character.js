@@ -22,12 +22,12 @@ class Character extends React.Component {
 				}
 			},
 			attributes: [
-				{ label: 'STRENGTH', value: 10 },
-				{ label: 'DEXTERITY', value: 20 },
-				{ label: 'SPIRIT', value: 26 },
-				{ label: 'INTELLECT', value: 18 },
-				{ label: 'ARMOR', value: 60 },
-				{ label: 'MOVEMENT', value: 54 }
+				{ label: 'STRENGTH', value: 10, image: require('../../images/strength.png') },
+				{ label: 'DEXTERITY', value: 20, image: require('../../images/dexterity.png') },
+				{ label: 'SPIRIT', value: 26, image: require('../../images/spirit.png') },
+				{ label: 'INTELLECT', value: 18, image: require('../../images/intellect.png') },
+				{ label: 'ARMOR', value: 60, image: require('../../images/armor.png') },
+				{ label: 'MOVEMENT', value: 54, image: require('../../images/movement.png') }
 			],
 			stats: [
 				{ label: 'WEAPON DAMAGE', value: '15-25' },
