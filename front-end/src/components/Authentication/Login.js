@@ -49,7 +49,7 @@ class Login extends Component {
 
 	handleLogin = () => {
 		const { cookies } = this.props;
-		fetch(`${config.API.DOMAIN}:${config.API.PORT}/api/user/signin`, {
+		fetch(`${config.API.DOMAIN}:${config.API.PORT}/api/user/login`, {
 			method: 'POST',
 			mode: 'cors',
 			credentials: 'include',

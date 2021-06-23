@@ -17,7 +17,7 @@ const theme = createMuiTheme({
 
 const CharacterStats = (props) => {
 	const [ minimizeCharacteristics, setMinimizeCharacteristics ] = useState(true);
-	const [ minimizeStatistics, setMinimizeStatistics ] = useState(false);
+	const [ minimizeStatistics, setMinimizeStatistics ] = useState(true);
 
 	return (
 		<Grid item xs={12} sm={12} md={5} lg={5} xl={5} style={{ padding: 5 }}>

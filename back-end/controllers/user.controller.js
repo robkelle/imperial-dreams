@@ -34,7 +34,7 @@ exports.signup = (req, res) => {
 
 	function userValidations() {
 		try {
-			// Username must be over 8 characters and Alpha-Numberic
+			// Username must be over 8 characters and Alpha-Numeric
 			if (user.username.length >= 8 && !userNameRegex.test(user.username)) {
 				userValidate.usernameValid = true;
 			}
@@ -119,7 +119,7 @@ exports.signup = (req, res) => {
 /*
     Logs a valid user in
 */
-exports.signin = (req, res, next) => {
+exports.login = (req, res, next) => {
 	User.findOne(
 		{
 			username: req.body.username.toLowerCase()
@@ -358,5 +358,6 @@ exports.resetPassword = (req, res) => {
 };
 
 exports.verifyAuth = (req, res) => {
+  console.log('Test Verify');
 	res.status(200).send({ message: 'User is logged in.' });
 };

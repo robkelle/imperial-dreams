@@ -16,11 +16,11 @@ const ChatGIFMessage = (props) => {
 							<ListItemText
 								primary={<img src={props.message} alt="" />}
 								secondary={
-									<div align="left">
+									<span align="left">
 										<Typography variant="caption" style={{ color: '#fff' }}>
 											{props.user} posted on {Moment(props.posted).format('llll')}
 										</Typography>
-									</div>
+									</span>
 								}
 							/>
 						</ListItem>

@@ -11,7 +11,7 @@ const upload = multer({
 	dest: 'uploads/'
 });
 
-router.post('/', upload.single('characterImage'), checkAuthorization, Character.postCharacterImage);
-router.get('/:userID', checkAuthorization, Character.getProfileImage);
+router.post('/', upload.single('characterImage'), Character.postCharacterImage);
+router.get('/:userID', Character.getProfileImage);
 
 module.exports = router;

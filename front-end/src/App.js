@@ -71,6 +71,7 @@ function App(props) {
 	return (
 		<div>
 			<Router basename="imperial">
+
 				<Authenticator.Provider value={handleAuth}>
 					<Navbar />
 					{/* Initialize all routes */}
@@ -107,7 +108,7 @@ function App(props) {
 						path="/map"
 						render={(e) =>
 							handleAuth.isAuthorized ? (
-								<Map cookies={props.cookies} />
+								<Map cookies={props.cookies} history={e.history} />
 							) : (
 								<Login history={e.history} cookies={props.cookies} />
 							)}
