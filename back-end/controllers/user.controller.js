@@ -360,6 +360,5 @@ exports.resetPassword = (req, res) => {
 };
 
 exports.verifyAuth = (req, res) => {
-  console.log('Test Verify');
 	res.status(200).send({ message: 'User is logged in.' });
 };
