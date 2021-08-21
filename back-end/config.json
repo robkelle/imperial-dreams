@@ -28,5 +28,5 @@
 		"USER": "1mperialdr3ams@gmail.com",
 		"PASSWORD": "!mperialdre5ms"
 	},
-	"ALLOW_ORIGIN": "http://localhost:3000"
+	"ALLOW_ORIGIN": "http://localhost:3001"
 }

@@ -251,9 +251,11 @@ exports.logout = (req, res) => {
 					});
 				}
 				res.clearCookie('accessToken');
-				res.json({
-					isLoggedIn: false
-				});
+        res.status(401).send({
+          message: 'User needs to login before accessing this API.',
+          httpStatus: 401,
+          isLoggedIn: false
+        });
 			}
 		);
 	}
