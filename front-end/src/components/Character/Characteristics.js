@@ -58,18 +58,6 @@ const addCharacterType = async (type, label, props) => {
 	});
 };
 
-const getSelected = (types, props, setSelectedType) => {
-	if (types) {
-		types.forEach((value, index) => {
-			props.characteristics.forEach((characteristic) => {
-				if (value.type === characteristic.type && value.label === characteristic.label) {
-					setSelectedType(index);
-				}
-			});
-		});
-	}
-};
-
 const Characteristics = (props) => {
 	const [ selectedType, setSelectedType ] = useState(0);
 	const [ options, setOptions ] = useState(null);
@@ -100,9 +88,24 @@ const Characteristics = (props) => {
 		setAnchorEl(event.currentTarget);
 	};
 
+	const getSelected = (types, props, setSelectedType) => {
+		if (types) {
+			types.forEach((value, index) => {
+				props.characteristics.forEach((characteristic) => {
+					if (value.type === characteristic.type && value.label === characteristic.label) {
+						setSelectedType(index);
+					}
+				});
+			});
+		} else {
+			// Set default on page load
+			handleClose(undefined, props);
+		}
+	};
+
 	// Gets all characteristics based on type
 	const handleClose = (e, props) => {
-		fetch(`${config.API.DOMAIN}:${config.API.PORT}/api/archetype/${e.nativeEvent.target.outerText}`, {
+		fetch(`${config.API.DOMAIN}:${config.API.PORT}/api/archetype/${e === undefined ? props.characteristics[0].type : e.nativeEvent.target.outerText}`, {
 			method: 'GET',
 			mode: 'cors',
 			credentials: 'include',
@@ -175,12 +178,7 @@ const Characteristics = (props) => {
 											}}
 											style={characteristicStyle(index)}
 										>
-											<img
-												src={'data:image/jpeg;base64,' + BufferToBase64(value.image.data.data)}
-												width="100%"
-												height="200"
-												alt=""
-											/>
+											<img src={'data:image/jpeg;base64,' + BufferToBase64(value.image.data.data)} width="100%" height="200" alt="" />
 										</Button>
 									</Grid>
 								);

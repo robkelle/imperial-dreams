@@ -9,8 +9,7 @@ const checkAuthorization = (req, res, next) => {
 		res.clearCookie('accessToken');
 		res.status(401).send({
 			message: 'Invalid or missing authorization token.',
-			httpStatus: 401,
-      isLoggedIn: false
+			httpStatus: 401
 		});
 	} else {
 		// Verify Access Token
@@ -88,8 +87,7 @@ const checkAuthorization = (req, res, next) => {
 							} else {
                 res.status(401).send({
                   message: 'Refresh token is expired or not found.',
-                  httpStatus: 401,
-                  isLoggedIn: false
+                  httpStatus: 401
                 });
               }
 						});
@@ -107,8 +105,7 @@ const checkAuthorization = (req, res, next) => {
 				if (!user) {
 					res.status(401).send({
 						message: 'User needs to login before accessing this API.',
-						httpStatus: 401,
-            isLoggedIn: false
+						httpStatus: 401
 					});
 				} else {
 					// Executes the middleware succeeding this middleware function

@@ -42,7 +42,11 @@ class CharacterProfile extends Component {
 				return res.json();
 			})
 			.then((res) => {
-				this.getProfileImage();
+				if (res.httpStatus === 401) {
+					this.props.cookies.remove('isAuthorized', { path: '/' });
+				} else {
+					this.getProfileImage();
+				}
 			});
 	};
 
@@ -56,9 +60,13 @@ class CharacterProfile extends Component {
 				return res.json();
 			})
 			.then((res) => {
-				this.setState({
-					image: res.profileImage
-				});
+				if (res.httpStatus === 401) {
+					this.props.cookies.remove('isAuthorized', { path: '/' });
+				} else {
+					this.setState({
+						image: res.profileImage
+					});
+				}
 			});
 	};
 
@@ -108,10 +116,7 @@ class CharacterProfile extends Component {
 						<Grid container spacing={1} justify="center">
 							<Grid item xl={12}>
 								{this.state.image ? (
-									<Avatar
-										style={{ width: '100%', height: 'auto' }}
-										src={'data:image/jpeg;base64,' + BufferToBase64(this.state.image.data.data)}
-									/>
+									<Avatar style={{ width: '100%', height: 'auto' }} src={'data:image/jpeg;base64,' + BufferToBase64(this.state.image.data.data)} />
 								) : (
 									<Avatar style={{ width: 400, height: 350 }}>
 										<AccountCircleIcon style={{ width: 400, height: 350, color: '#181818' }} />
