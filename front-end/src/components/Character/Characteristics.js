@@ -88,24 +88,9 @@ const Characteristics = (props) => {
 		setAnchorEl(event.currentTarget);
 	};
 
-	const getSelected = (types, props, setSelectedType) => {
-		if (types) {
-			types.forEach((value, index) => {
-				props.characteristics.forEach((characteristic) => {
-					if (value.type === characteristic.type && value.label === characteristic.label) {
-						setSelectedType(index);
-					}
-				});
-			});
-		} else {
-			// Set default on page load
-			handleClose(undefined, props);
-		}
-	};
-
 	// Gets all characteristics based on type
 	const handleClose = (e, props) => {
-		fetch(`${config.API.DOMAIN}:${config.API.PORT}/api/archetype/${e === undefined ? props.characteristics[0].type : e.nativeEvent.target.outerText}`, {
+		fetch(`${config.API.DOMAIN}:${config.API.PORT}/api/archetype/${e.nativeEvent.target.outerText}`, {
 			method: 'GET',
 			mode: 'cors',
 			credentials: 'include',
@@ -125,6 +110,21 @@ const Characteristics = (props) => {
 			});
 
 		setAnchorEl(null);
+	};
+
+	const getSelected = (types, props, setSelectedType) => {
+		if (types) {
+			types.forEach((value, index) => {
+				props.characteristics.forEach((characteristic) => {
+					if (value.type === characteristic.type && value.label === characteristic.label) {
+						setSelectedType(index);
+					}
+				});
+			});
+		} else {
+			// Set default on page load
+			//handleClose(undefined, props);
+		}
 	};
 
 	const characteristicStyle = (index) => {

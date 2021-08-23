@@ -94,7 +94,10 @@ class InitSockets {
   */
 	start() {
 		this.io.on('connection', (socket) => {
-			this.io.emit('userConnected', 'User connected to chat room.');
+			socket.on('userDisconnected', (res) => {
+				this._postMessage(res);
+			});
+
 			this._socketLoader(socket);
 			this._socketPoster(socket);
 		});

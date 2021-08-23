@@ -1,17 +1,4 @@
-import {
-	Dialog,
-	DialogTitle,
-	Fab,
-	FormControl,
-	FormHelperText,
-	Grid,
-	IconButton,
-	Input,
-	InputAdornment,
-	InputLabel,
-	Paper,
-	Typography
-} from '@material-ui/core';
+import { Dialog, DialogTitle, Fab, FormControl, FormHelperText, Grid, IconButton, Input, InputAdornment, InputLabel, Paper, Typography } from '@material-ui/core';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import React, { Component, Fragment } from 'react';
 
@@ -27,8 +14,9 @@ import config from '../../config.json';
 import io from 'socket.io-client';
 import { withCookies } from 'react-cookie';
 
-//import ChatLoader from './ChatLoader';
+import { v4 as uuidv4 } from 'uuid';
 
+//import ChatLoader from './ChatLoader';
 
 const theme = createMuiTheme({
 	palette: {
@@ -129,49 +117,25 @@ class Chat extends Component {
 						.map((value) => {
 							if (value.messageType === 'gif') {
 								return (
-									<div key={value._id}>
+									<div key={uuidv4()}>
 										<ChatGIFMessage
 											message={value.message}
 											posted={value.posted}
 											user={value.username}
-											style={
-												this.props.cookies.get('user') === value.username ? (
-													this.classes.messageStyleSpanPersonal
-												) : (
-													this.classes.messageStyleSpan
-												)
-											}
-											action={
-												this.props.cookies.get('user') === value.username ? (
-													this.classes.sentMessageStyle
-												) : (
-													this.classes.receivedMessageStyle
-												)
-											}
+											style={this.props.cookies.get('user') === value.username ? this.classes.messageStyleSpanPersonal : this.classes.messageStyleSpan}
+											action={this.props.cookies.get('user') === value.username ? this.classes.sentMessageStyle : this.classes.receivedMessageStyle}
 										/>
 									</div>
 								);
 							} else {
 								return (
-									<div key={value._id}>
+									<div key={uuidv4()}>
 										<ChatMessage
 											message={value.message}
 											posted={value.posted}
 											user={value.username}
-											style={
-												this.props.cookies.get('user') === value.username ? (
-													this.classes.messageStyleSpanPersonal
-												) : (
-													this.classes.messageStyleSpan
-												)
-											}
-											action={
-												this.props.cookies.get('user') === value.username ? (
-													this.classes.sentMessageStyle
-												) : (
-													this.classes.receivedMessageStyle
-												)
-											}
+											style={this.props.cookies.get('user') === value.username ? this.classes.messageStyleSpanPersonal : this.classes.messageStyleSpan}
+											action={this.props.cookies.get('user') === value.username ? this.classes.sentMessageStyle : this.classes.receivedMessageStyle}
 										/>
 									</div>
 								);
@@ -248,66 +212,31 @@ class Chat extends Component {
 				}
 			});
 
-		// this.socket.on('userConnected', (res) => {
-		// 	// Adds the message into the database
-		// 	this.socket.emit('postMessage', {
-		// 		message: `${cookies.get('user')} has joined ${this.props.room}`,
-		// 		username: cookies.get('user'),
-		// 		page: this.state.page,
-		// 		pageLimit: this.state.pageLimit,
-		// 		room: this.props.room
-		// 	});
-		// });
-
 		this.socket.on('loadMessage', (res) => {
 			this.setState({
 				messages: res.message
 					.map((value, index) => {
 						if (value.messageType === 'gif') {
 							return (
-								<div key={value._id + index}>
+								<div key={uuidv4()}>
 									<ChatGIFMessage
 										message={value.message}
 										posted={value.posted}
 										user={value.username}
-										style={
-											this.props.cookies.get('user') === value.username ? (
-												this.classes.messageStyleSpanPersonal
-											) : (
-												this.classes.messageStyleSpan
-											)
-										}
-										action={
-											this.props.cookies.get('user') === value.username ? (
-												this.classes.sentMessageStyle
-											) : (
-												this.classes.receivedMessageStyle
-											)
-										}
+										style={this.props.cookies.get('user') === value.username ? this.classes.messageStyleSpanPersonal : this.classes.messageStyleSpan}
+										action={this.props.cookies.get('user') === value.username ? this.classes.sentMessageStyle : this.classes.receivedMessageStyle}
 									/>
 								</div>
 							);
 						} else {
 							return (
-								<div key={value._id + index}>
+								<div key={uuidv4()}>
 									<ChatMessage
 										message={value.message}
 										posted={value.posted}
 										user={value.username}
-										style={
-											this.props.cookies.get('user') === value.username ? (
-												this.classes.messageStyleSpanPersonal
-											) : (
-												this.classes.messageStyleSpan
-											)
-										}
-										action={
-											this.props.cookies.get('user') === value.username ? (
-												this.classes.sentMessageStyle
-											) : (
-												this.classes.receivedMessageStyle
-											)
-										}
+										style={this.props.cookies.get('user') === value.username ? this.classes.messageStyleSpanPersonal : this.classes.messageStyleSpan}
+										action={this.props.cookies.get('user') === value.username ? this.classes.sentMessageStyle : this.classes.receivedMessageStyle}
 									/>
 								</div>
 							);
@@ -324,6 +253,15 @@ class Chat extends Component {
 	}
 
 	componentWillUnmount() {
+		this.socket.emit('userDisconnected', {
+			message: `${this.props.cookies.get('user')} has left the chat`,
+			username: this.props.cookies.get('user'),
+			messageType: 'text',
+			page: this.state.page,
+			pageLimit: this.state.pageLimit,
+			room: this.props.room
+		});
+
 		this.socket.disconnect();
 	}
 
@@ -388,13 +326,8 @@ class Chat extends Component {
 									onKeyDown={this.handleKeyDown}
 									endAdornment={
 										<InputAdornment position="end" style={{ marginBottom: 12 }}>
-											<Fab
-												size={'small'}
-												style={{ backgroundColor: this.chatColor, color: '#fff' }}
-											>
-												<SendIcon
-													onClick={() => this.addMessage(this.state.addMessage, 'text')}
-												/>
+											<Fab size={'small'} style={{ backgroundColor: this.chatColor, color: '#fff' }}>
+												<SendIcon onClick={() => this.addMessage(this.state.addMessage, 'text')} />
 											</Fab>
 											<Fab
 												size={'small'}
@@ -404,9 +337,7 @@ class Chat extends Component {
 													marginLeft: 5
 												}}
 											>
-												<GifIcon
-													onClick={() => this.setState({ displayGif: true, gifyOpen: true })}
-												/>
+												<GifIcon onClick={() => this.setState({ displayGif: true, gifyOpen: true })} />
 											</Fab>
 										</InputAdornment>
 									}
@@ -424,17 +355,9 @@ class Chat extends Component {
 				</div>
 				<div align="right">
 					{this.state.displayGif ? (
-						<Dialog
-							fullScreen={false}
-							open={this.state.gifyOpen}
-							onBackdropClick={() => this.setState({ gifyOpen: false })}
-						>
+						<Dialog fullScreen={false} open={this.state.gifyOpen} onBackdropClick={() => this.setState({ gifyOpen: false })}>
 							<DialogTitle align="right">
-								<IconButton
-									aria-label="Close"
-									onClick={this.handleClose}
-									style={{ backgroundColor: this.chatColor, color: '#fff' }}
-								>
+								<IconButton aria-label="Close" onClick={this.handleClose} style={{ backgroundColor: this.chatColor, color: '#fff' }}>
 									<CloseIcon />
 								</IconButton>
 							</DialogTitle>
