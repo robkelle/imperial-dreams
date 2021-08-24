@@ -136,6 +136,8 @@ class Chat extends Component {
 											user={value.username}
 											style={this.props.cookies.get('user') === value.username ? this.classes.messageStyleSpanPersonal : this.classes.messageStyleSpan}
 											action={this.props.cookies.get('user') === value.username ? this.classes.sentMessageStyle : this.classes.receivedMessageStyle}
+                      type={value.messageType}
+                      isMe={this.props.cookies.get('user') === value.username ? true : false}
 										/>
 									</div>
 								);
@@ -194,6 +196,15 @@ class Chat extends Component {
 	componentDidMount() {
 		const { cookies } = this.props;
 
+    this.socket.emit('userConnected', {
+			message: `${cookies.get('user')} has joined the chat`,
+			username: cookies.get('user'),
+			messageType: 'connect',
+			page: this.state.page,
+			pageLimit: this.state.pageLimit,
+			room: this.props.room
+		});
+
 		// Verify that the user is authenticated
 		fetch(`${config.API.DOMAIN}:${config.API.PORT}/api/user/verify`, {
 			method: 'GET',
@@ -237,6 +248,8 @@ class Chat extends Component {
 										user={value.username}
 										style={this.props.cookies.get('user') === value.username ? this.classes.messageStyleSpanPersonal : this.classes.messageStyleSpan}
 										action={this.props.cookies.get('user') === value.username ? this.classes.sentMessageStyle : this.classes.receivedMessageStyle}
+                    type={value.messageType}
+                    isMe={this.props.cookies.get('user') === value.username ? true : false}
 									/>
 								</div>
 							);
@@ -256,7 +269,7 @@ class Chat extends Component {
 		this.socket.emit('userDisconnected', {
 			message: `${this.props.cookies.get('user')} has left the chat`,
 			username: this.props.cookies.get('user'),
-			messageType: 'text',
+			messageType: 'disconnect',
 			page: this.state.page,
 			pageLimit: this.state.pageLimit,
 			room: this.props.room
@@ -266,7 +279,6 @@ class Chat extends Component {
 	}
 
 	render() {
-		//const loader = <ChatLoader />;
 
 		return (
 			<Fragment>
