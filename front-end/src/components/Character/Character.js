@@ -158,7 +158,7 @@ class Character extends React.Component {
 						<Grid item xl={12} style={{marginTop: 15}}>
 							<Grid container spacing={2}>
 								<Characteristics
-									title="CUSTOMIZE"
+									title="CHARACTERISTICS"
 									types={this.state.selected}
 									selectedType={this.selectedAttributes}
 									characteristics={this.state.characteristics}

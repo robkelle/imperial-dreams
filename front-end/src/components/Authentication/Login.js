@@ -4,9 +4,7 @@ import {
 	Button,
 	Card,
 	CardContent,
-	Checkbox,
 	FormControl,
-	FormControlLabel,
 	FormHelperText,
 	Grid,
 	Input,
@@ -201,7 +199,7 @@ class Login extends Component {
 									</div>
 
 									<br />
-									<div>
+									{/* <div>
 										<FormControlLabel
 											control={
 												<Checkbox
@@ -214,7 +212,7 @@ class Login extends Component {
 											}
 											label="Remember Username"
 										/>
-									</div>
+									</div> */}
 									<Button
 										type="submit"
 										style={{

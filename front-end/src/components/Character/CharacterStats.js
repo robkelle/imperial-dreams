@@ -1,4 +1,4 @@
-import { Button, Collapse, Divider, Grid, LinearProgress, Paper, Typography } from '@material-ui/core';
+import { Button, Collapse, Divider, Grid, LinearProgress, Paper, Table, TableBody, TableCell, TableRow, Typography } from '@material-ui/core';
 import React, { useState } from 'react';
 
 import { ThemeProvider } from '@material-ui/styles';
@@ -35,7 +35,7 @@ const CharacterStats = (props) => {
 				{props.title}
 			</Typography>
 			<Paper style={{ backgroundColor: '#181818', color: '#fff' }} align="center">
-				<Grid container spacing={1} align="left" style={{ padding: 10 }}>
+				<Grid container spacing={1} align="left" style={{ padding: 5 }}>
 					<Grid item xs={12}>
 						<Typography variant="subtitle1" gutterBottom style={{ color: '#fff' }}>
 							{props.title}
@@ -65,9 +65,7 @@ const CharacterStats = (props) => {
 						<Button
 							style={{ color: '#fff', backgroundColor: 'rgb(138, 3, 3)', marginTop: 15 }}
 							onClick={() => {
-								minimizeCharacteristics
-									? setMinimizeCharacteristics(false)
-									: setMinimizeCharacteristics(true);
+								minimizeCharacteristics ? setMinimizeCharacteristics(false) : setMinimizeCharacteristics(true);
 							}}
 						>
 							<Typography variant="subtitle1" gutterBottom style={{ color: '#fff' }}>
@@ -77,20 +75,19 @@ const CharacterStats = (props) => {
 
 						<Divider variant="fullWidth" style={{ backgroundColor: 'rgb(138, 3, 3)', marginBottom: 10 }} />
 					</Grid>
-					<Grid item xl={6}>
+
+					<Grid item xs={6}>
 						<Collapse in={minimizeCharacteristics}>
-							{props.characteristics.map((value, index) => {
-								return (
-									<Grid container justify="space-evenly" key={index}>
-										<Grid item xl={6}>
-											<Typography variant="overline">{value.type}</Typography>
-										</Grid>
-										<Grid item xl={6}>
-											<Typography variant="overline">{value.label}</Typography>
-										</Grid>
-									</Grid>
-								);
-							})}
+							<Table>
+								{props.characteristics.map((value, index) => (
+									<TableBody>
+										<TableRow key={index}>
+											<TableCell style={{ color: '#fff', border: 'none' }}>{value.type}</TableCell>
+											<TableCell style={{ color: '#fff', border: 'none' }}>{value.label}</TableCell>
+										</TableRow>
+									</TableBody>
+								))}
+							</Table>
 						</Collapse>
 					</Grid>
 
@@ -107,22 +104,20 @@ const CharacterStats = (props) => {
 						</Button>
 						<Divider variant="fullWidth" style={{ backgroundColor: 'rgb(138, 3, 3)', marginBottom: 10 }} />
 					</Grid>
-					{props.stats.map((key, index) => {
-						return (
-							<Grid item xl={6} key={index}>
-								<Collapse in={minimizeStatistics}>
-									<Grid container justify="space-evenly">
-										<Grid item xl={6}>
-											<Typography variant="overline">{key.label}</Typography>
-										</Grid>
-										<Grid item xl={2}>
-											<Typography variant="overline">{key.value}</Typography>
-										</Grid>
-									</Grid>
-								</Collapse>
-							</Grid>
-						);
-					})}
+					<Grid item xs={6}>
+						<Collapse in={minimizeStatistics}>
+							<Table>
+								{props.stats.map((value, index) => (
+									<TableBody>
+										<TableRow key={index}>
+											<TableCell style={{ color: '#fff', border: 'none' }}>{value.label}</TableCell>
+											<TableCell style={{ color: '#fff', border: 'none' }}>{value.value}</TableCell>
+										</TableRow>
+									</TableBody>
+								))}
+							</Table>
+						</Collapse>
+					</Grid>
 				</Grid>
 			</Paper>
 		</Grid>

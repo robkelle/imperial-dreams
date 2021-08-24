@@ -12,11 +12,8 @@ import SendIcon from '@material-ui/icons/Send';
 import _ from 'lodash';
 import config from '../../config.json';
 import io from 'socket.io-client';
-import { withCookies } from 'react-cookie';
-
 import { v4 as uuidv4 } from 'uuid';
-
-//import ChatLoader from './ChatLoader';
+import { withCookies } from 'react-cookie';
 
 const theme = createMuiTheme({
 	palette: {

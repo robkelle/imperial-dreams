@@ -10,13 +10,13 @@
 	},
 	"ACCESS_TOKEN": {
 		"SECRET": "15822f7f7515197bae615e5fba77a234ba9a7eaa9a18372d2a09f9bc57eb675b",
-		"EXPIRATION": 10,
-		"VALID_FOR": "10 seconds"
+		"EXPIRATION": 86400,
+		"VALID_FOR": "1 day"
 	},
 	"REFRESH_TOKEN": {
 		"SECRET": "3UrX4WHymAnlgamDYpV1MdjaSViSRdvMUrAuWbG84i44P1CzJT",
-		"EXPIRATION": 86400,
-		"VALID_FOR": "1 day"
+		"EXPIRATION": 864000,
+		"VALID_FOR": "10 days"
 	},
 	"RESET_TOKEN": {
 		"SECRET": "tf8pn7VUy4GotD5zAOh3zzaGiTn3UsjQKwRzw7B34JYWNpvkuc",
