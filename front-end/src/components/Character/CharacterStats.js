@@ -80,8 +80,8 @@ const CharacterStats = (props) => {
 						<Collapse in={minimizeCharacteristics}>
 							<Table>
 								{props.characteristics.map((value, index) => (
-									<TableBody>
-										<TableRow key={index}>
+									<TableBody key={index}>
+										<TableRow>
 											<TableCell style={{ color: '#fff', border: 'none' }}>{value.type}</TableCell>
 											<TableCell style={{ color: '#fff', border: 'none' }}>{value.label}</TableCell>
 										</TableRow>
@@ -108,8 +108,8 @@ const CharacterStats = (props) => {
 						<Collapse in={minimizeStatistics}>
 							<Table>
 								{props.stats.map((value, index) => (
-									<TableBody>
-										<TableRow key={index}>
+									<TableBody key={index}>
+										<TableRow>
 											<TableCell style={{ color: '#fff', border: 'none' }}>{value.label}</TableCell>
 											<TableCell style={{ color: '#fff', border: 'none' }}>{value.value}</TableCell>
 										</TableRow>
