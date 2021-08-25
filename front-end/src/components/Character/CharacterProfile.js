@@ -114,7 +114,7 @@ class CharacterProfile extends Component {
 						<Grid container spacing={1} justify="center">
 							<Grid item xl={12}>
 								{this.state.image ? (
-									<Avatar style={{ width: '400px', height: 'auto' }} src={'data:image/jpeg;base64,' + BufferToBase64(this.state.image.data.data)} />
+									<Avatar style={{ width: '100%', height: 'auto' }} src={'data:image/jpeg;base64,' + BufferToBase64(this.state.image.data.data)} />
 								) : (
 									<Avatar style={{ width: 400, height: 350 }}>
 										<AccountCircleIcon style={{ width: 400, height: 350, color: '#181818' }} />
