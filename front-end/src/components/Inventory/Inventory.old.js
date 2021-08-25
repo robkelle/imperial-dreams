@@ -14,8 +14,8 @@ const inventory = [
 			name: 'Weapon',
 			index: 0
 		},
-		name: 'Diamond Sword',
-		quantity: 2,
+		name: 'Battle axe',
+		quantity: 0,
 		image: ''
 	},
 	{
@@ -23,8 +23,8 @@ const inventory = [
 			name: 'Weapon',
 			index: 0
 		},
-		name: 'Gold Sword',
-		quantity: 5,
+		name: 'Bludgeon',
+		quantity: 0,
 		image: ''
 	},
 	{
@@ -32,8 +32,8 @@ const inventory = [
 			name: 'Weapon',
 			index: 0
 		},
-		name: 'Diamond Sword',
-		quantity: 2,
+		name: 'Club',
+		quantity: 0,
 		image: ''
 	},
 	{
@@ -41,8 +41,8 @@ const inventory = [
 			name: 'Weapon',
 			index: 0
 		},
-		name: 'Gold Sword',
-		quantity: 5,
+		name: 'Flail',
+		quantity: 0,
 		image: ''
 	},
 	{
@@ -50,8 +50,8 @@ const inventory = [
 			name: 'Weapon',
 			index: 0
 		},
-		name: 'Diamond Sword',
-		quantity: 2,
+		name: 'Flanged mace',
+		quantity: 0,
 		image: ''
 	},
 	{
@@ -59,8 +59,8 @@ const inventory = [
 			name: 'Weapon',
 			index: 0
 		},
-		name: 'Gold Sword',
-		quantity: 5,
+		name: 'War hammer',
+		quantity: 0,
 		image: ''
 	},
 	{
@@ -68,8 +68,8 @@ const inventory = [
 			name: 'Weapon',
 			index: 0
 		},
-		name: 'Diamond Sword',
-		quantity: 2,
+		name: 'Arming Sword',
+		quantity: 0,
 		image: ''
 	},
 	{
@@ -77,8 +77,8 @@ const inventory = [
 			name: 'Weapon',
 			index: 0
 		},
-		name: 'Gold Sword',
-		quantity: 5,
+		name: 'Dagger',
+		quantity: 0,
 		image: ''
 	},
 	{
@@ -86,8 +86,8 @@ const inventory = [
 			name: 'Weapon',
 			index: 0
 		},
-		name: 'Diamond Sword',
-		quantity: 2,
+		name: 'Estoc',
+		quantity: 0,
 		image: ''
 	},
 	{
@@ -95,8 +95,8 @@ const inventory = [
 			name: 'Weapon',
 			index: 0
 		},
-		name: 'Gold Sword',
-		quantity: 5,
+		name: 'Falchion',
+		quantity: 0,
 		image: ''
 	},
 	{
@@ -104,8 +104,8 @@ const inventory = [
 			name: 'Weapon',
 			index: 0
 		},
-		name: 'Diamond Sword',
-		quantity: 2,
+		name: 'Kanta',
+		quantity: 0,
 		image: ''
 	},
 	{
@@ -113,8 +113,8 @@ const inventory = [
 			name: 'Weapon',
 			index: 0
 		},
-		name: 'Gold Sword',
-		quantity: 5,
+		name: 'Knife',
+		quantity: 0,
 		image: ''
 	},
 	{
@@ -122,26 +122,80 @@ const inventory = [
 			name: 'Weapon',
 			index: 0
 		},
-		name: 'Gold Sword',
-		quantity: 5,
+		name: 'Longsword',
+		quantity: 0,
 		image: ''
 	},
-  {
+	{
 		type: {
 			name: 'Weapon',
+			index: 0
+		},
+		name: 'Rapier',
+		quantity: 0,
+		image: ''
+	},
+	{
+		type: {
+			name: 'Weapon',
+			index: 0
+		},
+		name: 'Saber',
+		quantity: 0,
+		image: ''
+	},
+	{
+		type: {
+			name: 'Weapon',
+			index: 0
+		},
+		name: 'Shortsword',
+		quantity: 0,
+		image: ''
+	},
+	{
+		type: {
+			name: 'Bow',
 			index: 1
 		},
-		name: 'Gold Sword',
-		quantity: 5,
+		name: 'Daikyu',
+		quantity: 0,
 		image: ''
 	},
 	{
 		type: {
-			name: 'Weapon',
+			name: 'Bow',
 			index: 1
 		},
-		name: 'Sword',
-		quantity: 5,
+		name: 'English longbow',
+		quantity: 0,
+		image: ''
+	},
+	{
+		type: {
+			name: 'Bow',
+			index: 1
+		},
+		name: 'Welsh longbow',
+		quantity: 0,
+		image: ''
+	},
+	{
+		type: {
+			name: 'Bow',
+			index: 1
+		},
+		name: 'Hungarian bow',
+		quantity: 0,
+		image: ''
+	},
+	{
+		type: {
+			name: 'Bow',
+			index: 1
+		},
+		name: 'Mongol bow',
+		quantity: 0,
 		image: ''
 	}
 ];
@@ -178,15 +232,12 @@ export class Inventory extends Component {
 								return (
 									<Grid item xs={6} sm={3} md={2} lg={2} xl={2} key={index}>
 										<div className="animate__animated animate__backInDown">
-											<Card className="texture2">
+											<Card className= style={value.quantity === 0 ? {backgroundColor: '#ffffff !important'} : {}}>
 												<CardContent>
 													<Typography variant="overline">{value.name}</Typography>
 												</CardContent>
 												<CardActions>
 													<Typography variant="subtitle2">x {value.quantity}</Typography>
-                          <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
-        </IconButton>
 												</CardActions>
 											</Card>
 										</div>
