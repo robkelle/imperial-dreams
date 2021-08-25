@@ -5,12 +5,9 @@ import armor from '../../images/BotW_Armor_Icon.png';
 import bow from '../../images/BotW_Bow_Icon.png';
 import food from '../../images/BotW_Food_Icon.png';
 import materials from '../../images/BotW_Material_Icon.png';
+//import rare from '../../images/BotW_Key_Item_Icon.png';
 import shield from '../../images/BotW_Shield_Icon.png';
 import weapon from '../../images/BotW_Weapon_Icon.png';
-
-//import rare from '../../images/BotW_Key_Item_Icon.png';
-
-
 
 const inventory = [
 	{

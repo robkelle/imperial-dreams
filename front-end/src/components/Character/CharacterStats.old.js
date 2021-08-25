@@ -45,7 +45,7 @@ const CharacterStats = (props) => {
 							return (
 								<Grid item xl={6} key={index}>
 									<Grid container spacing={0}>
-										<Grid item xl={2}>
+										<Grid item xl={2} style={{margin: '0px -30px 0px 0px'}}>
 											<img src={value.image} alt="stats" style={{ height: 50, width: 50 }} />
 										</Grid>
 										<Grid item xs={10} style={{marginBottom: 10}}>
