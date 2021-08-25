@@ -125,6 +125,24 @@ const inventory = [
 		name: 'Gold Sword',
 		quantity: 5,
 		image: ''
+	},
+  {
+		type: {
+			name: 'Weapon',
+			index: 1
+		},
+		name: 'Gold Sword',
+		quantity: 5,
+		image: ''
+	},
+	{
+		type: {
+			name: 'Weapon',
+			index: 1
+		},
+		name: 'Sword',
+		quantity: 5,
+		image: ''
 	}
 ];
 
@@ -144,7 +162,7 @@ export class Inventory extends Component {
 		const { tabValue } = this.state;
 		return (
 			<Fragment>
-				<Tabs centered={true} value={tabValue} onChange={this.handleChange} style={{backgroundColor: 'rgba(24, 24, 24, .75)', paddingBottom: 15}}>
+				<Tabs centered={true} value={tabValue} onChange={this.handleChange} style={{ backgroundColor: 'rgba(24, 24, 24, .75)', paddingBottom: 10 }}>
 					<Tab value={0} icon={<Avatar src={weapon} />} />
 					<Tab value={1} icon={<Avatar src={bow} />} />
 					<Tab value={2} icon={<Avatar src={shield} />} />
@@ -153,12 +171,12 @@ export class Inventory extends Component {
 					<Tab value={5} icon={<Avatar src={food} />} />
 				</Tabs>
 
-				<div align="center" style={{marginTop: 10}}>
-					<Grid container lg={11} spacing={1}>
+				<div align="center" style={{ margin: 10 }}>
+					<Grid container spacing={2}>
 						{inventory.map((value, index) => {
 							if (value.type.index === tabValue) {
 								return (
-									<Grid item lg={1} key={index} spacing={5} alignContent="space-between">
+									<Grid item xs={6} sm={3} md={2} lg={2} xl={2} key={index}>
 										<div className="animate__animated animate__backInDown">
 											<Card className="texture2">
 												<CardContent>
@@ -166,6 +184,9 @@ export class Inventory extends Component {
 												</CardContent>
 												<CardActions>
 													<Typography variant="subtitle2">x {value.quantity}</Typography>
+                          <IconButton aria-label="add to favorites">
+          <FavoriteIcon />
+        </IconButton>
 												</CardActions>
 											</Card>
 										</div>
