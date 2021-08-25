@@ -20,22 +20,20 @@ const CharacterStats = (props) => {
 	const [ minimizeStatistics, setMinimizeStatistics ] = useState(true);
 
 	return (
-		<Grid item xs={12} sm={12} md={5} lg={5} xl={5} style={{ padding: 5 }}>
+		<Grid item xs={12} sm={12} md={5} lg={5} xl={5}>
 			<Typography
-				variant="h5"
+				variant="h6"
 				gutterBottom={true}
-				style={{
-					color: '#FFFAF0',
-					backgroundColor: 'rgba(24, 24, 24, 0.75)',
-					border: 'solid 4px #3CB371',
-					borderRadius: 500
-				}}
+        className="texture2"
+					style={{
+            padding: '10px'
+					}}
 				align="center"
 			>
 				{props.title}
 			</Typography>
-			<Paper style={{ backgroundColor: '#181818', color: '#fff' }} align="center">
-				<Grid container spacing={1} align="left" style={{ padding: 5 }}>
+			<Paper className="texture" align="center">
+				<Grid container align="left" style={{ padding: 5 }}>
 					<Grid item xs={12}>
 						<Typography variant="subtitle1" gutterBottom style={{ color: '#fff' }}>
 							{props.title}

@@ -144,19 +144,17 @@ const Characteristics = (props) => {
 		<Fragment>
 			<Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
 				<Typography
-					variant="h5"
+					variant="h6"
 					gutterBottom={true}
+          className="texture2"
 					style={{
-						color: '#FFFAF0',
-						backgroundColor: 'rgba(24, 24, 24, 0.75)',
-						border: 'solid 4px #3CB371',
-						borderRadius: 500
+            padding: '10px'
 					}}
 					align="center"
 				>
 					{props.title}
 				</Typography>
-				<Paper style={{ backgroundColor: '#181818', color: '#fff' }} align="right">
+				<Paper className="texture" align="right">
 					<MenuType
 						handleClick={(e) => {
 							handleClick(e, props);

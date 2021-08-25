@@ -140,13 +140,8 @@ class Character extends React.Component {
 		return (
 			<React.Fragment>
 				<ThemeProvider theme={theme}>
-					<Paper square style={{ backgroundColor: 'rgb(138, 3, 3)' }}>
-						<Tabs
-							value={this.state.tabValue}
-							indicatorColor="secondary"
-							textColor="inherit"
-							onChange={this.handleTabChange}
-						>
+					<Paper square className="texture2">
+						<Tabs value={this.state.tabValue} indicatorColor="secondary" textColor="inherit" onChange={this.handleTabChange}>
 							<Tab label="Character" style={{ color: '#fff' }} />
 							<Tab label="Inventory" style={{ color: '#fff' }} />
 						</Tabs>
@@ -155,7 +150,7 @@ class Character extends React.Component {
 
 				{this.state.tabValue === 0 ? (
 					<Grid container style={{ padding: 10 }} className="animate__animated animate__slideInLeft">
-						<Grid item xl={12} style={{marginTop: 15}}>
+						<Grid item xl={12} style={{ marginTop: 15 }}>
 							<Grid container spacing={2}>
 								<Characteristics
 									title="CHARACTERISTICS"
@@ -165,13 +160,7 @@ class Character extends React.Component {
 									cookies={this.props.cookies}
 								/>
 								<CharacterProfile title="PROFILE" cookies={this.props.cookies} />
-								<CharacterStats
-									title="STATS"
-									characteristics={this.state.characteristics}
-									stats={this.state.stats}
-									attributes={this.state.attributes}
-									cookies={this.props.cookies}
-								/>
+								<CharacterStats title="STATS" characteristics={this.state.characteristics} stats={this.state.stats} attributes={this.state.attributes} cookies={this.props.cookies} />
 							</Grid>
 						</Grid>
 					</Grid>
