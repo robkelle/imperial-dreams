@@ -1,45 +1,15 @@
-import { Button, Grid, IconButton, Menu, MenuItem, Paper, Typography } from '@material-ui/core';
+import { Button, Grid, Paper, Tab, Tabs, Typography } from '@material-ui/core';
 import React, { Fragment, useEffect, useState } from 'react';
 
 import { BufferToBase64 } from './BufferImage';
-import MoreHorizontal from '@material-ui/icons/MoreHoriz';
 import config from '../../config.json';
+import { makeStyles } from '@material-ui/core/styles';
 
-const MenuType = (props) => {
-	const ITEM_HEIGHT = 48;
-	const open = Boolean(props.anchorEl);
-
-	return (
-		<div>
-			<IconButton aria-label="more" aria-controls="long-menu" aria-haspopup="true" onClick={props.handleClick}>
-				<MoreHorizontal style={{ color: '#fff' }} />
-			</IconButton>
-			<Menu
-				id="long-menu"
-				anchorEl={props.anchorEl}
-				keepMounted
-				open={open}
-				onClose={props.handleClose}
-				PaperProps={{
-					style: {
-						maxHeight: ITEM_HEIGHT * 4.5,
-						width: '20ch'
-					}
-				}}
-			>
-				{props.options !== null ? (
-					props.options.map((option, index) => (
-						<MenuItem key={index} onClick={props.handleClose}>
-							{option._id.type}
-						</MenuItem>
-					))
-				) : (
-					''
-				)}
-			</Menu>
-		</div>
-	);
-};
+const useStyles = makeStyles({
+	wrapper: {
+		alignItems: 'baseline'
+	}
+});
 
 const addCharacterType = async (type, label, props) => {
 	await fetch(`${config.API.DOMAIN}:${config.API.PORT}/api/characterArchetype/${type}/${label}`, {
@@ -60,37 +30,28 @@ const addCharacterType = async (type, label, props) => {
 
 const Characteristics = (props) => {
 	const [ selectedType, setSelectedType ] = useState(0);
-	const [ options, setOptions ] = useState(null);
-	const [ anchorEl, setAnchorEl ] = useState(null);
 	const [ types, setTypes ] = useState(null);
+	const [ tabValue, setTabValue ] = useState('Eye Color');
+	const [ defaultType, setDefaultType ] = useState(true);
 
-	// Gets group of types
-	const handleClick = (event, props) => {
-		fetch(`${config.API.DOMAIN}:${config.API.PORT}/api/archetype/groupByType`, {
-			method: 'GET',
-			mode: 'cors',
-			credentials: 'include',
-			headers: {
-				'Content-Type': 'application/json'
-			}
-		})
-			.then((res) => {
-				return res.json();
-			})
-			.then((res) => {
-				if (res.httpStatus === 401) {
-					props.cookies.remove('isAuthorized', { path: '/' });
-				} else {
-					setOptions(res);
-				}
+	const classes = useStyles();
+
+	const getSelected = (types, props, setSelectedType) => {
+		if (types) {
+			types.forEach((value, index) => {
+				props.userCharacteristics.forEach((characteristic) => {
+					if (value.type === characteristic.type && value.label === characteristic.label) {
+						setSelectedType(index);
+					}
+				});
 			});
-
-		setAnchorEl(event.currentTarget);
+		} else {
+			// Set default on page load
+		}
 	};
 
-	// Gets all characteristics based on type
-	const handleClose = (e, props) => {
-		fetch(`${config.API.DOMAIN}:${config.API.PORT}/api/archetype/${e.nativeEvent.target.outerText}`, {
+	const getDefaultType = (value, props) => {
+		fetch(`${config.API.DOMAIN}:${config.API.PORT}/api/archetype/${value}`, {
 			method: 'GET',
 			mode: 'cors',
 			credentials: 'include',
@@ -106,25 +67,9 @@ const Characteristics = (props) => {
 					props.cookies.remove('isAuthorized', { path: '/' });
 				} else {
 					setTypes(res);
+					setDefaultType(false);
 				}
 			});
-
-		setAnchorEl(null);
-	};
-
-	const getSelected = (types, props, setSelectedType) => {
-		if (types) {
-			types.forEach((value, index) => {
-				props.characteristics.forEach((characteristic) => {
-					if (value.type === characteristic.type && value.label === characteristic.label) {
-						setSelectedType(index);
-					}
-				});
-			});
-		} else {
-			// Set default on page load
-			//handleClose(undefined, props);
-		}
 	};
 
 	const characteristicStyle = (index) => {
@@ -136,36 +81,66 @@ const Characteristics = (props) => {
 	useEffect(
 		() => {
 			getSelected(types, props, setSelectedType);
+
+			props.types.map((value, index) => {
+				if (index === 0 && defaultType) {
+					getDefaultType(value._id.type, props);
+				}
+
+				return true;
+			});
 		},
-		[ props, types ]
+		[ types, props, defaultType ]
 	);
 
 	return (
 		<Fragment>
-			<Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
+			<Grid item xs={4}>
 				<Typography
 					variant="h6"
 					gutterBottom={true}
-          className="texture2"
+					className="texture2"
 					style={{
-            padding: '10px'
+						padding: '10px'
 					}}
 					align="center"
 				>
 					{props.title}
 				</Typography>
-				<Paper className="texture" align="right">
-					<MenuType
-						handleClick={(e) => {
-							handleClick(e, props);
-						}}
-						anchorEl={anchorEl}
-						handleClose={(e) => {
-							handleClose(e, props);
-						}}
-						options={options}
-					/>
-					<Grid container>
+				<Paper className="texture" style={{ position: 'relative', height: '80%' }}>
+					<div className="sidebar">
+						<Tabs
+							TabIndicatorProps={{ style: { backgroundColor: '#e6e8ea' } }}
+							orientation="vertical"
+							value={tabValue}
+							onChange={(e, value) => {
+								setTabValue(value);
+
+								fetch(`${config.API.DOMAIN}:${config.API.PORT}/api/archetype/${value}`, {
+									method: 'GET',
+									mode: 'cors',
+									credentials: 'include',
+									headers: {
+										'Content-Type': 'application/json'
+									}
+								})
+									.then((res) => {
+										return res.json();
+									})
+									.then((res) => {
+										if (res.httpStatus === 401) {
+											props.cookies.remove('isAuthorized', { path: '/' });
+										} else {
+											setTypes(res);
+										}
+									});
+							}}
+						>
+							{props.types.map((value, index) => <Tab classes={classes} key={index} label={value._id.type} value={value._id.type} />)}
+						</Tabs>
+					</div>
+
+					<Grid item xs={12} style={{ marginLeft: 200, display: 'flex' }}>
 						{types ? (
 							types.map((value, index) => {
 								return (
@@ -182,9 +157,7 @@ const Characteristics = (props) => {
 								);
 							})
 						) : (
-							<Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-								<div align="left" style={{ height: 250, width: '100%', color: '#fff' }} />
-							</Grid>
+							<Fragment />
 						)}
 					</Grid>
 				</Paper>

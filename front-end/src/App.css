@@ -50,3 +50,11 @@ a:hover {
 	background-size: 'cover';
 	color: #e6e8ea !important;
 }
+
+.sidebar {
+	height: 100% !important;
+	position: absolute !important;
+  display: block;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+

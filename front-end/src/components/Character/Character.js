@@ -153,13 +153,7 @@ class Character extends React.Component {
 					<Grid container style={{ padding: 10 }} className="animate__animated animate__slideInLeft">
 						<Grid item xl={12} style={{ marginTop: 15 }}>
 							<Grid container spacing={2}>
-								<Characteristics
-									title="CHARACTERISTICS"
-									types={this.state.selected}
-									selectedType={this.selectedAttributes}
-									characteristics={this.state.characteristics}
-									cookies={this.props.cookies}
-								/>
+								<Characteristics title="CHARACTERISTICS" types={this.state.types} selectedType={this.selectedAttributes} userCharacteristics={this.state.characteristics} cookies={this.props.cookies} />
 								<CharacterProfile title="PROFILE" cookies={this.props.cookies} />
 								<CharacterStats title="STATS" characteristics={this.state.characteristics} stats={this.state.stats} attributes={this.state.attributes} cookies={this.props.cookies} />
 							</Grid>
