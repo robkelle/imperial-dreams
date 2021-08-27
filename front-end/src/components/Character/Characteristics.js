@@ -74,7 +74,7 @@ const Characteristics = (props) => {
 
 	const characteristicStyle = (index) => {
 		if (index === selectedType) {
-			return { backgroundColor: 'rgb(138, 3, 3)', width: '100%', height: '200' };
+			return { background: 'green' };
 		}
 	};
 
@@ -95,7 +95,7 @@ const Characteristics = (props) => {
 
 	return (
 		<Fragment>
-			<Grid item xs={4}>
+			<Grid item xs={12} sm={12} md={5} lg={5} xl={5}>
 				<Typography
 					variant="h6"
 					gutterBottom={true}
@@ -107,7 +107,7 @@ const Characteristics = (props) => {
 				>
 					{props.title}
 				</Typography>
-				<Paper className="texture" style={{ position: 'relative', height: '80%' }}>
+				<Paper className="texture" style={{ position: 'relative' }}>
 					<div className="sidebar">
 						<Tabs
 							TabIndicatorProps={{ style: { backgroundColor: '#e6e8ea' } }}
@@ -140,11 +140,11 @@ const Characteristics = (props) => {
 						</Tabs>
 					</div>
 
-					<Grid item xs={12} style={{ marginLeft: 200, display: 'flex' }}>
+					<div style={{ marginLeft: 170 }}>
 						{types ? (
 							types.map((value, index) => {
 								return (
-									<Grid item xs={3} sm={3} md={3} lg={3} xl={3} key={index}>
+									<Grid container item xs={12} sm={6} md={6} lg={4} xl={3} key={index} style={{ display: 'inline-flex' }}>
 										<Button
 											onClick={() => {
 												addCharacterType(value.type, value.label, props);
@@ -159,7 +159,7 @@ const Characteristics = (props) => {
 						) : (
 							<Fragment />
 						)}
-					</Grid>
+					</div>
 				</Paper>
 			</Grid>
 		</Fragment>
