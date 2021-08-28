@@ -216,7 +216,7 @@ export class Inventory extends Component {
 		const { tabValue } = this.state;
 		return (
 			<Fragment>
-				<Tabs centered={true} value={tabValue} onChange={this.handleChange} style={{ backgroundColor: 'rgba(24, 24, 24, .75)', paddingBottom: 10 }}>
+				<Tabs centered={true} value={tabValue} onChange={this.handleChange} style={{ backgroundColor: 'rgba(24, 24, 24, .75)', paddingBottom: 10 }} TabIndicatorProps={{ style: { backgroundColor: '#FFDE00' } }}>
 					<Tab value={0} icon={<Avatar src={weapon} />} />
 					<Tab value={1} icon={<Avatar src={bow} />} />
 					<Tab value={2} icon={<Avatar src={shield} />} />

@@ -141,7 +141,7 @@ class Character extends React.Component {
 			<React.Fragment>
 				<ThemeProvider theme={theme}>
 					<Paper square className="texture2">
-						<Tabs value={this.state.tabValue} indicatorColor="secondary" textColor="inherit" onChange={this.handleTabChange}>
+						<Tabs value={this.state.tabValue} TabIndicatorProps={{ style: { backgroundColor: '#e6e8ea' } }} textColor="inherit" onChange={this.handleTabChange}>
 							<Tab label="Character" style={{ color: '#e6e8ea' }} />
 							<Tab label="Inventory" style={{ color: '#e6e8ea' }} />
 							<Tab label="Barter Market" style={{ color: '#e6e8ea' }} />

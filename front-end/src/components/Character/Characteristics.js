@@ -29,9 +29,9 @@ const addCharacterType = async (type, label, props) => {
 };
 
 const Characteristics = (props) => {
-	const [ selectedType, setSelectedType ] = useState(0);
+	const [ selectedType, setSelectedType ] = useState(undefined);
 	const [ types, setTypes ] = useState(null);
-	const [ tabValue, setTabValue ] = useState('Eye Color');
+	const [ tabValue, setTabValue ] = useState(undefined);
 	const [ defaultType, setDefaultType ] = useState(true);
 
 	const classes = useStyles();
@@ -68,13 +68,14 @@ const Characteristics = (props) => {
 				} else {
 					setTypes(res);
 					setDefaultType(false);
+					setTabValue(res[0].type);
 				}
 			});
 	};
 
 	const characteristicStyle = (index) => {
 		if (index === selectedType) {
-			return { background: 'green' };
+			return { background: '#FFDE00' };
 		}
 	};
 
@@ -109,35 +110,40 @@ const Characteristics = (props) => {
 				</Typography>
 				<Paper className="texture" style={{ position: 'relative' }}>
 					<div className="sidebar">
-						<Tabs
-							TabIndicatorProps={{ style: { backgroundColor: '#e6e8ea' } }}
-							orientation="vertical"
-							value={tabValue}
-							onChange={(e, value) => {
-								setTabValue(value);
+						{tabValue === undefined ? (
+							''
+						) : (
+							<Tabs
+								TabIndicatorProps={{ style: { backgroundColor: '#FFDE00' } }}
+								orientation="vertical"
+								value={tabValue}
+								onChange={(e, value) => {
+									setSelectedType(undefined);
+									setTabValue(value);
 
-								fetch(`${config.API.DOMAIN}:${config.API.PORT}/api/archetype/${value}`, {
-									method: 'GET',
-									mode: 'cors',
-									credentials: 'include',
-									headers: {
-										'Content-Type': 'application/json'
-									}
-								})
-									.then((res) => {
-										return res.json();
-									})
-									.then((res) => {
-										if (res.httpStatus === 401) {
-											props.cookies.remove('isAuthorized', { path: '/' });
-										} else {
-											setTypes(res);
+									fetch(`${config.API.DOMAIN}:${config.API.PORT}/api/archetype/${value}`, {
+										method: 'GET',
+										mode: 'cors',
+										credentials: 'include',
+										headers: {
+											'Content-Type': 'application/json'
 										}
-									});
-							}}
-						>
-							{props.types.map((value, index) => <Tab classes={classes} key={index} label={value._id.type} value={value._id.type} />)}
-						</Tabs>
+									})
+										.then((res) => {
+											return res.json();
+										})
+										.then((res) => {
+											if (res.httpStatus === 401) {
+												props.cookies.remove('isAuthorized', { path: '/' });
+											} else {
+												setTypes(res);
+											}
+										});
+								}}
+							>
+								{props.types.map((value, index) => <Tab classes={classes} key={index} label={value._id.type} value={value._id.type} />)}
+							</Tabs>
+						)}
 					</div>
 
 					<div style={{ marginLeft: 170 }}>
