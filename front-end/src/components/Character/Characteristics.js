@@ -3,6 +3,7 @@ import React, { Fragment, useEffect, useState } from 'react';
 
 import { BufferToBase64 } from './BufferImage';
 import config from '../../config.json';
+import highlightBorder from '../../images/highlightBorder.png';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
@@ -75,7 +76,7 @@ const Characteristics = (props) => {
 
 	const characteristicStyle = (index) => {
 		if (index === selectedType) {
-			return { background: '#FFDE00' };
+			return { background: `url('${highlightBorder}')`, backgroundSize: '100% 100%', backgroundRepeat: 'no-repeat', height: '300px' };
 		}
 	};
 
@@ -108,7 +109,7 @@ const Characteristics = (props) => {
 				>
 					{props.title}
 				</Typography>
-				<Paper className="texture" style={{ position: 'relative' }}>
+				<Paper className="texture" style={{ position: 'relative', height: '100%' }}>
 					<div className="sidebar">
 						{tabValue === undefined ? (
 							''
@@ -150,14 +151,14 @@ const Characteristics = (props) => {
 						{types ? (
 							types.map((value, index) => {
 								return (
-									<Grid container item xs={12} sm={6} md={6} lg={4} xl={3} key={index} style={{ display: 'inline-flex' }}>
+									<Grid key={index} container item xs={12} sm={6} md={6} lg={4} xl={3} style={{ display: 'inline-flex' }}>
 										<Button
 											onClick={() => {
 												addCharacterType(value.type, value.label, props);
 											}}
 											style={characteristicStyle(index)}
 										>
-											<img src={'data:image/jpeg;base64,' + BufferToBase64(value.image.data.data)} width="100%" height="200" alt="" />
+											<img src={'data:image/jpeg;base64,' + BufferToBase64(value.image.data.data)} width="100%" height="200px" alt="" />
 										</Button>
 									</Grid>
 								);

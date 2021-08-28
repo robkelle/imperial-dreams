@@ -40,11 +40,11 @@ class Character extends React.Component {
 				{ label: 'SPIRIT', value: 26, image: require('../../images/spirit.png') },
 				{ label: 'INTELLECT', value: 18, image: require('../../images/intellect.png') },
 				{ label: 'ARMOR', value: 60, image: require('../../images/armor.png') },
-				{ label: 'MOVEMENT', value: 90, image: require('../../images/movement.png') }
+				{ label: 'STAMINA', value: 90, image: require('../../images/movement.png') },
+        { label: 'WEALTH', value: 90, image: require('../../images/movement.png') }
 			],
 			stats: [
 				{ label: 'WEAPON DAMAGE', value: '15-25' },
-				{ label: 'WARMTH CONVERSION', value: '100%' },
 				{ label: 'CRITICAL HIT CHANCE', value: '5%' },
 				{ label: 'DASH COUNT', value: '2' },
 				{ label: 'CRITICAL HIT DAMAGE', value: '125%' },
@@ -52,11 +52,7 @@ class Character extends React.Component {
 				{ label: 'POWER DAMAGE', value: '120%' },
 				{ label: 'HEALTH REGEN', value: '10/s' },
 				{ label: 'POWER COOLDOWN', value: '-0.5/s' },
-				{ label: 'HUNGER RESISTANCE', value: '7%' },
-				{ label: 'FIRE DAMAGE', value: '15%' },
-				{ label: 'FIRE RESISTANCE', value: '5%' },
-				{ label: 'ICE DAMAGE', value: '35%' },
-				{ label: 'ICE RESISTANCE', value: '6%' }
+				{ label: 'HUNGER RESISTANCE', value: '7%' }
 			]
 		};
 	}
