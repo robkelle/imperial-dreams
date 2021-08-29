@@ -46,7 +46,7 @@ a:hover {
 }
 
 .texture2 {
-	background: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), url('./images/texture2Background.jpg');
+	background: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.90)), url('./images/texture2Background.jpg');
 	background-size: 'cover';
 	color: #e6e8ea !important;
 }

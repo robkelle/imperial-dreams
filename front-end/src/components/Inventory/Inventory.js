@@ -17,7 +17,7 @@ import sword from '../../images/swordInventory.png';
 const theme = createMuiTheme({
 	palette: {
 		primary: {
-			main: '#3CB371'
+			main: '#e6e8ea'
 		},
 		secondary: {
 			main: 'rgb(138, 3, 3)'
@@ -60,7 +60,7 @@ export class Inventory extends Component {
 						{inventory.map((value, index) => {
 							if (value.type.index === tabValue) {
 								return (
-									<Grid item xs={12} sm={6} md={4} lg={3} xl={2} key={index}>
+									<Grid item xs={12} sm={6} md={4} lg={4} xl={2} key={index}>
 										<div className='animate__animated animate__backInDown'>
 											<ThemeProvider theme={theme}>
 												<Card
@@ -71,7 +71,7 @@ export class Inventory extends Component {
 															{}
 													}>
 													<CardContent>
-														<Typography variant='h5'>{value.name}</Typography>
+														<Typography variant='h5' gutterBottom={true}>{value.name}</Typography>
 														<Grid container spacing={1} align='left'>
 															<Grid item xs={6}>
 																<Typography variant='overline' gutterBottom={true}>
@@ -119,12 +119,12 @@ export class Inventory extends Component {
 													<CardActions style={{backgroundColor: 'rgba(24, 24, 24, .75)'}}>
 														<Divider orientation='horizontal' variant='fullWidth' light={true} />
 														<Grid container align='right'>
-															<Grid item xs={5}>
-																<Typography variant='overline' gutterBottom={true}>
+															<Grid item xs={4}>
+																<Typography variant='overline'>
 																	Quantity: {value.quantity}
 																</Typography>
 															</Grid>
-															<Grid item xs={7}>
+															<Grid item xs={8}>
 																<Button variant='contained' color='primary'>
 																	Equip
 																</Button>
