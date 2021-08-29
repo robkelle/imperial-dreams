@@ -2,8 +2,6 @@
 
 import {
 	AddArchetype,
-	BorderBackground,
-	ButtonBackground,
 	ForgotPassword,
 	Landing,
 	LoadingScreen,
@@ -25,7 +23,6 @@ import { Authenticator } from './components/Authentication/AuthenticatorContext'
 const classes = {
 	main: {
 		borderRadius: '25px',
-		backgroundImage: `url(${BorderBackground})`,
 		width: 600,
 		padding: '25px 35px 60px 35px',
 		marginTop: 10
@@ -56,7 +53,6 @@ const classes = {
 		color: 'red'
 	},
 	buttonStyle: {
-		backgroundImage: `url(${ButtonBackground})`,
 		backgroundPosition: 'center',
 		backgroundSize: 'cover',
 		backgroundRepeat: 'no-repeat',
