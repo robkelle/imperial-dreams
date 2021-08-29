@@ -1,16 +1,29 @@
-import { Avatar, Card, CardActions, CardContent, Grid, Tab, Tabs, Typography } from '@material-ui/core';
+import { Avatar, Button, Card, CardActions, CardContent, Divider, Grid, LinearProgress, Tab, Tabs, Typography } from '@material-ui/core';
 import React, { Component, Fragment } from 'react';
 
+import { ThemeProvider } from '@material-ui/styles';
 import armor from '../../images/armorInventory.png';
 import book from '../../images/bookInventory.png';
 import bow from '../../images/bowInventory.png';
 import castle from '../../images/castleInventory.png';
+import { createMuiTheme } from '@material-ui/core/styles';
 import dragon from '../../images/dragonInventory.png';
 import food from '../../images/foodInventory.png';
 import inventory from './inventorySampleData.json';
 import magic from '../../images/magicInventory.png';
 import potion from '../../images/potionInventory.png';
 import sword from '../../images/swordInventory.png';
+
+const theme = createMuiTheme({
+	palette: {
+		primary: {
+			main: '#3CB371'
+		},
+		secondary: {
+			main: 'rgb(138, 3, 3)'
+		}
+	}
+});
 
 export class Inventory extends Component {
 	constructor() {
@@ -47,22 +60,92 @@ export class Inventory extends Component {
 						{inventory.map((value, index) => {
 							if (value.type.index === tabValue) {
 								return (
-									<Grid item xs={6} sm={3} md={2} lg={2} xl={2} key={index}>
+									<Grid item xs={6} sm={3} md={3} lg={3} xl={2} key={index}>
 										<div className='animate__animated animate__backInDown'>
-											<Card
-												className='texture2'
-												style={
+											<ThemeProvider theme={theme}>
+												<Card
+													className='texture2'
+													style={
 
-														value.quantity === 0 ? { backgroundColor: '#ffffff !important' } :
-														{}
-												}>
-												<CardContent>
-													<Typography variant='overline'>{value.name}</Typography>
-												</CardContent>
-												<CardActions>
-													<Typography variant='subtitle2'>x {value.quantity}</Typography>
-												</CardActions>
-											</Card>
+															value.quantity === 0 ? { backgroundColor: '#E6E8EA !important' } :
+															{}
+													}>
+													<CardContent>
+														<Typography variant='h5'>{value.name}</Typography>
+														<Grid container align='left'>
+															<Grid item xs={12}>
+																<Typography variant='overline' gutterBottom={true}>
+																	Level: {value.itemDetails.level}
+																</Typography>
+																<LinearProgress variant='determinate' color='secondary' value={value.itemDetails.level} />
+															</Grid>
+														</Grid>
+														<Grid container align='left'>
+															<Grid item xs={12}>
+																<Typography variant='overline'>Strength: {value.itemDetails.strength}</Typography>
+																<LinearProgress variant='determinate' color='secondary' value={value.itemDetails.strength} />
+															</Grid>
+														</Grid>
+														<Grid container align='left'>
+															<Grid item xs={12}>
+																<Typography variant='overline'>Power: {value.itemDetails.power}</Typography>
+																<LinearProgress variant='determinate' color='secondary' value={value.itemDetails.power} />
+															</Grid>
+														</Grid>
+														<Grid container align='left'>
+															<Grid item xs={12}>
+																<Typography variant='overline'>Spirit: {value.itemDetails.spirit}</Typography>
+																<LinearProgress variant='determinate' color='secondary' value={value.itemDetails.spirit} />
+															</Grid>
+														</Grid>
+														<Grid container align='left'>
+															<Grid item xs={12}>
+																<Typography variant='overline'>Intellect: {value.itemDetails.intellect}</Typography>
+																<LinearProgress variant='determinate' color='secondary' value={value.itemDetails.intellect} />
+															</Grid>
+														</Grid>
+														<Grid container align='left'>
+															<Grid item xs={12}>
+																<Typography variant='overline'>Armor: {value.itemDetails.armor}</Typography>
+																<LinearProgress variant='determinate' color='secondary' value={value.itemDetails.armor} />
+															</Grid>
+														</Grid>
+														<Grid container align='left'>
+															<Grid item xs={12}>
+																<Typography variant='overline'>Stamina: {value.itemDetails.stamina}</Typography>
+																<LinearProgress variant='determinate' color='secondary' value={value.itemDetails.stamina} />
+															</Grid>
+														</Grid>
+														<Grid container align='left'>
+															<Grid item xs={12}>
+																<Typography variant='overline'>Coin: {value.itemDetails.coin}</Typography>
+																<LinearProgress variant='determinate' color='secondary' value={value.itemDetails.coin} />
+															</Grid>
+														</Grid>
+													</CardContent>
+													<CardActions>
+														<Divider orientation='horizontal' variant='fullWidth' light={true} />
+														<Grid container spacing={1}>
+															<Grid item xs={2}>
+																<Typography variant='h6' gutterBottom={true}>
+																	x {value.quantity}
+																</Typography>
+															</Grid>
+															<Grid item xs={2} />
+															<Grid item xs={4}>
+																<Button className="texture" variant='contained' color='primary'>
+																	Equip
+																</Button>
+															</Grid>
+															<Grid item xs={4}>
+																<Button variant='contained' color='secondary'>
+																	Sell
+																</Button>
+															</Grid>
+														</Grid>
+													</CardActions>
+												</Card>
+											</ThemeProvider>
 										</div>
 									</Grid>
 								);

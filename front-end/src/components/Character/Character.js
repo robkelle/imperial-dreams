@@ -26,7 +26,9 @@ class Character extends React.Component {
 		this.state = {
 			types: [],
 			tabValue: 0,
-			characteristics: [ { label: 'LOADING', type: 'LOADING' } ],
+			characteristics: [
+				{ label: 'LOADING', type: 'LOADING' }
+			],
 			selectedAttributes: null,
 			selected: null,
 			formControlStyle: {
@@ -41,18 +43,14 @@ class Character extends React.Component {
 				{ label: 'INTELLECT', value: 18, image: require('../../images/bookInventory.png') },
 				{ label: 'ARMOR', value: 60, image: require('../../images/armorInventory.png') },
 				{ label: 'STAMINA', value: 90, image: require('../../images/foodInventory.png') },
-        { label: 'WEALTH', value: 90, image: require('../../images/castleInventory.png') }
+				{ label: 'WEALTH', value: 90, image: require('../../images/castleInventory.png') }
 			],
 			stats: [
-				{ label: 'WEAPON DAMAGE', value: '15-25' },
-				{ label: 'CRITICAL HIT CHANCE', value: '5%' },
-				{ label: 'DASH COUNT', value: '2' },
-				{ label: 'CRITICAL HIT DAMAGE', value: '125%' },
-				{ label: 'LIFE ON HIT', value: '25' },
-				{ label: 'POWER DAMAGE', value: '120%' },
-				{ label: 'HEALTH REGEN', value: '10/s' },
-				{ label: 'POWER COOLDOWN', value: '-0.5/s' },
-				{ label: 'HUNGER RESISTANCE', value: '7%' }
+				{ label: 'Rare Items', value: '0' },
+				{ label: 'Total Kills', value: '0' },
+				{ label: 'Debt', value: '0 coin' },
+				{ label: 'Earned Bartering', value: '0 coin' },
+				{ label: 'Spent Bartering', value: '0 coin' }
 			]
 		};
 	}
@@ -136,28 +134,26 @@ class Character extends React.Component {
 		return (
 			<React.Fragment>
 				<ThemeProvider theme={theme}>
-					<Paper square className="texture2">
-						<Tabs value={this.state.tabValue} TabIndicatorProps={{ style: { backgroundColor: '#e6e8ea' } }} textColor="inherit" onChange={this.handleTabChange}>
-							<Tab label="Character" style={{ color: '#e6e8ea' }} />
-							<Tab label="Inventory" style={{ color: '#e6e8ea' }} />
-							<Tab label="Barter Market" style={{ color: '#e6e8ea' }} />
+					<Paper square className='texture2'>
+						<Tabs value={this.state.tabValue} TabIndicatorProps={{ style: { backgroundColor: '#e6e8ea' } }} textColor='inherit' onChange={this.handleTabChange}>
+							<Tab label='Character' style={{ color: '#e6e8ea' }} />
+							<Tab label='Inventory' style={{ color: '#e6e8ea' }} />
+							<Tab label='Barter Market' style={{ color: '#e6e8ea' }} />
 						</Tabs>
 					</Paper>
 				</ThemeProvider>
 
-				{this.state.tabValue === 0 ? (
-					<Grid container style={{ padding: 10 }} className="animate__animated animate__slideInLeft">
+				{
+					this.state.tabValue === 0 ? <Grid container style={{ padding: 10 }} className='animate__animated animate__slideInLeft'>
 						<Grid item xl={12} style={{ marginTop: 15 }}>
 							<Grid container spacing={2}>
-								<Characteristics title="CHARACTERISTICS" types={this.state.types} selectedType={this.selectedAttributes} userCharacteristics={this.state.characteristics} cookies={this.props.cookies} />
-								<CharacterProfile title="PROFILE" cookies={this.props.cookies} />
-								<CharacterStats title="CHARACTER" characteristics={this.state.characteristics} stats={this.state.stats} attributes={this.state.attributes} cookies={this.props.cookies} />
+								<Characteristics title='CHARACTERISTICS' types={this.state.types} selectedType={this.selectedAttributes} userCharacteristics={this.state.characteristics} cookies={this.props.cookies} />
+								<CharacterProfile title='PROFILE' cookies={this.props.cookies} />
+								<CharacterStats title='CHARACTER' characteristics={this.state.characteristics} stats={this.state.stats} attributes={this.state.attributes} cookies={this.props.cookies} />
 							</Grid>
 						</Grid>
-					</Grid>
-				) : (
-					<Inventory />
-				)}
+					</Grid> :
+					<Inventory />}
 			</React.Fragment>
 		);
 	}
