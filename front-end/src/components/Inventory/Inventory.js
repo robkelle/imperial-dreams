@@ -60,7 +60,7 @@ export class Inventory extends Component {
 						{inventory.map((value, index) => {
 							if (value.type.index === tabValue) {
 								return (
-									<Grid item xs={6} sm={3} md={3} lg={3} xl={2} key={index}>
+									<Grid item xs={12} sm={6} md={4} lg={3} xl={2} key={index}>
 										<div className='animate__animated animate__backInDown'>
 											<ThemeProvider theme={theme}>
 												<Card
@@ -72,73 +72,64 @@ export class Inventory extends Component {
 													}>
 													<CardContent>
 														<Typography variant='h5'>{value.name}</Typography>
-														<Grid container align='left'>
-															<Grid item xs={12}>
+														<Grid container spacing={1} align='left'>
+															<Grid item xs={6}>
 																<Typography variant='overline' gutterBottom={true}>
 																	Level: {value.itemDetails.level}
 																</Typography>
 																<LinearProgress variant='determinate' color='secondary' value={value.itemDetails.level} />
 															</Grid>
-														</Grid>
-														<Grid container align='left'>
-															<Grid item xs={12}>
+															<Grid item xs={6}>
 																<Typography variant='overline'>Strength: {value.itemDetails.strength}</Typography>
 																<LinearProgress variant='determinate' color='secondary' value={value.itemDetails.strength} />
 															</Grid>
 														</Grid>
-														<Grid container align='left'>
-															<Grid item xs={12}>
+														<Grid container spacing={1} align='left'>
+															<Grid item xs={6}>
 																<Typography variant='overline'>Power: {value.itemDetails.power}</Typography>
 																<LinearProgress variant='determinate' color='secondary' value={value.itemDetails.power} />
 															</Grid>
-														</Grid>
-														<Grid container align='left'>
-															<Grid item xs={12}>
+															<Grid item xs={6}>
 																<Typography variant='overline'>Spirit: {value.itemDetails.spirit}</Typography>
 																<LinearProgress variant='determinate' color='secondary' value={value.itemDetails.spirit} />
 															</Grid>
 														</Grid>
-														<Grid container align='left'>
-															<Grid item xs={12}>
+														<Grid container spacing={1} align='left'>
+															<Grid item xs={6}>
 																<Typography variant='overline'>Intellect: {value.itemDetails.intellect}</Typography>
 																<LinearProgress variant='determinate' color='secondary' value={value.itemDetails.intellect} />
 															</Grid>
-														</Grid>
-														<Grid container align='left'>
-															<Grid item xs={12}>
+
+															<Grid item xs={6}>
 																<Typography variant='overline'>Armor: {value.itemDetails.armor}</Typography>
 																<LinearProgress variant='determinate' color='secondary' value={value.itemDetails.armor} />
 															</Grid>
 														</Grid>
-														<Grid container align='left'>
-															<Grid item xs={12}>
+														<Grid container spacing={1} align='left'>
+															<Grid item xs={6}>
 																<Typography variant='overline'>Stamina: {value.itemDetails.stamina}</Typography>
 																<LinearProgress variant='determinate' color='secondary' value={value.itemDetails.stamina} />
 															</Grid>
-														</Grid>
-														<Grid container align='left'>
-															<Grid item xs={12}>
+															<Grid item xs={6}>
 																<Typography variant='overline'>Coin: {value.itemDetails.coin}</Typography>
 																<LinearProgress variant='determinate' color='secondary' value={value.itemDetails.coin} />
 															</Grid>
 														</Grid>
 													</CardContent>
-													<CardActions>
+													<CardActions style={{backgroundColor: 'rgba(24, 24, 24, .75)'}}>
 														<Divider orientation='horizontal' variant='fullWidth' light={true} />
-														<Grid container spacing={1}>
-															<Grid item xs={2}>
-																<Typography variant='h6' gutterBottom={true}>
-																	x {value.quantity}
+														<Grid container align='right'>
+															<Grid item xs={5}>
+																<Typography variant='overline' gutterBottom={true}>
+																	Quantity: {value.quantity}
 																</Typography>
 															</Grid>
-															<Grid item xs={2} />
-															<Grid item xs={4}>
-																<Button className="texture" variant='contained' color='primary'>
+															<Grid item xs={7}>
+																<Button variant='contained' color='primary'>
 																	Equip
 																</Button>
-															</Grid>
-															<Grid item xs={4}>
-																<Button variant='contained' color='secondary'>
+
+																<Button variant='contained' color='secondary' style={{marginLeft: 10}}>
 																	Sell
 																</Button>
 															</Grid>
