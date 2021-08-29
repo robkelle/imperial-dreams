@@ -35,13 +35,13 @@ class Character extends React.Component {
 				}
 			},
 			attributes: [
-				{ label: 'STRENGTH', value: 10, image: require('../../images/strength.png') },
-				{ label: 'DEXTERITY', value: 20, image: require('../../images/dexterity.png') },
-				{ label: 'SPIRIT', value: 26, image: require('../../images/spirit.png') },
-				{ label: 'INTELLECT', value: 18, image: require('../../images/intellect.png') },
-				{ label: 'ARMOR', value: 60, image: require('../../images/armor.png') },
-				{ label: 'STAMINA', value: 90, image: require('../../images/movement.png') },
-        { label: 'WEALTH', value: 90, image: require('../../images/movement.png') }
+				{ label: 'STRENGTH', value: 10, image: require('../../images/shieldInventory.png') },
+				{ label: 'POWER', value: 20, image: require('../../images/dragonInventory.png') },
+				{ label: 'SPIRIT', value: 26, image: require('../../images/ballInventory.png') },
+				{ label: 'INTELLECT', value: 18, image: require('../../images/bookInventory.png') },
+				{ label: 'ARMOR', value: 60, image: require('../../images/armorInventory.png') },
+				{ label: 'STAMINA', value: 90, image: require('../../images/foodInventory.png') },
+        { label: 'WEALTH', value: 90, image: require('../../images/castleInventory.png') }
 			],
 			stats: [
 				{ label: 'WEAPON DAMAGE', value: '15-25' },
@@ -151,7 +151,7 @@ class Character extends React.Component {
 							<Grid container spacing={2}>
 								<Characteristics title="CHARACTERISTICS" types={this.state.types} selectedType={this.selectedAttributes} userCharacteristics={this.state.characteristics} cookies={this.props.cookies} />
 								<CharacterProfile title="PROFILE" cookies={this.props.cookies} />
-								<CharacterStats title="STATS" characteristics={this.state.characteristics} stats={this.state.stats} attributes={this.state.attributes} cookies={this.props.cookies} />
+								<CharacterStats title="CHARACTER" characteristics={this.state.characteristics} stats={this.state.stats} attributes={this.state.attributes} cookies={this.props.cookies} />
 							</Grid>
 						</Grid>
 					</Grid>

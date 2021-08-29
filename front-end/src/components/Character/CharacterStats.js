@@ -10,7 +10,7 @@ const theme = createMuiTheme({
 			main: 'rgb(138, 3, 3)'
 		},
 		secondary: {
-			main: '#fff'
+			main: '#E6E8EA'
 		}
 	}
 });
@@ -36,8 +36,8 @@ const CharacterStats = (props) => {
 				<Paper className="texture" align="center" style={{ color: '#e6e8ea' }}>
 					<Grid container align="left" style={{ padding: 5 }}>
 						<Grid item xs={12}>
-							<Typography variant="subtitle1" gutterBottom style={{ color: '#fff' }}>
-								{props.title}
+							<Typography variant="subtitle1" gutterBottom style={{ color: '#E6E8EA' }}>
+								DETAILS
 							</Typography>
 							<Divider variant="fullWidth" style={{ backgroundColor: 'rgb(138, 3, 3)', marginBottom: 10 }} />
 						</Grid>
@@ -62,12 +62,12 @@ const CharacterStats = (props) => {
 						})}
 						<Grid item xs={12}>
 							<Button
-								style={{ color: '#fff', backgroundColor: 'rgb(138, 3, 3)', marginTop: 15 }}
+								style={{ color: '#E6E8EA', backgroundColor: 'rgb(138, 3, 3)', marginTop: 15 }}
 								onClick={() => {
 									minimizeCharacteristics ? setMinimizeCharacteristics(false) : setMinimizeCharacteristics(true);
 								}}
 							>
-								<Typography variant="subtitle1" gutterBottom style={{ color: '#fff' }}>
+								<Typography variant="subtitle1" gutterBottom style={{ color: '#E6E8EA' }}>
 									CHARACTERISTICS
 								</Typography>
 							</Button>
@@ -81,8 +81,8 @@ const CharacterStats = (props) => {
 									{props.characteristics.map((value, index) => (
 										<TableBody key={index}>
 											<TableRow>
-												<TableCell style={{ color: '#fff', border: 'none' }}>{value.type}</TableCell>
-												<TableCell style={{ color: '#fff', border: 'none' }}>{value.label}</TableCell>
+												<TableCell style={{ color: '#E6E8EA', border: 'none' }}>{value.type}</TableCell>
+												<TableCell style={{ color: '#E6E8EA', border: 'none' }}>{value.label}</TableCell>
 											</TableRow>
 										</TableBody>
 									))}
@@ -92,12 +92,12 @@ const CharacterStats = (props) => {
 
 						<Grid item xs={12}>
 							<Button
-								style={{ color: '#fff', backgroundColor: 'rgb(138, 3, 3)' }}
+								style={{ color: '#E6E8EA', backgroundColor: 'rgb(138, 3, 3)' }}
 								onClick={() => {
 									minimizeStatistics ? setMinimizeStatistics(false) : setMinimizeStatistics(true);
 								}}
 							>
-								<Typography variant="subtitle1" gutterBottom style={{ color: '#fff' }}>
+								<Typography variant="subtitle1" gutterBottom style={{ color: '#E6E8EA' }}>
 									STATISTICS
 								</Typography>
 							</Button>
@@ -109,8 +109,8 @@ const CharacterStats = (props) => {
 									{props.stats.map((value, index) => (
 										<TableBody key={index}>
 											<TableRow>
-												<TableCell style={{ color: '#fff', border: 'none' }}>{value.label}</TableCell>
-												<TableCell style={{ color: '#fff', border: 'none' }}>{value.value}</TableCell>
+												<TableCell style={{ color: '#E6E8EA', border: 'none' }}>{value.label}</TableCell>
+												<TableCell style={{ color: '#E6E8EA', border: 'none' }}>{value.value}</TableCell>
 											</TableRow>
 										</TableBody>
 									))}
