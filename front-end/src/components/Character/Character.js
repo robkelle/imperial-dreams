@@ -49,8 +49,8 @@ class Character extends React.Component {
 				{ label: 'Rare Items', value: '0' },
 				{ label: 'Total Kills', value: '0' },
 				{ label: 'Debt', value: '0 coin' },
-				{ label: 'Earned Bartering', value: '0 coin' },
-				{ label: 'Spent Bartering', value: '0 coin' }
+				{ label: 'Earned', value: '0 coin' },
+				{ label: 'Spent', value: '0 coin' }
 			]
 		};
 	}
