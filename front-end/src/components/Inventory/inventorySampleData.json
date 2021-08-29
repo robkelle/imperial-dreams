@@ -1,0 +1,23 @@
+[
+	{ "type": { "name": "Weapon", "index": 0 }, "name": "Battle axe", "quantity": 0, "image": "" },
+	{ "type": { "name": "Weapon", "index": 0 }, "name": "Bludgeon", "quantity": 0, "image": "" },
+	{ "type": { "name": "Weapon", "index": 0 }, "name": "Club", "quantity": 0, "image": "" },
+	{ "type": { "name": "Weapon", "index": 0 }, "name": "Flail", "quantity": 0, "image": "" },
+	{ "type": { "name": "Weapon", "index": 0 }, "name": "Flanged mace", "quantity": 0, "image": "" },
+	{ "type": { "name": "Weapon", "index": 0 }, "name": "War hammer", "quantity": 0, "image": "" },
+	{ "type": { "name": "Weapon", "index": 0 }, "name": "Arming Sword", "quantity": 0, "image": "" },
+	{ "type": { "name": "Weapon", "index": 0 }, "name": "Dagger", "quantity": 0, "image": "" },
+	{ "type": { "name": "Weapon", "index": 0 }, "name": "Estoc", "quantity": 0, "image": "" },
+	{ "type": { "name": "Weapon", "index": 0 }, "name": "Falchion", "quantity": 0, "image": "" },
+	{ "type": { "name": "Weapon", "index": 0 }, "name": "Kanta", "quantity": 0, "image": "" },
+	{ "type": { "name": "Weapon", "index": 0 }, "name": "Knife", "quantity": 0, "image": "" },
+	{ "type": { "name": "Weapon", "index": 0 }, "name": "Longsword", "quantity": 0, "image": "" },
+	{ "type": { "name": "Weapon", "index": 0 }, "name": "Rapier", "quantity": 0, "image": "" },
+	{ "type": { "name": "Weapon", "index": 0 }, "name": "Saber", "quantity": 0, "image": "" },
+	{ "type": { "name": "Weapon", "index": 0 }, "name": "Shortsword", "quantity": 0, "image": "" },
+	{ "type": { "name": "Bow", "index": 1 }, "name": "Daikyu", "quantity": 0, "image": "" },
+	{ "type": { "name": "Bow", "index": 1 }, "name": "English longbow", "quantity": 0, "image": "" },
+	{ "type": { "name": "Bow", "index": 1 }, "name": "Welsh longbow", "quantity": 0, "image": "" },
+	{ "type": { "name": "Bow", "index": 1 }, "name": "Hungarian bow", "quantity": 0, "image": "" },
+	{ "type": { "name": "Bow", "index": 1 }, "name": "Mongol bow", "quantity": 0, "image": "" }
+]
