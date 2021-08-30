@@ -63,15 +63,11 @@ export class Inventory extends Component {
 									<Grid item xs={12} sm={6} md={4} lg={4} xl={2} key={index}>
 										<div className='animate__animated animate__backInDown'>
 											<ThemeProvider theme={theme}>
-												<Card
-													className='texture2'
-													style={
-
-															value.quantity === 0 ? { backgroundColor: '#E6E8EA !important' } :
-															{}
-													}>
+												<Card className='texture2'>
 													<CardContent>
-														<Typography variant='h5' gutterBottom={true}>{value.name}</Typography>
+														<Typography variant='h5' gutterBottom={true}>
+															{value.name}
+														</Typography>
 														<Grid container spacing={1} align='left'>
 															<Grid item xs={6}>
 																<Typography variant='overline' gutterBottom={true}>
@@ -116,20 +112,18 @@ export class Inventory extends Component {
 															</Grid>
 														</Grid>
 													</CardContent>
-													<CardActions style={{backgroundColor: 'rgba(24, 24, 24, .75)'}}>
+													<CardActions style={{ backgroundColor: 'rgba(24, 24, 24, .75)' }}>
 														<Divider orientation='horizontal' variant='fullWidth' light={true} />
 														<Grid container align='right'>
 															<Grid item xs={4}>
-																<Typography variant='overline'>
-																	Quantity: {value.quantity}
-																</Typography>
+																<Typography variant='overline'>Quantity: {value.quantity}</Typography>
 															</Grid>
 															<Grid item xs={8}>
 																<Button variant='contained' color='primary'>
 																	Equip
 																</Button>
 
-																<Button variant='contained' color='secondary' style={{marginLeft: 10}}>
+																<Button variant='contained' color='secondary' style={{ marginLeft: 10 }}>
 																	Sell
 																</Button>
 															</Grid>
