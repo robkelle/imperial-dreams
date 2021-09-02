@@ -43,11 +43,17 @@ export class Map extends Component {
 			new PIXI.Texture(this.state.ssheet, new PIXI.Rectangle(1.2 * w, 0, w, h))
 		];
 
+		ps.playerSheet['walkNorth'] = [];
+
+		ps.playerSheet['walkEast'] = [];
+
 		ps.playerSheet['walkSouth'] = [
 			new PIXI.Texture(this.state.ssheet, new PIXI.Rectangle(1.2 * w, 0, w, h)),
 			new PIXI.Texture(this.state.ssheet, new PIXI.Rectangle(0 * w, 0, w, h)),
 			new PIXI.Texture(this.state.ssheet, new PIXI.Rectangle(2.2 * w, 0, w, h))
 		];
+
+		ps.playerSheet['walkWest'] = [];
 	};
 
 	createPlayer = (app) => {
@@ -81,7 +87,7 @@ export class Map extends Component {
 				this.state.player.play();
 			}
 
-      this.state.player.y += 2;
+			this.state.player.y += 2;
 		}
 
 		// D Key
