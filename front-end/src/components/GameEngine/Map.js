@@ -8,7 +8,8 @@ export class Map extends Component {
 		this.state = {
 			app: new PIXI.Application(),
 			graphics: new PIXI.Graphics(),
-			container: new PIXI.Container()
+			container: new PIXI.Container(),
+			playerSheet: {}
 		};
 
 		this.keys = {};
@@ -20,6 +21,73 @@ export class Map extends Component {
 
 	keysDown = (e) => {
 		this.keys[e.keyCode] = true;
+	};
+
+	doneLoading = (app) => {
+		this.createPlayerSheet(app);
+		this.createPlayer(app);
+		app.ticker.add(() => {
+			this.gameLoop();
+		});
+	};
+
+	createPlayerSheet = (app) => {
+		let ps = this.state;
+		this.setState({
+			ssheet: new PIXI.BaseTexture.from(app.loader.resources['king'].url)
+		});
+		let w = 65;
+		let h = 90;
+
+		ps.playerSheet['standSouth'] = [
+			new PIXI.Texture(this.state.ssheet, new PIXI.Rectangle(1.2 * w, 0, w, h))
+		];
+
+		ps.playerSheet['walkSouth'] = [
+			new PIXI.Texture(this.state.ssheet, new PIXI.Rectangle(1.2 * w, 0, w, h)),
+			new PIXI.Texture(this.state.ssheet, new PIXI.Rectangle(0 * w, 0, w, h)),
+			new PIXI.Texture(this.state.ssheet, new PIXI.Rectangle(2.2 * w, 0, w, h))
+		];
+	};
+
+	createPlayer = (app) => {
+		this.setState({
+			player: new PIXI.AnimatedSprite(this.state.playerSheet.standSouth)
+		});
+		this.state.player.anchor.set(0.5);
+		this.state.player.animationSpeed = 2;
+		this.state.player.loop = false;
+		this.state.player.x = app.view.width / 2;
+		this.state.player.y = app.view.height / 2;
+		app.stage.addChild(this.state.player);
+		this.state.player.play();
+	};
+
+	gameLoop = () => {
+		// W Key
+		if (this.keys['87']) {
+			//player.y -= 2;
+		}
+
+		// A Key
+		if (this.keys['65']) {
+			//player.x -= 2;
+		}
+
+		// S Key
+		if (this.keys['83']) {
+			if (!this.state.player.playing) {
+				this.state.player.textures = this.state.playerSheet.walkSouth;
+				this.state.player.play();
+			}
+
+      this.state.player.y += 2;
+		}
+
+		// D Key
+		if (this.keys['68']) {
+			//player.x += 2;
+		}
 	};
 
 	componentDidMount() {
@@ -42,40 +110,19 @@ export class Map extends Component {
 		app.stage.addChild(container);
 
 		// Create a new texture
-		const texture = PIXI.Texture.from(require('../../images/sampleImage.png'));
-
-		let player = new PIXI.Sprite(texture);
-		player.anchor.set(0.5);
-		player.x = app.view.width / 2;
-		player.y = app.view.height / 2;
-		player.height = 25;
-		player.width = 25;
-		container.addChild(player);
+		app.loader.add('king', require('../../images/characterSprite.png'));
+		app.loader.load(() => {
+			this.doneLoading(app);
+		});
 
 		window.addEventListener('keydown', this.keysDown);
 		window.addEventListener('keyup', this.keysUp);
 
-		app.ticker.add(() => {
-			if (this.keys['87']) {
-				player.y -= 2;
-			}
-
-			if (this.keys['65']) {
-				player.x -= 2;
-			}
-
-			if (this.keys['83']) {
-				player.y += 2;
-			}
-
-			if (this.keys['68']) {
-				player.x += 2;
-			}
-		});
+		//app.ticker.add(() => this.gameLoop(player));
 	}
 
 	render() {
-		return <div id="pixi-canvas" />;
+		return <div id='pixi-canvas' />;
 	}
 }
 
