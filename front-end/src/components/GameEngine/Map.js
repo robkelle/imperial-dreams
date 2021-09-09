@@ -36,63 +36,95 @@ export class Map extends Component {
 		this.setState({
 			ssheet: new PIXI.BaseTexture.from(app.loader.resources['king'].url)
 		});
-		let w = 65;
-		let h = 90;
+		let w = 56;
+		let h = 84;
 
 		ps.playerSheet['standSouth'] = [
-			new PIXI.Texture(this.state.ssheet, new PIXI.Rectangle(1.2 * w, 0, w, h))
+			new PIXI.Texture(this.state.ssheet, new PIXI.Rectangle(0 * w, 0, w, h))
 		];
 
-		ps.playerSheet['walkNorth'] = [];
+		ps.playerSheet['walkNorth'] = [
+			new PIXI.Texture(this.state.ssheet, new PIXI.Rectangle(115, 87, w, h)),
+			new PIXI.Texture(this.state.ssheet, new PIXI.Rectangle(114, 1, w, h)),
+			new PIXI.Texture(this.state.ssheet, new PIXI.Rectangle(1, 173, w, h))
+		];
 
-		ps.playerSheet['walkEast'] = [];
+		ps.playerSheet['walkEast'] = [
+			new PIXI.Texture(this.state.ssheet, new PIXI.Rectangle(58, 87, w, h)),
+			new PIXI.Texture(this.state.ssheet, new PIXI.Rectangle(58, 173, w, h)),
+			new PIXI.Texture(this.state.ssheet, new PIXI.Rectangle(228, 87, w, h))
+		];
 
 		ps.playerSheet['walkSouth'] = [
-			new PIXI.Texture(this.state.ssheet, new PIXI.Rectangle(1.2 * w, 0, w, h)),
-			new PIXI.Texture(this.state.ssheet, new PIXI.Rectangle(0 * w, 0, w, h)),
-			new PIXI.Texture(this.state.ssheet, new PIXI.Rectangle(2.2 * w, 0, w, h))
+			new PIXI.Texture(this.state.ssheet, new PIXI.Rectangle(1, 1, w, h)),
+			new PIXI.Texture(this.state.ssheet, new PIXI.Rectangle(171, 1, w, h)),
+			new PIXI.Texture(this.state.ssheet, new PIXI.Rectangle(172, 87, w, h))
 		];
 
-		ps.playerSheet['walkWest'] = [];
+		ps.playerSheet['walkWest'] = [
+			new PIXI.Texture(this.state.ssheet, new PIXI.Rectangle(57, 1, w, h)),
+			new PIXI.Texture(this.state.ssheet, new PIXI.Rectangle(227, 1, w, h)),
+			new PIXI.Texture(this.state.ssheet, new PIXI.Rectangle(1, 87, w, h))
+		];
 	};
 
 	createPlayer = (app) => {
 		this.setState({
 			player: new PIXI.AnimatedSprite(this.state.playerSheet.standSouth)
 		});
-		this.state.player.anchor.set(0.5);
-		this.state.player.animationSpeed = 2;
-		this.state.player.loop = false;
-		this.state.player.x = app.view.width / 2;
-		this.state.player.y = app.view.height / 2;
-		app.stage.addChild(this.state.player);
-		this.state.player.play();
+
+		let player = this.state.player;
+
+		player.anchor.set(0.5);
+		player.animationSpeed = 1.5;
+		player.loop = false;
+		player.x = app.view.width / 2;
+		player.y = app.view.height / 2;
+		app.stage.addChild(player);
+		player.play();
 	};
 
 	gameLoop = () => {
+		let player = this.state.player;
+
 		// W Key
 		if (this.keys['87']) {
-			//player.y -= 2;
+			if (!player.playing) {
+				player.textures = this.state.playerSheet.walkNorth;
+				player.play();
+			}
+
+			player.y -= 2;
 		}
 
 		// A Key
 		if (this.keys['65']) {
-			//player.x -= 2;
+			if (!player.playing) {
+				player.textures = this.state.playerSheet.walkWest;
+				player.play();
+			}
+
+			player.x -= 2;
 		}
 
 		// S Key
 		if (this.keys['83']) {
-			if (!this.state.player.playing) {
-				this.state.player.textures = this.state.playerSheet.walkSouth;
-				this.state.player.play();
+			if (!player.playing) {
+				player.textures = this.state.playerSheet.walkSouth;
+				player.play();
 			}
 
-			this.state.player.y += 2;
+			player.y += 2;
 		}
 
 		// D Key
 		if (this.keys['68']) {
-			//player.x += 2;
+			if (!player.playing) {
+				player.textures = this.state.playerSheet.walkEast;
+				player.play();
+			}
+
+			player.x += 2;
 		}
 	};
 
