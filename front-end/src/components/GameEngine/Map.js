@@ -1,6 +1,6 @@
 import * as PIXI from 'pixi.js';
 
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 
 import { Viewport } from 'pixi-viewport';
 
@@ -21,6 +21,16 @@ export class Map extends Component {
 
 	keysDown = (e) => {
 		this.keys[e.keyCode] = true;
+	};
+
+	drawRectangle = (viewport, x, y) => {
+		let graphic = new PIXI.Graphics();
+		graphic.x = x;
+		graphic.y = y;
+		graphic.lineStyle(2, '0xC0C0C0');
+		graphic.drawRect(0, 0, 50, 50);
+
+		viewport.addChild(graphic);
 	};
 
 	doneLoading = (app, viewport) => {
@@ -82,7 +92,7 @@ export class Map extends Component {
 		let player = this.state.player;
 
 		player.anchor.set(0.5);
-		player.animationSpeed = .5;
+		player.animationSpeed = 0.5;
 		player.loop = false;
 		player.x = app.view.width / 2;
 		player.y = app.view.height / 2;
@@ -92,7 +102,7 @@ export class Map extends Component {
 		player.play();
 	};
 
-	gameLoop = (viewport) => {
+	gameLoop = () => {
 		let player = this.state.player;
 
 		// W Key
@@ -102,7 +112,7 @@ export class Map extends Component {
 				player.play();
 			}
 
-			player.y -= 2;
+			player.y -= 5;
 		}
 
 		// A Key
@@ -112,7 +122,7 @@ export class Map extends Component {
 				player.play();
 			}
 
-			player.x -= 2;
+			player.x -= 5;
 		}
 
 		// S Key
@@ -122,7 +132,7 @@ export class Map extends Component {
 				player.play();
 			}
 
-			player.y += 2;
+			player.y += 5;
 		}
 
 		// D Key
@@ -132,7 +142,7 @@ export class Map extends Component {
 				player.play();
 			}
 
-			player.x += 2;
+			player.x += 5;
 		}
 	};
 
@@ -167,9 +177,16 @@ export class Map extends Component {
 		// The root display container that's rendered
 		app.stage.addChild(viewport);
 
+		let gridX = 100;
+		let gridY = 100;
+		for (var x = 0; x < gridX; x++) {
+			for (var y = 0; y < gridY; y++) {
+				this.drawRectangle(viewport, x * 50, y * 50);
+			}
+		}
+
 		// Activate plugins
-		viewport.drag().pinch().wheel().decelerate();
-		viewport.mouseEdges();
+		viewport.drag().pinch().wheel().decelerate().clampZoom({ minWidth: 1000, minHeight: 1000, maxWidth: 4000, maxHeight: 4000 });
 
 		// Creates player texture
 		app.loader.add('king', require('../../images/characterSprite.png'));
@@ -183,7 +200,7 @@ export class Map extends Component {
 	}
 
 	render() {
-		return <div />;
+		return <Fragment />;
 	}
 }
 
