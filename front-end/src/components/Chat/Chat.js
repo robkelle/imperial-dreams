@@ -1,17 +1,5 @@
-import {
-	Dialog,
-	DialogTitle,
-	Fab,
-	FormControl,
-	FormHelperText,
-	Grid,
-	IconButton,
-	Input,
-	InputAdornment,
-	InputLabel,
-	Paper,
-	Typography
-} from '@material-ui/core';
+import { Dialog, DialogTitle, Fab, FormControl, FormHelperText, Grid, IconButton, Input, InputAdornment, InputLabel, Paper, Typography } from '@material-ui/core';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import React, { Component, Fragment } from 'react';
 
 import ChatGIFMessage from './ChatGIFMessage';
@@ -24,9 +12,19 @@ import SendIcon from '@material-ui/icons/Send';
 import _ from 'lodash';
 import config from '../../config.json';
 import io from 'socket.io-client';
+import { v4 as uuidv4 } from 'uuid';
 import { withCookies } from 'react-cookie';
 
-//import ChatLoader from './ChatLoader';
+const theme = createMuiTheme({
+	palette: {
+		primary: {
+			main: 'rgb(18, 18, 18)'
+		},
+		secondary: {
+			main: '#fff'
+		}
+	}
+});
 
 class Chat extends Component {
 	constructor() {
@@ -116,49 +114,27 @@ class Chat extends Component {
 						.map((value) => {
 							if (value.messageType === 'gif') {
 								return (
-									<div key={value._id}>
+									<div key={uuidv4()}>
 										<ChatGIFMessage
 											message={value.message}
 											posted={value.posted}
 											user={value.username}
-											style={
-												this.props.cookies.get('user') === value.username ? (
-													this.classes.messageStyleSpanPersonal
-												) : (
-													this.classes.messageStyleSpan
-												)
-											}
-											action={
-												this.props.cookies.get('user') === value.username ? (
-													this.classes.sentMessageStyle
-												) : (
-													this.classes.receivedMessageStyle
-												)
-											}
+											style={this.props.cookies.get('user') === value.username ? this.classes.messageStyleSpanPersonal : this.classes.messageStyleSpan}
+											action={this.props.cookies.get('user') === value.username ? this.classes.sentMessageStyle : this.classes.receivedMessageStyle}
 										/>
 									</div>
 								);
 							} else {
 								return (
-									<div key={value._id}>
+									<div key={uuidv4()}>
 										<ChatMessage
 											message={value.message}
 											posted={value.posted}
 											user={value.username}
-											style={
-												this.props.cookies.get('user') === value.username ? (
-													this.classes.messageStyleSpanPersonal
-												) : (
-													this.classes.messageStyleSpan
-												)
-											}
-											action={
-												this.props.cookies.get('user') === value.username ? (
-													this.classes.sentMessageStyle
-												) : (
-													this.classes.receivedMessageStyle
-												)
-											}
+											style={this.props.cookies.get('user') === value.username ? this.classes.messageStyleSpanPersonal : this.classes.messageStyleSpan}
+											action={this.props.cookies.get('user') === value.username ? this.classes.sentMessageStyle : this.classes.receivedMessageStyle}
+                      type={value.messageType}
+                      isMe={this.props.cookies.get('user') === value.username ? true : false}
 										/>
 									</div>
 								);
@@ -217,6 +193,15 @@ class Chat extends Component {
 	componentDidMount() {
 		const { cookies } = this.props;
 
+    this.socket.emit('userConnected', {
+			message: `${cookies.get('user')} has joined the chat`,
+			username: cookies.get('user'),
+			messageType: 'connect',
+			page: this.state.page,
+			pageLimit: this.state.pageLimit,
+			room: this.props.room
+		});
+
 		// Verify that the user is authenticated
 		fetch(`${config.API.DOMAIN}:${config.API.PORT}/api/user/verify`, {
 			method: 'GET',
@@ -235,66 +220,33 @@ class Chat extends Component {
 				}
 			});
 
-		// this.socket.on('userConnected', (res) => {
-		// 	// Adds the message into the database
-		// 	this.socket.emit('postMessage', {
-		// 		message: `${cookies.get('user')} has joined ${this.props.room}`,
-		// 		username: cookies.get('user'),
-		// 		page: this.state.page,
-		// 		pageLimit: this.state.pageLimit,
-		// 		room: this.props.room
-		// 	});
-		// });
-
 		this.socket.on('loadMessage', (res) => {
 			this.setState({
 				messages: res.message
-					.map((value, index) => {
+					.map((value) => {
 						if (value.messageType === 'gif') {
 							return (
-								<div key={value._id + index}>
+								<div key={uuidv4()}>
 									<ChatGIFMessage
 										message={value.message}
 										posted={value.posted}
 										user={value.username}
-										style={
-											this.props.cookies.get('user') === value.username ? (
-												this.classes.messageStyleSpanPersonal
-											) : (
-												this.classes.messageStyleSpan
-											)
-										}
-										action={
-											this.props.cookies.get('user') === value.username ? (
-												this.classes.sentMessageStyle
-											) : (
-												this.classes.receivedMessageStyle
-											)
-										}
+										style={this.props.cookies.get('user') === value.username ? this.classes.messageStyleSpanPersonal : this.classes.messageStyleSpan}
+										action={this.props.cookies.get('user') === value.username ? this.classes.sentMessageStyle : this.classes.receivedMessageStyle}
 									/>
 								</div>
 							);
 						} else {
 							return (
-								<div key={value._id + index}>
+								<div key={uuidv4()}>
 									<ChatMessage
 										message={value.message}
 										posted={value.posted}
 										user={value.username}
-										style={
-											this.props.cookies.get('user') === value.username ? (
-												this.classes.messageStyleSpanPersonal
-											) : (
-												this.classes.messageStyleSpan
-											)
-										}
-										action={
-											this.props.cookies.get('user') === value.username ? (
-												this.classes.sentMessageStyle
-											) : (
-												this.classes.receivedMessageStyle
-											)
-										}
+										style={this.props.cookies.get('user') === value.username ? this.classes.messageStyleSpanPersonal : this.classes.messageStyleSpan}
+										action={this.props.cookies.get('user') === value.username ? this.classes.sentMessageStyle : this.classes.receivedMessageStyle}
+                    type={value.messageType}
+                    isMe={this.props.cookies.get('user') === value.username ? true : false}
 									/>
 								</div>
 							);
@@ -311,11 +263,19 @@ class Chat extends Component {
 	}
 
 	componentWillUnmount() {
+		this.socket.emit('userDisconnected', {
+			message: `${this.props.cookies.get('user')} has left the chat`,
+			username: this.props.cookies.get('user'),
+			messageType: 'disconnect',
+			page: this.state.page,
+			pageLimit: this.state.pageLimit,
+			room: this.props.room
+		});
+
 		this.socket.disconnect();
 	}
 
 	render() {
-		//const loader = <ChatLoader />;
 
 		return (
 			<Fragment>
@@ -358,59 +318,55 @@ class Chat extends Component {
 				</div>
 
 				<div style={{ margin: '10px 0px 10px 0px' }} width={'100%'}>
-					<Paper style={{ padding: 20 }}>
-						<FormControl fullWidth={true} hiddenLabel={true}>
-							<InputLabel htmlFor="message-input">Type a message</InputLabel>
-							<Input
-								id="message-input"
-								fullWidth={true}
-								autoFocus={true}
-								disableUnderline={false}
-								value={this.state.addMessage || ''}
-								multiline={false}
-								onChange={(e) => {
-									this.setState({ addMessage: e.target.value });
-								}}
-								onKeyDown={this.handleKeyDown}
-								endAdornment={
-									<InputAdornment position="end" style={{ marginBottom: 12 }}>
-										<Fab size={'small'} style={{ backgroundColor: this.chatColor, color: '#fff' }}>
-											<SendIcon onClick={() => this.addMessage(this.state.addMessage, 'text')} />
-										</Fab>
-										<Fab
-											size={'small'}
-											style={{ backgroundColor: this.chatColor, color: '#fff', marginLeft: 5 }}
-										>
-											<GifIcon
-												onClick={() => this.setState({ displayGif: true, gifyOpen: true })}
-											/>
-										</Fab>
-									</InputAdornment>
-								}
-							/>
-							{this.state.helperText ? (
-								<FormHelperText error={true} style={{ color: this.chatColor }}>
-									<strong>Please type a message to continue.</strong>
-								</FormHelperText>
-							) : (
-								''
-							)}
-						</FormControl>
-					</Paper>
+					<MuiThemeProvider theme={theme}>
+						<Paper style={{ padding: 20 }}>
+							<FormControl fullWidth={true} hiddenLabel={true}>
+								<InputLabel htmlFor="message-input">Type a message</InputLabel>
+								<Input
+									id="message-input"
+									fullWidth={true}
+									autoFocus={true}
+									disableUnderline={false}
+									value={this.state.addMessage || ''}
+									multiline={false}
+									onChange={(e) => {
+										this.setState({ addMessage: e.target.value });
+									}}
+									onKeyDown={this.handleKeyDown}
+									endAdornment={
+										<InputAdornment position="end" style={{ marginBottom: 12 }}>
+											<Fab size={'small'} style={{ backgroundColor: this.chatColor, color: '#fff' }}>
+												<SendIcon onClick={() => this.addMessage(this.state.addMessage, 'text')} />
+											</Fab>
+											<Fab
+												size={'small'}
+												style={{
+													backgroundColor: this.chatColor,
+													color: '#fff',
+													marginLeft: 5
+												}}
+											>
+												<GifIcon onClick={() => this.setState({ displayGif: true, gifyOpen: true })} />
+											</Fab>
+										</InputAdornment>
+									}
+								/>
+								{this.state.helperText ? (
+									<FormHelperText error={true} style={{ color: this.chatColor }}>
+										<strong>Please type a message to continue.</strong>
+									</FormHelperText>
+								) : (
+									''
+								)}
+							</FormControl>
+						</Paper>
+					</MuiThemeProvider>
 				</div>
 				<div align="right">
 					{this.state.displayGif ? (
-						<Dialog
-							fullScreen={false}
-							open={this.state.gifyOpen}
-							onBackdropClick={() => this.setState({ gifyOpen: false })}
-						>
+						<Dialog fullScreen={false} open={this.state.gifyOpen} onBackdropClick={() => this.setState({ gifyOpen: false })}>
 							<DialogTitle align="right">
-								<IconButton
-									aria-label="Close"
-									onClick={this.handleClose}
-									style={{ backgroundColor: this.chatColor, color: '#fff' }}
-								>
+								<IconButton aria-label="Close" onClick={this.handleClose} style={{ backgroundColor: this.chatColor, color: '#fff' }}>
 									<CloseIcon />
 								</IconButton>
 							</DialogTitle>

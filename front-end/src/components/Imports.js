@@ -3,14 +3,13 @@
 import { Route, BrowserRouter as Router } from 'react-router-dom';
 
 import AddArchetype from './Character/AddArchetype';
-import BorderBackground from '../images/borderBackground.jpg';
-import ButtonBackground from '../images/buttonBackground.jpg';
 import ForgotPassword from './Authentication/ForgotPassword';
 import { Landing } from './Landing';
 import { LoadingScreen } from './LoadingScreen';
 import Login from './Authentication/Login';
 import Map from './GameEngine/Map';
 import { Navbar } from './Navbar';
+import {Profile} from './Profile';
 import React from 'react';
 import Register from './Authentication/Register';
 import ResetPassword from './Authentication/ResetPassword';
@@ -31,7 +30,6 @@ export {
 	LoadingScreen,
 	withCookies,
 	ResetPassword,
-	ButtonBackground,
-	BorderBackground,
-	AddArchetype
+  AddArchetype,
+  Profile
 };

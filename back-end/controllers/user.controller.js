@@ -34,7 +34,7 @@ exports.signup = (req, res) => {
 
 	function userValidations() {
 		try {
-			// Username must be over 8 characters and Alpha-Numberic
+			// Username must be over 8 characters and Alpha-Numeric
 			if (user.username.length >= 8 && !userNameRegex.test(user.username)) {
 				userValidate.usernameValid = true;
 			}
@@ -119,7 +119,7 @@ exports.signup = (req, res) => {
 /*
     Logs a valid user in
 */
-exports.signin = (req, res, next) => {
+exports.login = (req, res, next) => {
 	User.findOne(
 		{
 			username: req.body.username.toLowerCase()
@@ -215,7 +215,6 @@ exports.signin = (req, res, next) => {
 				// Sends client response
 				res.cookie('accessToken', token, cookieOptions);
 				res.status(200).send({
-					refreshToken: refreshToken,
 					username: user.username,
 					_id: user._id,
 					isLoggedIn: true
@@ -252,9 +251,11 @@ exports.logout = (req, res) => {
 					});
 				}
 				res.clearCookie('accessToken');
-				res.json({
-					isLoggedIn: false
-				});
+        res.status(401).send({
+          message: 'User needs to login before accessing this API.',
+          httpStatus: 401,
+          isLoggedIn: false
+        });
 			}
 		);
 	}
@@ -275,7 +276,6 @@ exports.forgotPassword = (req, res) => {
 			if (err) {
 				console.log(err);
 			} else {
-				console
 				console.log(info);
 			}
 		});

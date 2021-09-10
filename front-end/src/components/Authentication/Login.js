@@ -4,9 +4,7 @@ import {
 	Button,
 	Card,
 	CardContent,
-	Checkbox,
 	FormControl,
-	FormControlLabel,
 	FormHelperText,
 	Grid,
 	Input,
@@ -49,7 +47,7 @@ class Login extends Component {
 
 	handleLogin = () => {
 		const { cookies } = this.props;
-		fetch(`${config.API.DOMAIN}:${config.API.PORT}/api/user/signin`, {
+		fetch(`${config.API.DOMAIN}:${config.API.PORT}/api/user/login`, {
 			method: 'POST',
 			mode: 'cors',
 			credentials: 'include',
@@ -150,6 +148,7 @@ class Login extends Component {
 													this.setState({ username: e.target.value });
 												}}
 												endAdornment={<UserIcon />}
+                        autoComplete="username"
 											/>
 
 											{!this.state.username && !this.state.isValid ? (
@@ -175,6 +174,7 @@ class Login extends Component {
 													this.setState({ password: e.target.value });
 												}}
 												endAdornment={<PasswordIcon />}
+                        autoComplete="current-password"
 											/>
 											{!this.state.isPasswordValid ? (
 												<div className="animate__animated animate__slideInUp">
@@ -199,7 +199,7 @@ class Login extends Component {
 									</div>
 
 									<br />
-									<div>
+									{/* <div>
 										<FormControlLabel
 											control={
 												<Checkbox
@@ -212,7 +212,7 @@ class Login extends Component {
 											}
 											label="Remember Username"
 										/>
-									</div>
+									</div> */}
 									<Button
 										type="submit"
 										style={{

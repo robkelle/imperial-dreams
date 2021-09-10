@@ -24,3 +24,4 @@ yarn-error.log*
 autocomplete/client.d.ts
 autocomplete/server.d.ts
 jsconfig.json
+imperial-dreams-workspace.code-workspace

@@ -23,29 +23,57 @@ exports.postArchetype = (req, res) => {
 		if (err) {
 			res.status(500).send('Something went wrong.');
 		} else {
-			res.status(200).send({ message: `${archetype.label} ${archetype.type} was created.` });
+			res.status(200).send({
+				message: `${archetype.label} ${archetype.type} was created.`
+			});
 		}
 	});
 };
 
 exports.getArchetypeGroupByType = (req, res) => {
-	Archetype.aggregate([ { $group: { _id: { type: '$type' } } } ], (err, archetype) => {
-		res.send(archetype);
-	});
+	Archetype.aggregate(
+		[
+			{
+				$group: {
+					_id: {
+						type: '$type'
+					}
+				}
+			},
+			{
+				$sort: {
+					'_id.type': 1
+				}
+			}
+		],
+		(err, archetype) => {
+			res.send(archetype);
+		}
+	);
 };
 
 exports.getArchetypeByType = (req, res) => {
-	Archetype.find({ type: req.params.type }, (err, data) => {
-		if (err) {
-			res.status(500).send('Error fetching archetype type.');
-		} else {
-			res.status(200).send(data);
+	Archetype.find(
+		{
+			type: req.params.type
+		},
+		(err, data) => {
+			if (err) {
+				res.status(500).send('Error fetching archetype type.');
+			} else {
+				res.status(200).send(data);
+			}
 		}
-	});
+	);
 };
 
 exports.deleteArchetype = (req, res) => {
-	Archetype.deleteOne({ _id: req.params.id }, (err, data) => {
-		res.status(200).send(data);
-	});
+	Archetype.deleteOne(
+		{
+			_id: req.params.id
+		},
+		(err, data) => {
+			res.status(200).send(data);
+		}
+	);
 };

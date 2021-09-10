@@ -2,14 +2,13 @@
 
 import {
 	AddArchetype,
-	BorderBackground,
-	ButtonBackground,
 	ForgotPassword,
 	Landing,
 	LoadingScreen,
 	Login,
 	Map,
 	Navbar,
+	Profile,
 	React,
 	Register,
 	ResetPassword,
@@ -24,7 +23,6 @@ import { Authenticator } from './components/Authentication/AuthenticatorContext'
 const classes = {
 	main: {
 		borderRadius: '25px',
-		backgroundImage: `url(${BorderBackground})`,
 		width: 600,
 		padding: '25px 35px 60px 35px',
 		marginTop: 10
@@ -55,7 +53,6 @@ const classes = {
 		color: 'red'
 	},
 	buttonStyle: {
-		backgroundImage: `url(${ButtonBackground})`,
 		backgroundPosition: 'center',
 		backgroundSize: 'cover',
 		backgroundRepeat: 'no-repeat',
@@ -70,6 +67,7 @@ function App(props) {
 	return (
 		<div>
 			<Router basename="imperial">
+
 				<Authenticator.Provider value={handleAuth}>
 					<Navbar />
 					{/* Initialize all routes */}
@@ -106,7 +104,18 @@ function App(props) {
 						path="/map"
 						render={(e) =>
 							handleAuth.isAuthorized ? (
-								<Map cookies={props.cookies} />
+								<Map cookies={props.cookies} history={e.history} />
+							) : (
+								<Login history={e.history} cookies={props.cookies} />
+							)}
+					/>
+
+					<Route
+						exact
+						path="/profile"
+						render={(e) =>
+							handleAuth.isAuthorized ? (
+								<Profile cookies={props.cookies} />
 							) : (
 								<Login history={e.history} cookies={props.cookies} />
 							)}

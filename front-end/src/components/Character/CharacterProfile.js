@@ -4,7 +4,20 @@ import React, { Component, Fragment } from 'react';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import AttachFileIcon from '@material-ui/icons/Attachment';
 import { BufferToBase64 } from './BufferImage';
+import { ThemeProvider } from '@material-ui/styles';
 import config from '../../config.json';
+import { createMuiTheme } from '@material-ui/core/styles';
+
+const theme = createMuiTheme({
+	palette: {
+		primary: {
+			main: 'rgb(138, 3, 3)'
+		},
+		secondary: {
+			main: '#fff'
+		}
+	}
+});
 
 class CharacterProfile extends Component {
 	constructor() {
@@ -29,7 +42,11 @@ class CharacterProfile extends Component {
 				return res.json();
 			})
 			.then((res) => {
-				this.getProfileImage();
+				if (res.httpStatus === 401) {
+					this.props.cookies.remove('isAuthorized', { path: '/' });
+				} else {
+					this.getProfileImage();
+				}
 			});
 	};
 
@@ -43,9 +60,13 @@ class CharacterProfile extends Component {
 				return res.json();
 			})
 			.then((res) => {
-				this.setState({
-					image: res.profileImage
-				});
+				if (res.httpStatus === 401) {
+					this.props.cookies.remove('isAuthorized', { path: '/' });
+				} else {
+					this.setState({
+						image: res.profileImage
+					});
+				}
 			});
 	};
 
@@ -53,34 +74,47 @@ class CharacterProfile extends Component {
 		this.getProfileImage();
 	}
 
+	componentWillUnmount() {
+		this.setState({
+			image: null
+		});
+	}
+
 	render() {
 		return (
 			<Fragment>
 				<Grid item xs={12} sm={12} md={3} lg={3} xl={3}>
-					<Typography variant="h5" gutterBottom={true} style={{ color: '#fff' }}>
+					<Typography
+						variant="h6"
+						gutterBottom={true}
+						className="texture2"
+						style={{
+							padding: '10px'
+						}}
+						align="center"
+					>
 						{this.props.title}
 					</Typography>
-					<Paper style={{ backgroundColor: '#181818', color: '#fff' }} align="center">
+					<Paper className="texture" align="center">
 						<div align="right">
-							<IconButton variant="contained" component="label" color="secondary">
-								<AttachFileIcon />
+							<ThemeProvider theme={theme}>
+								<IconButton variant="contained" component="label" color="primary">
+									<AttachFileIcon />
 
-								<input
-									type="file"
-									style={{ display: 'none' }}
-									onChange={(e) => {
-										this.addProfileImage(e.target.files[0], this.props.cookies.cookies._id);
-									}}
-								/>
-							</IconButton>
+									<input
+										type="file"
+										style={{ display: 'none' }}
+										onChange={(e) => {
+											this.addProfileImage(e.target.files[0], this.props.cookies.cookies._id);
+										}}
+									/>
+								</IconButton>
+							</ThemeProvider>
 						</div>
-						<Grid container spacing={1}>
+						<Grid container spacing={1} justify="center">
 							<Grid item xl={12}>
 								{this.state.image ? (
-									<Avatar
-										style={{ width: 400, height: 350 }}
-										src={'data:image/jpeg;base64,' + BufferToBase64(this.state.image.data.data)}
-									/>
+									<Avatar style={{ width: '100%', height: 'auto' }} src={'data:image/jpeg;base64,' + BufferToBase64(this.state.image.data.data)} />
 								) : (
 									<Avatar style={{ width: 400, height: 350 }}>
 										<AccountCircleIcon style={{ width: 400, height: 350, color: '#181818' }} />
