@@ -10,8 +10,8 @@ export class Map extends Component {
 		this.state = {
 			app: new PIXI.Application({ resizeTo: window }),
 			playerSheet: {},
-      ssheet: null,
-      player: null
+			ssheet: null,
+			player: null
 		};
 
 		this.keys = {};
@@ -35,16 +35,19 @@ export class Map extends Component {
 		viewport.addChild(graphic);
 	};
 
-	doneLoading = (app, viewport) => {
-
-    let gridX = 100;
+	buildGrid = (viewport) => {
+		let gridX = 100;
 		let gridY = 100;
+
 		for (var x = 0; x < gridX; x++) {
 			for (var y = 0; y < gridY; y++) {
 				this.drawRectangle(viewport, x * 50, y * 50);
 			}
 		}
+	};
 
+	doneLoading = (app, viewport) => {
+		this.buildGrid(viewport);
 		this.createPlayerSheet(app);
 		this.createPlayer(app, viewport);
 		app.ticker.add(() => {
@@ -161,7 +164,7 @@ export class Map extends Component {
 	componentWillUnmount() {
 		// Removes caching when component is unmounted
 		new PIXI.utils.clearTextureCache();
-    this.state.app.destroy(true);
+		this.state.app.destroy(true);
 	}
 
 	componentDidMount() {
