@@ -223,7 +223,7 @@ class Chat extends Component {
 		this.socket.on('loadMessage', (res) => {
 			this.setState({
 				messages: res.message
-					.map((value, index) => {
+					.map((value) => {
 						if (value.messageType === 'gif') {
 							return (
 								<div key={uuidv4()}>
