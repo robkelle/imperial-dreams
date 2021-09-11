@@ -173,7 +173,7 @@ export class Map extends Component {
 		player.animationSpeed = 0.5;
 		player.loop = false;
 		player.x = this.state.container.width / 2;
-		player.y = app.view.height / 2;
+		player.y = this.state.container.heightw / 2;
 		player.zIndex = 1;
 		container.addChild(player);
 		viewport.addChild(container)
