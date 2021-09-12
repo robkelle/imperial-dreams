@@ -16,6 +16,7 @@ export class Map extends Component {
 			ssheet: null,
 			player: null,
 			tsheet: null,
+			fsheet: null,
 			tileSheet: {},
 		    tentContainer: new PIXI.Container(),
 			container: new PIXI.Container(),
@@ -61,8 +62,8 @@ export class Map extends Component {
 		let sprite = new PIXI.Sprite(graphic);
 		sprite.x = 0;
 		sprite.y = 0;
-		for (let i =0; i< 200; i++){
-			for (var y = 0; y < 200; y++){
+		for (let i =0; i< 100; i++){
+			for (var y = 0; y < 100; y++){
 
 				let sprite = new PIXI.Sprite(graphic);
 				sprite.x += 32 * i;
@@ -111,11 +112,33 @@ export class Map extends Component {
 			new PIXI.Texture(this.state.tsheet, new PIXI.Rectangle(5 * w, 3* h, 3*w, 3*h)),
 			new PIXI.Texture(this.state.tsheet, new PIXI.Rectangle(8 * w, 6* h, 2*w, 2*h)),   
 			new PIXI.Texture(this.state.tsheet, new PIXI.Rectangle(12 * w, 2* h, 1*w, 1*h)),
-			//new PIXI.Texture(this.state.tsheet, new PIXI.Rectangle(12 * w, 3* h, 1*w, 1*h))
+			new PIXI.Texture(this.state.tsheet, new PIXI.Rectangle(12 * w, 3* h, 1*w, 1*h)),
 			new PIXI.Texture(this.state.tsheet, new PIXI.Rectangle(12 * w, 3* h, 1*w, 1*h)),
 			new PIXI.Texture(this.state.tsheet, new PIXI.Rectangle(12 * w, 4* h, 1*w, 1*h))
 
 			
+
+			
+		];
+
+	}
+	createTileOutside = (app) => {		
+		let ps = this.state;
+		let w = 48;
+		let h = 48;
+
+		this.setState({
+			fsheet: new PIXI.BaseTexture.from(app.loader.resources['outside'].url)
+		});
+
+		ps.tileSheet['outside'] = [
+			new PIXI.Texture(this.state.fsheet, new PIXI.Rectangle(5 * w, 0* h, 3*w, 3*h)),
+			new PIXI.Texture(this.state.fsheet, new PIXI.Rectangle(5 * w, 3* h, 3*w, 3*h)),
+			new PIXI.Texture(this.state.fsheet, new PIXI.Rectangle(8 * w, 6* h, 2*w, 2*h)),   
+			new PIXI.Texture(this.state.fsheet, new PIXI.Rectangle(12 * w, 2* h, 1*w, 1*h)),
+			//new PIXI.Texture(this.state.tsheet, new PIXI.Rectangle(12 * w, 3* h, 1*w, 1*h))
+			new PIXI.Texture(this.state.fsheet, new PIXI.Rectangle(12 * w, 3* h, 1*w, 1*h)),
+			new PIXI.Texture(this.state.fsheet, new PIXI.Rectangle(12 * w, 4* h, 1*w, 1*h))
 
 			
 		];
@@ -153,7 +176,7 @@ export class Map extends Component {
 
 	doneLoading = (app, viewport) => {
     this.addGrass(viewport);
-	//wthis.addStone(viewport)
+	//this.addStone(viewport);
 	var y = this.state.container.width /2;
 	var x = this.state.container.height /2;
 
@@ -164,7 +187,10 @@ export class Map extends Component {
 	//	this.buildGrid(viewport);
 	   let ps = this.state
 	
-		this.createTileSheet(app)	;
+		this.createTileSheet(app);
+		this.createTileOutside(app)
+		this.createTiles(app, viewport,x -900,y -100,this.state.tileSheet.outside[2]);
+
         this.createTiles(app, viewport,x -559,y -200,this.state.tileSheet.tent[3] );
 		this.createTiles(app, viewport,x -800,y -200,this.state.tileSheet.tent[4] );
 		this.createTiles(app, viewport,x -559,y -200,this.state.tileSheet.tent[3] );
@@ -336,7 +362,8 @@ export class Map extends Component {
 		app.loader.add('grass', require('../../images/maps/grass.png'));
 		app.loader.add('grounds', require('../../images/tilesets/Outside_A4.png'))
 		app.loader.add('tents', require ('../../images/tilesets/Outside_B.png') )
-
+		app.loader.add('outside', require ('../../images/tilesets/Outside_B.png') )
+		
 		window.addEventListener('keydown', this.keysDown);
 		window.addEventListener('keyup', this.keysUp);
 
