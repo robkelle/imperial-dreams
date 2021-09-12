@@ -111,7 +111,11 @@ export class Map extends Component {
 			new PIXI.Texture(this.state.tsheet, new PIXI.Rectangle(5 * w, 3* h, 3*w, 3*h)),
 			new PIXI.Texture(this.state.tsheet, new PIXI.Rectangle(8 * w, 6* h, 2*w, 2*h)),   
 			new PIXI.Texture(this.state.tsheet, new PIXI.Rectangle(12 * w, 2* h, 1*w, 1*h)),
-			new PIXI.Texture(this.state.tsheet, new PIXI.Rectangle(12 * w, 3* h, 1*w, 1*h))
+			//new PIXI.Texture(this.state.tsheet, new PIXI.Rectangle(12 * w, 3* h, 1*w, 1*h))
+			new PIXI.Texture(this.state.tsheet, new PIXI.Rectangle(12 * w, 3* h, 1*w, 1*h)),
+			new PIXI.Texture(this.state.tsheet, new PIXI.Rectangle(12 * w, 4* h, 1*w, 1*h))
+
+			
 
 			
 		];
@@ -159,22 +163,20 @@ export class Map extends Component {
 //	app,viewport,x,y,texture
 	//	this.buildGrid(viewport);
 	   let ps = this.state
-		this.createPlayerSheet(app);
-		this.createPlayer(app, viewport);
+	
 		this.createTileSheet(app)	;
-
+        this.createTiles(app, viewport,x -559,y -200,this.state.tileSheet.tent[3] );
+		this.createTiles(app, viewport,x -800,y -200,this.state.tileSheet.tent[4] );
 		this.createTiles(app, viewport,x -559,y -200,this.state.tileSheet.tent[3] );
-		this.createTiles(app, viewport,x -800,y -300,this.state.tileSheet.tent[2] );
-		this.createTiles(app, viewport,x -800,y -300,this.state.tileSheet.tent[2] );
-		this.createTiles(app, viewport,x -800,y -330,this.state.tileSheet.tent[2] );
-		this.createTiles(app, viewport,x -800,y -325,this.state.tileSheet.tent[2] );
-		this.createTiles(app, viewport,x -800,y -320,this.state.tileSheet.tent[2] );
+		this.createTiles(app, viewport,x -900,y -300,this.state.tileSheet.tent[2] );
 		this.createTiles(app, viewport,x -800,y -300,this.state.tileSheet.tent[2] );
 		this.createTiles(app, viewport,x -575,y -400,this.state.tileSheet.tent[2] );
 		this.createTiles(app, viewport,x -800,y -435,this.state.tileSheet.tent[2] );
 	    this.createTiles(app, viewport,x -500,y -400,this.state.tileSheet.tent[1] );
 		this.createTiles(app, viewport,x -700,y -400,this.state.tileSheet.tent[1] );
-	
+		this.createTiles(app, viewport,x -500,y -150,this.state.tileSheet.tent[5] );
+		this.createPlayerSheet(app);
+		this.createPlayer(app, viewport);
 		app.ticker.add(() => {
 			this.gameLoop(viewport);
 		});
