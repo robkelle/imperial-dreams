@@ -15,7 +15,11 @@ export class Map extends Component {
 			playerSheet: {},
 			ssheet: null,
 			player: null,
-			container: new PIXI.Container()
+			tsheet: null,
+			tileSheet: {},
+		    tentContainer: new PIXI.Container(),
+			container: new PIXI.Container(),
+			grassRender: new PIXI.Container()
 		};
 
 		this.keys = {};
@@ -28,16 +32,6 @@ export class Map extends Component {
 	keysDown = (e) => {
 		this.keys[e.keyCode] = true;
 	};
-
-	
-	createTileMap = () => {
-        let app = this.state.app
-		let tileStage;
-        let tilemap;
-        let frame = 0;
-	};
-
-
 
 	drawRectangle = (viewport, x, y) => {
 		let app = this.state.app
@@ -58,14 +52,9 @@ export class Map extends Component {
 	};
 
 	addGrass = (viewport) => {
-		
-
-		
 		let app = this.state.app
 		var container = this.state.container
-	//	container.x = app.view.width / 2;
-	//	container.y = app.view.height / 2;
-	//	container.pivot.x = container.width / 2;
+	
         container.pivot.y = container.height / 2;
 		container.visible = true;
 		let graphic = new PIXI.Texture.from(app.loader.resources['grass'].url)
@@ -81,18 +70,70 @@ export class Map extends Component {
 				container.addChild(sprite)
 
 			}
-			
-
-		}
-		
-		
-		
-		
-		
+		}			
 		viewport.addChild(container);
 
 	}
 
+	addStone = (viewport) => {
+		let app = this.state.app
+		var container = this.state.container
+	
+        container.pivot.y = container.height / 2;
+		container.visible = true;
+		let graphic = new PIXI.Texture.from(app.loader.resources['tents'].url)
+		let sprite = new PIXI.Sprite(graphic);
+		sprite.x = 0;
+		sprite.y = 0;
+		container.addChild(sprite)
+		viewport.addChild(container);
+
+
+
+		
+
+	}
+	
+
+	createTileSheet = (app) => {		
+		let ps = this.state;
+		let w = 48;
+		let h = 48;
+
+		this.setState({
+			tsheet: new PIXI.BaseTexture.from(app.loader.resources['tents'].url)
+		});
+
+		ps.tileSheet['tent'] = [
+			// Tent
+			new PIXI.Texture(this.state.tsheet, new PIXI.Rectangle(5 * w, 0* h, 3*w, 3*h)),
+			//Tent red accent
+			new PIXI.Texture(this.state.tsheet, new PIXI.Rectangle(5 * w, 3* h, 3*w, 3*h)),
+			new PIXI.Texture(this.state.tsheet, new PIXI.Rectangle(8 * w, 6* h, 2*w, 2*h)),   
+			new PIXI.Texture(this.state.tsheet, new PIXI.Rectangle(12 * w, 2* h, 1*w, 1*h)),
+			new PIXI.Texture(this.state.tsheet, new PIXI.Rectangle(12 * w, 3* h, 1*w, 1*h))
+
+			
+		];
+
+	}
+	
+	createTiles = (app,viewport,x,y,texture) =>{
+		let ps = this.state
+
+		    let sprite = new PIXI.Sprite(texture);
+			let container = this.state.container
+
+			sprite.anchor.set(.05);
+			sprite.loop = false;
+			sprite.x = x
+			sprite.y = y
+			sprite.zIndex = 1;
+			container.addChild(sprite);
+			viewport.addChild(container)
+			
+		};
+/*
 	buildGrid = (viewport) => {
 		let gridX = 50;
 		let gridY = 50;
@@ -104,20 +145,42 @@ export class Map extends Component {
 		}
 	};
 
-	
-
-	
+*/	
 
 	doneLoading = (app, viewport) => {
-        this.addGrass(viewport);
-		//this.buildGrid(viewport);
+    this.addGrass(viewport);
+	//wthis.addStone(viewport)
+	var y = this.state.container.width /2;
+	var x = this.state.container.height /2;
+
+
+		//ps.tileSheet.tent[0])
+	
+//	app,viewport,x,y,texture
+	//	this.buildGrid(viewport);
+	   let ps = this.state
 		this.createPlayerSheet(app);
 		this.createPlayer(app, viewport);
+		this.createTileSheet(app)	;
+
+		this.createTiles(app, viewport,x -559,y -200,this.state.tileSheet.tent[3] );
+		this.createTiles(app, viewport,x -800,y -300,this.state.tileSheet.tent[2] );
+		this.createTiles(app, viewport,x -800,y -300,this.state.tileSheet.tent[2] );
+		this.createTiles(app, viewport,x -800,y -330,this.state.tileSheet.tent[2] );
+		this.createTiles(app, viewport,x -800,y -325,this.state.tileSheet.tent[2] );
+		this.createTiles(app, viewport,x -800,y -320,this.state.tileSheet.tent[2] );
+		this.createTiles(app, viewport,x -800,y -300,this.state.tileSheet.tent[2] );
+		this.createTiles(app, viewport,x -575,y -400,this.state.tileSheet.tent[2] );
+		this.createTiles(app, viewport,x -800,y -435,this.state.tileSheet.tent[2] );
+	    this.createTiles(app, viewport,x -500,y -400,this.state.tileSheet.tent[1] );
+		this.createTiles(app, viewport,x -700,y -400,this.state.tileSheet.tent[1] );
 	
 		app.ticker.add(() => {
 			this.gameLoop(viewport);
 		});
 	};
+
+	
 
 	createPlayerSheet = (app) => {
 		let ps = this.state;
@@ -169,11 +232,11 @@ export class Map extends Component {
 
 		let player = this.state.player;
         let container = this.state.container
-		player.anchor.set(1);
+		player.anchor.set(.5);
 		player.animationSpeed = 0.5;
 		player.loop = false;
 		player.x = this.state.container.width / 2;
-		player.y = this.state.container.heightw / 2;
+		player.y = this.state.container.height / 2;
 		player.zIndex = 1;
 		container.addChild(player);
 		viewport.addChild(container)
@@ -269,6 +332,8 @@ export class Map extends Component {
 		app.loader.add('tough', require('../../images/maps/tough.png'));
 		app.loader.add('red_chest', require('../../images/maps/red_chest.png'));
 		app.loader.add('grass', require('../../images/maps/grass.png'));
+		app.loader.add('grounds', require('../../images/tilesets/Outside_A4.png'))
+		app.loader.add('tents', require ('../../images/tilesets/Outside_B.png') )
 
 		window.addEventListener('keydown', this.keysDown);
 		window.addEventListener('keyup', this.keysUp);
