@@ -1,7 +1,7 @@
 
 import * as TILEMAP from '@pixi/tilemap';
 import * as PIXI from 'pixi.js';
- 
+
 
 import React, { Component, Fragment } from 'react';
 
@@ -18,14 +18,13 @@ export class Map extends Component {
 			tsheet: null,
 			fsheet: null,
 			tileSheet: {},
-		    tentContainer: new PIXI.Container(),
+			tentContainer: new PIXI.Container(),
 			container: new PIXI.Container(),
 			grassRender: new PIXI.Container()
 		};
 
 		this.keys = {};
 	}
-
 	keysUp = (e) => {
 		this.keys[e.keyCode] = false;
 	};
@@ -33,37 +32,18 @@ export class Map extends Component {
 	keysDown = (e) => {
 		this.keys[e.keyCode] = true;
 	};
-
-	drawRectangle = (viewport, x, y) => {
-		let app = this.state.app
-		var container = this.state.container
-		let graphic = new PIXI.Graphics();
-		graphic.x = x;
-		graphic.y = y;
-		graphic.lineStyle(2, '0xC0C0C0');
-		graphic.drawRect(0, 0, 32, 32);
-		
-		container.x = app.view.width / 2;
-		container.y = app.view.height / 2;
-		container.pivot.x = container.width / 2;
-        container.pivot.y = container.height / 2;
-		container.visible = true;
-        container.addChild(graphic)
-		viewport.addChild(container);
-	};
-
 	addGrass = (viewport) => {
 		let app = this.state.app
 		var container = this.state.container
-	
-        container.pivot.y = container.height / 2;
+
+		container.pivot.y = container.height / 2;
 		container.visible = true;
 		let graphic = new PIXI.Texture.from(app.loader.resources['grass'].url)
 		let sprite = new PIXI.Sprite(graphic);
 		sprite.x = 0;
 		sprite.y = 0;
-		for (let i =0; i< 100; i++){
-			for (var y = 0; y < 100; y++){
+		for (let i = 0; i < 100; i++) {
+			for (var y = 0; y < 100; y++) {
 
 				let sprite = new PIXI.Sprite(graphic);
 				sprite.x += 32 * i;
@@ -71,32 +51,11 @@ export class Map extends Component {
 				container.addChild(sprite)
 
 			}
-		}			
+		}
 		viewport.addChild(container);
 
 	}
-
-	addStone = (viewport) => {
-		let app = this.state.app
-		var container = this.state.container
-	
-        container.pivot.y = container.height / 2;
-		container.visible = true;
-		let graphic = new PIXI.Texture.from(app.loader.resources['tents'].url)
-		let sprite = new PIXI.Sprite(graphic);
-		sprite.x = 0;
-		sprite.y = 0;
-		container.addChild(sprite)
-		viewport.addChild(container);
-
-
-
-		
-
-	}
-	
-
-	createTileSheet = (app) => {		
+	createTileSheet = (app) => {
 		let ps = this.state;
 		let w = 48;
 		let h = 48;
@@ -107,22 +66,18 @@ export class Map extends Component {
 
 		ps.tileSheet['tent'] = [
 			// Tent
-			new PIXI.Texture(this.state.tsheet, new PIXI.Rectangle(5 * w, 0* h, 3*w, 3*h)),
+			new PIXI.Texture(this.state.tsheet, new PIXI.Rectangle(5 * w, 0 * h, 3 * w, 3 * h)),
 			//Tent red accent
-			new PIXI.Texture(this.state.tsheet, new PIXI.Rectangle(5 * w, 3* h, 3*w, 3*h)),
-			new PIXI.Texture(this.state.tsheet, new PIXI.Rectangle(8 * w, 6* h, 2*w, 2*h)),   
-			new PIXI.Texture(this.state.tsheet, new PIXI.Rectangle(12 * w, 2* h, 1*w, 1*h)),
-			new PIXI.Texture(this.state.tsheet, new PIXI.Rectangle(12 * w, 3* h, 1*w, 1*h)),
-			new PIXI.Texture(this.state.tsheet, new PIXI.Rectangle(12 * w, 3* h, 1*w, 1*h)),
-			new PIXI.Texture(this.state.tsheet, new PIXI.Rectangle(12 * w, 4* h, 1*w, 1*h))
-
-			
-
-			
+			new PIXI.Texture(this.state.tsheet, new PIXI.Rectangle(5 * w, 3 * h, 3 * w, 3 * h)),
+			new PIXI.Texture(this.state.tsheet, new PIXI.Rectangle(8 * w, 6 * h, 2 * w, 2 * h)),
+			new PIXI.Texture(this.state.tsheet, new PIXI.Rectangle(12 * w, 2 * h, 1 * w, 1 * h)),
+			new PIXI.Texture(this.state.tsheet, new PIXI.Rectangle(12 * w, 3 * h, 1 * w, 1 * h)),
+			new PIXI.Texture(this.state.tsheet, new PIXI.Rectangle(12 * w, 3 * h, 1 * w, 1 * h)),
+			new PIXI.Texture(this.state.tsheet, new PIXI.Rectangle(12 * w, 4 * h, 1 * w, 1 * h))
 		];
 
 	}
-	createTileOutside = (app) => {		
+	createTileOutside = (app) => {
 		let ps = this.state;
 		let w = 48;
 		let h = 48;
@@ -132,83 +87,60 @@ export class Map extends Component {
 		});
 
 		ps.tileSheet['outside'] = [
-			new PIXI.Texture(this.state.fsheet, new PIXI.Rectangle(5 * w, 0* h, 3*w, 3*h)),
-			new PIXI.Texture(this.state.fsheet, new PIXI.Rectangle(5 * w, 3* h, 3*w, 3*h)),
-			new PIXI.Texture(this.state.fsheet, new PIXI.Rectangle(8 * w, 6* h, 2*w, 2*h)),   
-			new PIXI.Texture(this.state.fsheet, new PIXI.Rectangle(12 * w, 2* h, 1*w, 1*h)),
-			//new PIXI.Texture(this.state.tsheet, new PIXI.Rectangle(12 * w, 3* h, 1*w, 1*h))
-			new PIXI.Texture(this.state.fsheet, new PIXI.Rectangle(12 * w, 3* h, 1*w, 1*h)),
-			new PIXI.Texture(this.state.fsheet, new PIXI.Rectangle(12 * w, 4* h, 1*w, 1*h))
-
-			
+			new PIXI.Texture(this.state.fsheet, new PIXI.Rectangle(5 * w, 0 * h, 3 * w, 3 * h)),
+			new PIXI.Texture(this.state.fsheet, new PIXI.Rectangle(5 * w, 3 * h, 3 * w, 3 * h)),
+			new PIXI.Texture(this.state.fsheet, new PIXI.Rectangle(8 * w, 6 * h, 2 * w, 2 * h)),
+			new PIXI.Texture(this.state.fsheet, new PIXI.Rectangle(12 * w, 2 * h, 1 * w, 1 * h)),
+			new PIXI.Texture(this.state.tsheet, new PIXI.Rectangle(12 * w, 3 * h, 1 * w, 1 * h)),
+			new PIXI.Texture(this.state.fsheet, new PIXI.Rectangle(12 * w, 3 * h, 1 * w, 1 * h)),
+			new PIXI.Texture(this.state.fsheet, new PIXI.Rectangle(12 * w, 4 * h, 1 * w, 1 * h))
 		];
 
 	}
-	
-	createTiles = (app,viewport,x,y,texture) =>{
+
+	createTiles = (app, viewport, x, y, texture) => {
 		let ps = this.state
 
-		    let sprite = new PIXI.Sprite(texture);
-			let container = this.state.container
+		let sprite = new PIXI.Sprite(texture);
+		let container = this.state.container
 
-			sprite.anchor.set(.05);
-			sprite.loop = false;
-			sprite.x = x
-			sprite.y = y
-			sprite.zIndex = 1;
-			container.addChild(sprite);
-			viewport.addChild(container)
-			
-		};
-/*
-	buildGrid = (viewport) => {
-		let gridX = 50;
-		let gridY = 50;
+		sprite.anchor.set(.05);
+		sprite.loop = false;
+		sprite.x = x
+		sprite.y = y
+		sprite.zIndex = 1;
+		container.addChild(sprite);
+		viewport.addChild(container)
 
-		for (var x = 0; x < gridX; x++) {
-			for (var y = 0; y < gridY; y++) {
-				this.drawRectangle(viewport, x * 32, y * 32);
-			}
-		}
 	};
 
-*/	
-
 	doneLoading = (app, viewport) => {
-    this.addGrass(viewport);
-	//this.addStone(viewport);
-	var y = this.state.container.width /2;
-	var x = this.state.container.height /2;
+		this.addGrass(viewport);
 
+		var y = this.state.container.width / 2;
+		var x = this.state.container.height / 2;
+		let ps = this.state
 
-		//ps.tileSheet.tent[0])
-	
-//	app,viewport,x,y,texture
-	//	this.buildGrid(viewport);
-	   let ps = this.state
-	
 		this.createTileSheet(app);
 		this.createTileOutside(app)
-		this.createTiles(app, viewport,x -900,y -100,this.state.tileSheet.outside[2]);
+		this.createTiles(app, viewport, x - 900, y - 100, this.state.tileSheet.outside[2]);
 
-        this.createTiles(app, viewport,x -559,y -200,this.state.tileSheet.tent[3] );
-		this.createTiles(app, viewport,x -800,y -200,this.state.tileSheet.tent[4] );
-		this.createTiles(app, viewport,x -559,y -200,this.state.tileSheet.tent[3] );
-		this.createTiles(app, viewport,x -900,y -300,this.state.tileSheet.tent[2] );
-		this.createTiles(app, viewport,x -800,y -300,this.state.tileSheet.tent[2] );
-		this.createTiles(app, viewport,x -575,y -400,this.state.tileSheet.tent[2] );
-		this.createTiles(app, viewport,x -800,y -435,this.state.tileSheet.tent[2] );
-	    this.createTiles(app, viewport,x -500,y -400,this.state.tileSheet.tent[1] );
-		this.createTiles(app, viewport,x -700,y -400,this.state.tileSheet.tent[1] );
-		this.createTiles(app, viewport,x -500,y -150,this.state.tileSheet.tent[5] );
+		this.createTiles(app, viewport, x - 559, y - 200, this.state.tileSheet.tent[3]);
+		this.createTiles(app, viewport, x - 800, y - 200, this.state.tileSheet.tent[4]);
+		this.createTiles(app, viewport, x - 559, y - 200, this.state.tileSheet.tent[3]);
+		this.createTiles(app, viewport, x - 900, y - 300, this.state.tileSheet.tent[2]);
+		this.createTiles(app, viewport, x - 800, y - 300, this.state.tileSheet.tent[2]);
+		this.createTiles(app, viewport, x - 575, y - 400, this.state.tileSheet.tent[2]);
+		this.createTiles(app, viewport, x - 800, y - 435, this.state.tileSheet.tent[2]);
+		this.createTiles(app, viewport, x - 500, y - 400, this.state.tileSheet.tent[1]);
+		this.createTiles(app, viewport, x - 700, y - 400, this.state.tileSheet.tent[1]);
+		this.createTiles(app, viewport, x - 500, y - 150, this.state.tileSheet.tent[5]);
 		this.createPlayerSheet(app);
 		this.createPlayer(app, viewport);
 		app.ticker.add(() => {
 			this.gameLoop(viewport);
 		});
 	};
-
-	
 
 	createPlayerSheet = (app) => {
 		let ps = this.state;
@@ -259,7 +191,7 @@ export class Map extends Component {
 		});
 
 		let player = this.state.player;
-        let container = this.state.container
+		let container = this.state.container
 		player.anchor.set(.5);
 		player.animationSpeed = 0.5;
 		player.loop = false;
@@ -361,9 +293,9 @@ export class Map extends Component {
 		app.loader.add('red_chest', require('../../images/maps/red_chest.png'));
 		app.loader.add('grass', require('../../images/maps/grass.png'));
 		app.loader.add('grounds', require('../../images/tilesets/Outside_A4.png'))
-		app.loader.add('tents', require ('../../images/tilesets/Outside_B.png') )
-		app.loader.add('outside', require ('../../images/tilesets/Outside_B.png') )
-		
+		app.loader.add('tents', require('../../images/tilesets/Outside_B.png'))
+		app.loader.add('outside', require('../../images/tilesets/Outside_B.png'))
+
 		window.addEventListener('keydown', this.keysDown);
 		window.addEventListener('keyup', this.keysUp);
 
