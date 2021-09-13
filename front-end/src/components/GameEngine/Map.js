@@ -1,4 +1,5 @@
 import * as PIXI from 'pixi.js';
+import  {CompositeTilemap} from '@pixi/tilemap';
 
 import React, { Component, Fragment } from 'react';
 
@@ -33,26 +34,19 @@ export class Map extends Component {
 		this.keys[e.keyCode] = true;
 	};
 
-	addGrass = (viewport) => {
-		let app = this.state.app;
-		var container = this.state.container;
 
-		container.pivot.y = container.height / 2;
-		container.visible = true;
-		let graphic = new PIXI.Texture.from(app.loader.resources['grass'].url);
-		let sprite = new PIXI.Sprite(graphic);
-		sprite.x = 0;
-		sprite.y = 0;
-		for (let i = 0; i < 200; i++) {
-			for (var y = 0; y < 200; y++) {
-				let sprite = new PIXI.Sprite(graphic);
-				sprite.x += 32 * i;
-				sprite.y += 32 * y;
-				container.addChild(sprite);
-			}
-		}
-		viewport.addChild(container);
-	};
+	createGrass = (app,viewport) =>{
+		let tilemap = new CompositeTilemap();
+		const size =32
+		let container = this.state.grassRender
+	   
+	tilemap.tile(app.loader.resources['grass'].url, 1 * size, 1* size)
+	
+				
+	
+	   container = tilemap
+	   viewport.addChild(container)
+			  }
 
 	createTileSheet = (app) => {
 		let ps = this.state;
@@ -110,7 +104,7 @@ export class Map extends Component {
 	};
 
 	doneLoading = (app, viewport) => {
-		this.addGrass(viewport);
+		this.createGrass(app,viewport);
 
 		var y = this.state.container.width / 2;
 		var x = this.state.container.height / 2;
