@@ -6,6 +6,11 @@ import * as PIXI from 'pixi.js';
 import React, { Component, Fragment } from 'react';
 
 import { Viewport } from 'pixi-viewport';
+<<<<<<< Updated upstream
+=======
+
+//import * as TILEMAP from '@pixi/tilemap';
+>>>>>>> Stashed changes
 
 export class Map extends Component {
 	constructor() {
