@@ -41,13 +41,17 @@ class InitSockets {
 		// When the message is saved to the database, emits the message to the client
 		message.save().then(() => {
 			Message.findById(message._id).exec((err, res) => {
-				this.io.in(res.room).emit('loadMessage', { message: [ res ] });
+				this.io.in(res.room).emit('loadMessage', {
+					message: [
+						res
+					]
+				});
 			});
 		});
 	}
 
 	/**
-    @name _socketLoader
+    @name _socketChatLoader
     @private
     @description The load socket will handle all the message posts and refresh the page when the client component mounts
 
@@ -58,7 +62,7 @@ class InitSockets {
 
     @returns {type} description
   */
-	_socketLoader(socket) {
+	_socketChatLoader(socket) {
 		socket.on('lazyLoad', (res) => {
 			socket.join(res.room);
 			this._getMessages(res.page, res.pageLimit, res.room);
@@ -66,7 +70,7 @@ class InitSockets {
 	}
 
 	/**
-    @name _socketPoster
+    @name _socketChatPoster
     @private
     @description  Posts a message to the message collection
 
@@ -77,7 +81,7 @@ class InitSockets {
 
     @returns {type} description
   */
-	_socketPoster(socket) {
+	_socketChatPoster(socket) {
 		socket.on('postMessage', (res) => {
 			this._postMessage(res);
 		});
@@ -104,16 +108,16 @@ class InitSockets {
 				this._postMessage(res);
 			});
 
-      socket.on('userJoinedGame', (res) => {
-        console.log(`${res.username} has joined!`);
-      })
+			socket.on('userJoinedGame', (res) => {
+				//console.log(`${res.username} has joined!`);
+			});
 
-      socket.on('setPlayerPosition', (res) => {
-        console.log(res);
-      })
+			socket.on('setPlayerPosition', (res) => {
+				console.log(res);
+			});
 
-			this._socketLoader(socket);
-			this._socketPoster(socket);
+			this._socketChatLoader(socket);
+			this._socketChatPoster(socket);
 		});
 	}
 }

@@ -4,6 +4,8 @@ import React, { Component, Fragment } from 'react';
 
 import { Player } from './Player';
 import { Viewport } from 'pixi-viewport';
+import config from '../../config.json';
+import io from 'socket.io-client';
 
 //import * as TILEMAP from '@pixi/tilemap';
 
@@ -21,7 +23,9 @@ export class Map extends Component {
 			grassRender: new PIXI.Container()
 		};
 
+		this.FPS = 60;
 		this.keys = {};
+		this.socket = io(`${config.API.DOMAIN}:${config.API.PORT}`);
 	}
 
 	keysUp = (e) => {
@@ -128,12 +132,6 @@ export class Map extends Component {
 		this.createTiles(app, viewport, x - 700, y - 400, this.state.tileSheet.tent[1]);
 		this.createTiles(app, viewport, x - 500, y - 150, this.state.tileSheet.tent[5]);
 
-		// Initialize player class
-		this.setState({
-			player: new Player(this.state.container, viewport, app, 56, 84, this.props.cookies.cookies.user)
-		});
-
-
 		// Adds logged in user player
 		let playerCoordinates = this.state.player.getPlayerCoordinates();
 		this.state.player.addPlayer(playerCoordinates, this.props.cookies.cookies.user);
@@ -200,6 +198,11 @@ export class Map extends Component {
 
 		window.addEventListener('keydown', this.keysDown);
 		window.addEventListener('keyup', this.keysUp);
+
+		// Initialize player class
+		this.setState({
+			player: new Player(this.state.container, viewport, app, 56, 84, this.props.cookies.cookies.user)
+		});
 
 		app.loader.load(() => {
 			this.doneLoading(app, viewport);
