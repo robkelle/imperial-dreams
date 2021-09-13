@@ -105,7 +105,7 @@ class InitSockets {
 			});
 
       socket.on('userJoinedGame', (res) => {
-        //console.log(res);
+        console.log(`${res.username} has joined!`);
       })
 
       socket.on('setPlayerPosition', (res) => {
