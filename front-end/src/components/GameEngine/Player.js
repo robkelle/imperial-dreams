@@ -95,10 +95,10 @@ export class Player {
 
 			player.y -= 5;
 			this.socket.emit('setPlayerPosition', {
-        username: user,
-        positionX: player.position._x,
-        positionY:player.position._y
-      });
+				username: user,
+				positionX: player.position._x,
+				positionY: player.position._y
+			});
 		}
 
 		// A Key
@@ -110,10 +110,10 @@ export class Player {
 
 			player.x -= 5;
 			this.socket.emit('setPlayerPosition', {
-        username: user,
-        positionX: player.position._x,
-        positionY:player.position._y
-      });
+				username: user,
+				positionX: player.position._x,
+				positionY: player.position._y
+			});
 		}
 
 		// S Key
@@ -125,10 +125,10 @@ export class Player {
 
 			player.y += 5;
 			this.socket.emit('setPlayerPosition', {
-        username: user,
-        positionX: player.position._x,
-        positionY:player.position._y
-      });
+				username: user,
+				positionX: player.position._x,
+				positionY: player.position._y
+			});
 		}
 
 		// D Key
@@ -140,10 +140,10 @@ export class Player {
 
 			player.x += 5;
 			this.socket.emit('setPlayerPosition', {
-        username: user,
-        positionX: player.position._x,
-        positionY:player.position._y
-      });
+				username: user,
+				positionX: player.position._x,
+				positionY: player.position._y
+			});
 		}
 	}
 }
