@@ -96,8 +96,6 @@ export class Map extends Component {
 	};
 
 	createTiles = (app, viewport, x, y, texture) => {
-		let ps = this.state;
-
 		let sprite = new PIXI.Sprite(texture);
 		let container = this.state.container;
 
@@ -132,11 +130,11 @@ export class Map extends Component {
 
 		// Initialize player class
 		this.setState({
-			player: new Player(this.state.container, viewport, app, 56, 84)
+			player: new Player(this.state.container, viewport, app, 56, 84, 'rwkeller')
 		});
 
     // Create player
-		this.state.player.createPlayer();
+		this.state.player.createPlayer({x: 500, y: 500});
 
     // Trigger game loop
 		app.ticker.add(() => {

@@ -9,14 +9,14 @@ import * as PIXI from 'pixi.js';
     new Player(this.state.container, viewport, app, 56, 84);
 */
 export class Player {
-	constructor(container, viewport, app, w=56, h=84) {
+	constructor(container, viewport, app, w=56, h=84, user) {
 		this.container = container;
 		this.viewport = viewport;
 		this.app = app;
 
 		// Load character sprite sheet
-		app.loader.add('character', require('../../images/characterSprite.png'));
-		this.spriteSheet = new PIXI.BaseTexture.from(app.loader.resources['character'].url);
+		app.loader.add(user, require('../../images/characterSprite.png'));
+		this.spriteSheet = new PIXI.BaseTexture.from(app.loader.resources[user].url);
 
 		// Build character sprite animations
 		this.playerSheet = {
@@ -53,14 +53,14 @@ export class Player {
 		this.player = new PIXI.AnimatedSprite(this.playerSheet.standSouth);
 	}
 
-	createPlayer() {
+	createPlayer(location) {
 		new PIXI.utils.clearTextureCache();
 		this.player.anchor.set(0.5);
 		this.player.animationSpeed = 0.5;
 		this.player.loop = false;
 		this.player.zIndex = -100;
-		this.player.x = this.container.width / 2;
-		this.player.y = this.container.height / 2;
+		this.player.x = location.x;
+		this.player.y = location.y;
 		this.container.addChild(this.player);
 		this.viewport.addChild(this.container);
 		this.viewport.follow(this.player);
