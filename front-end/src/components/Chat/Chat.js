@@ -29,7 +29,7 @@ const theme = createMuiTheme({
 class Chat extends Component {
 	constructor() {
 		super();
-		this.socket = io('http://localhost:4000');
+		this.socket = io(`${config.API.DOMAIN}:${config.API.PORT}`);
 		this._isMounted = false;
 		this.chatColor = '#8a0303';
 		this.classes = {
