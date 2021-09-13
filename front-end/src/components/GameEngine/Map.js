@@ -4,8 +4,6 @@ import React, { Component, Fragment } from 'react';
 
 import { Player } from './Player';
 import { Viewport } from 'pixi-viewport';
-import config from '../../config.json';
-import io from 'socket.io-client';
 
 //import * as TILEMAP from '@pixi/tilemap';
 
@@ -25,7 +23,6 @@ export class Map extends Component {
 
 		this.FPS = 60;
 		this.keys = {};
-		this.socket = io(`${config.API.DOMAIN}:${config.API.PORT}`);
 	}
 
 	keysUp = (e) => {
