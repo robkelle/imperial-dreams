@@ -14,7 +14,7 @@ export class Map extends Component {
 			app: new PIXI.Application({ resizeTo: window }),
 			tsheet: null,
 			fsheet: null,
-      player: null,
+			player: null,
 			tileSheet: {},
 			tentContainer: new PIXI.Container(),
 			container: new PIXI.Container(),
@@ -130,13 +130,15 @@ export class Map extends Component {
 
 		// Initialize player class
 		this.setState({
-			player: new Player(this.state.container, viewport, app, 56, 84, 'rwkeller')
+			player: new Player(this.state.container, viewport, app, 56, 84, this.props.cookies.cookies.user)
 		});
 
-    // Create player
-		this.state.player.createPlayer({x: 500, y: 500});
 
-    // Trigger game loop
+		// Adds logged in user player
+		let playerCoordinates = this.state.player.getPlayerCoordinates();
+		this.state.player.addPlayer(playerCoordinates, this.props.cookies.cookies.user);
+
+		// Trigger game loop
 		app.ticker.add(() => {
 			this.gameLoop(viewport);
 		});
@@ -144,7 +146,7 @@ export class Map extends Component {
 
 	gameLoop = () => {
 		// Call player movement to key-binds
-		this.state.player.movePlayer(this.keys);
+		this.state.player.movePlayer(this.keys, this.props.cookies.cookies.user);
 	};
 
 	// Life Cycle Components
@@ -152,7 +154,7 @@ export class Map extends Component {
 		// Removes caching when component is unmounted
 		new PIXI.utils.clearTextureCache();
 
-    // Destroy and don't use after this
+		// Destroy and don't use after this
 		this.state.app.destroy(true);
 	}
 

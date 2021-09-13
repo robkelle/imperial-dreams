@@ -1,5 +1,8 @@
 import * as PIXI from 'pixi.js';
 
+import config from '../../config.json';
+import io from 'socket.io-client';
+
 /**
   @name Player
 
@@ -9,10 +12,11 @@ import * as PIXI from 'pixi.js';
     new Player(this.state.container, viewport, app, 56, 84);
 */
 export class Player {
-	constructor(container, viewport, app, w=56, h=84, user) {
+	constructor(container, viewport, app, w = 56, h = 84, user) {
 		this.container = container;
 		this.viewport = viewport;
 		this.app = app;
+		this.socket = io(`${config.API.DOMAIN}:${config.API.PORT}`);
 
 		// Load character sprite sheet
 		app.loader.add(user, require('../../images/characterSprite.png'));
@@ -53,7 +57,11 @@ export class Player {
 		this.player = new PIXI.AnimatedSprite(this.playerSheet.standSouth);
 	}
 
-	createPlayer(location) {
+	addPlayer(location = { x: this.container.width / 2, y: this.container.height / 2 }, user) {
+		this.socket.emit('userJoinedGame', {
+			username: user
+		});
+
 		new PIXI.utils.clearTextureCache();
 		this.player.anchor.set(0.5);
 		this.player.animationSpeed = 0.5;
@@ -67,7 +75,15 @@ export class Player {
 		this.player.play();
 	}
 
-	movePlayer(keys) {
+	loadConnectedPlayers() {
+		console.log('Loading connected players');
+	}
+
+	getPlayerCoordinates() {
+		return undefined;
+	}
+
+	movePlayer(keys, user) {
 		const player = this.player;
 
 		// W Key
@@ -78,6 +94,15 @@ export class Player {
 			}
 
 			player.y -= 5;
+
+      console.log(player.position);
+      // setInterval(() => {
+      //   this.socket.emit('setPlayerPosition', {
+      //     username: user,
+      //     position: player.position
+      //   });
+      // }, 5000)
+
 		}
 
 		// A Key
@@ -88,6 +113,7 @@ export class Player {
 			}
 
 			player.x -= 5;
+			console.log(player.position);
 		}
 
 		// S Key
@@ -98,6 +124,7 @@ export class Player {
 			}
 
 			player.y += 5;
+			console.log(player.position);
 		}
 
 		// D Key
@@ -108,6 +135,7 @@ export class Player {
 			}
 
 			player.x += 5;
+			console.log(player.position);
 		}
 	}
 }

@@ -104,6 +104,14 @@ class InitSockets {
 				this._postMessage(res);
 			});
 
+      socket.on('userJoinedGame', (res) => {
+        //console.log(res);
+      })
+
+      socket.on('setPlayerPosition', (res) => {
+        console.log(res);
+      })
+
 			this._socketLoader(socket);
 			this._socketPoster(socket);
 		});
