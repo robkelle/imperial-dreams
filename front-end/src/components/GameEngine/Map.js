@@ -4,11 +4,6 @@ import React, { Component, Fragment } from 'react';
 
 import { Player } from './Player';
 import { Viewport } from 'pixi-viewport';
-<<<<<<< Updated upstream
-=======
-
-//import * as TILEMAP from '@pixi/tilemap';
->>>>>>> Stashed changes
 
 //import * as TILEMAP from '@pixi/tilemap';
 
