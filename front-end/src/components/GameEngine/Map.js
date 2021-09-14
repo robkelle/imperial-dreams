@@ -135,9 +135,6 @@ export class Map extends Component {
 	};
 
 	gameLoop = (player) => {
-		// Removes caching when component is unmounted
-		new PIXI.utils.clearTextureCache();
-
 		let user = this.props.cookies.cookies.user;
 
 		// Call player movement to key-binds
@@ -157,9 +154,6 @@ export class Map extends Component {
 	}
 
 	componentDidMount() {
-		// Removes caching when component is unmounted
-		new PIXI.utils.clearTextureCache();
-
 		if (!this.props.cookies.cookies.isAuthorized) {
 			this.props.history.push('/login');
 		}
