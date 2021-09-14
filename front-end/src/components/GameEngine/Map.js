@@ -1,10 +1,12 @@
 import * as PIXI from 'pixi.js';
-import  {CompositeTilemap} from '@pixi/tilemap';
 
 import React, { Component, Fragment } from 'react';
 
+import { CompositeTilemap } from '@pixi/tilemap';
 import { Player } from './Player';
 import { Viewport } from 'pixi-viewport';
+import config from '../../config.json';
+import io from 'socket.io-client';
 
 //import * as TILEMAP from '@pixi/tilemap';
 
@@ -24,6 +26,7 @@ export class Map extends Component {
 
 		this.FPS = 60;
 		this.keys = {};
+		this.socket = io(`${config.API.DOMAIN}:${config.API.PORT}`);
 	}
 
 	keysUp = (e) => {
@@ -34,19 +37,16 @@ export class Map extends Component {
 		this.keys[e.keyCode] = true;
 	};
 
-
-	createGrass = (app,viewport) =>{
+	createGrass = (app, viewport) => {
 		let tilemap = new CompositeTilemap();
-		const size =32
-		let container = this.state.grassRender
-	   
-	tilemap.tile(app.loader.resources['grass'].url, 1 * size, 1* size)
-	
-				
-	
-	   container = tilemap
-	   viewport.addChild(container)
-			  }
+		const size = 32;
+		let container = this.state.grassRender;
+
+		tilemap.tile(app.loader.resources['grass'].url, 1 * size, 1 * size);
+
+		container = tilemap;
+		viewport.addChild(container);
+	};
 
 	createTileSheet = (app) => {
 		let ps = this.state;
@@ -104,8 +104,9 @@ export class Map extends Component {
 	};
 
 	doneLoading = (app, viewport) => {
-		this.createGrass(app,viewport);
+		this.createGrass(app, viewport);
 
+		let currentUser = this.props.cookies.cookies.user;
 		var y = this.state.container.width / 2;
 		var x = this.state.container.height / 2;
 
@@ -124,8 +125,10 @@ export class Map extends Component {
 		this.createTiles(app, viewport, x - 500, y - 150, this.state.tileSheet.tent[5]);
 
 		// Adds logged in user player
-		let playerCoordinates = this.state.player.getPlayerCoordinates();
-		this.state.player.addPlayer(playerCoordinates, this.props.cookies.cookies.user);
+		this.state.player.addPlayer(undefined, currentUser);
+
+		// Load connected player positions
+		this.state.player.loadConnectedPlayers(app, 56, 84, currentUser, this.keys);
 
 		// Trigger game loop
 		app.ticker.add(() => {
@@ -134,8 +137,10 @@ export class Map extends Component {
 	};
 
 	gameLoop = () => {
+		let user = this.props.cookies.cookies.user;
+
 		// Call player movement to key-binds
-		this.state.player.movePlayer(this.keys, this.props.cookies.cookies.user);
+		this.state.player.movePlayer(this.keys, user);
 	};
 
 	// Life Cycle Components
@@ -145,6 +150,9 @@ export class Map extends Component {
 
 		// Destroy and don't use after this
 		this.state.app.destroy(true);
+
+		// Disconnect socket
+		this.socket.disconnect();
 	}
 
 	componentDidMount() {
@@ -153,6 +161,7 @@ export class Map extends Component {
 		}
 
 		let app = this.state.app;
+		let user = this.props.cookies.cookies.user;
 
 		// Draw the PIXI canvas
 		document.body.appendChild(app.view);
@@ -192,7 +201,7 @@ export class Map extends Component {
 
 		// Initialize player class
 		this.setState({
-			player: new Player(this.state.container, viewport, app, 56, 84, this.props.cookies.cookies.user)
+			player: new Player(this.state.container, viewport, app, 56, 84, user)
 		});
 
 		app.loader.load(() => {
