@@ -97,7 +97,7 @@ class Chat extends Component {
     @example
       this.loadItems();
   */
-      loadItems = () => {
+	loadItems = () => {
 		this.initialLoad = false;
 
 		this.socket.emit('lazyLoad', {
