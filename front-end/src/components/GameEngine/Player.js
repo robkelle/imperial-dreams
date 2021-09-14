@@ -76,19 +76,6 @@ export class Player {
 				this.player.play();
 			});
 		}
-
-		if (!currentUser) {
-			this.player.anchor.set(0.5);
-			this.player.animationSpeed = 0.5;
-			this.player.loop = false;
-			this.player.zIndex = -100;
-			this.player.x = location.x;
-			this.player.y = location.y;
-			this.container.addChild(this.player);
-			this.viewport.addChild(this.container);
-			this.viewport.follow(this.player);
-			this.player.play();
-		}
 	}
 
 	loadConnectedPlayers(app, w, h, currentUser, keys) {
@@ -135,7 +122,7 @@ export class Player {
 				// Initialize character animation for player
 				this.player = new PIXI.AnimatedSprite(this.playerSheet.standSouth);
 
-				this.addPlayer(res.position);
+				this.addPlayer(res.position, res.currentUser);
 				this.movePlayer(keys, res.username);
 			}
 		});

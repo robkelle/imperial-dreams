@@ -107,6 +107,7 @@ export class Map extends Component {
 		this.createGrass(app, viewport);
 
 		let currentUser = this.props.cookies.cookies.user;
+    let player = new Player(this.state.container, viewport, app, 56, 84, currentUser);
 		var y = this.state.container.width / 2;
 		var x = this.state.container.height / 2;
 
@@ -125,22 +126,22 @@ export class Map extends Component {
 		this.createTiles(app, viewport, x - 500, y - 150, this.state.tileSheet.tent[5]);
 
 		// Adds logged in user player
-		this.state.player.addPlayer(undefined, currentUser);
-
-		// Load connected player positions
-		this.state.player.loadConnectedPlayers(app, 56, 84, currentUser, this.keys);
+		player.addPlayer(undefined, currentUser);
 
 		// Trigger game loop
 		app.ticker.add(() => {
-			this.gameLoop(viewport);
+			this.gameLoop(player);
 		});
 	};
 
-	gameLoop = () => {
+	gameLoop = (player) => {
+		// Removes caching when component is unmounted
+		new PIXI.utils.clearTextureCache();
+
 		let user = this.props.cookies.cookies.user;
 
 		// Call player movement to key-binds
-		this.state.player.movePlayer(this.keys, user);
+		player.movePlayer(this.keys, user);
 	};
 
 	// Life Cycle Components
@@ -156,12 +157,14 @@ export class Map extends Component {
 	}
 
 	componentDidMount() {
+		// Removes caching when component is unmounted
+		new PIXI.utils.clearTextureCache();
+
 		if (!this.props.cookies.cookies.isAuthorized) {
 			this.props.history.push('/login');
 		}
 
 		let app = this.state.app;
-		let user = this.props.cookies.cookies.user;
 
 		// Draw the PIXI canvas
 		document.body.appendChild(app.view);
@@ -178,6 +181,7 @@ export class Map extends Component {
 
 		app.renderer.view.style.position = 'fixed';
 		app.renderer.view.style.display = 'block';
+
 		// The root display container that's rendered
 		app.stage.addChild(viewport);
 
@@ -198,11 +202,6 @@ export class Map extends Component {
 
 		window.addEventListener('keydown', this.keysDown);
 		window.addEventListener('keyup', this.keysUp);
-
-		// Initialize player class
-		this.setState({
-			player: new Player(this.state.container, viewport, app, 56, 84, user)
-		});
 
 		app.loader.load(() => {
 			this.doneLoading(app, viewport);
