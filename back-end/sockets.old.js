@@ -6,6 +6,16 @@ class InitSockets {
 		this.io = io;
 	}
 
+	_getCurrentPlayerPosition(socket) {
+		socket.on('currentPlayerPosition', (res) => {
+			User.findOne({ username: res.username }).exec((err, res) => {
+				socket.emit('currentPlayerPosition', {
+					position: res.player.position
+				});
+			});
+		});
+	}
+
 	_setPlayerPosition(socket) {
 		socket.on('setPlayerPosition', (res) => {
 			User.updateOne({ username: res.username }, { player: { position: { x: res.positionX, y: res.positionY } } }).exec((err, res) => {
@@ -19,12 +29,12 @@ class InitSockets {
 	_loadPlayers(socket) {
 		socket.on('loadPlayers', () => {
 			User.find({ player: { $exists: true } }).exec((err, res) => {
-        res.map((value) => {
-          socket.emit('generatePlayers', {
-            position: value.player.position,
-            username: value.username
-          });
-        })
+				res.map((value) => {
+					socket.emit('generatePlayers', {
+						position: value.player.position,
+						username: value.username
+					});
+				});
 			});
 		});
 	}
@@ -132,13 +142,10 @@ class InitSockets {
 				this._postMessage(res);
 			});
 
-			socket.on('userJoinedGame', (res) => {
-				//console.log(`${res.username} has joined!`);
-			});
-
 			// Game Sockets
 			this._loadPlayers(socket);
 			this._setPlayerPosition(socket);
+			this._getCurrentPlayerPosition(socket);
 
 			// Chat Sockets
 			this._socketChatLoader(socket);

@@ -121,6 +121,20 @@ class InitSockets {
 		});
 	}
 
+	_socketChatUserConnected(socket) {
+		socket.on('userConnected', (res) => {
+			// Post user connected message
+			this._postMessage(res);
+		});
+	}
+
+	_socketChatUserDisconnected(socket) {
+		socket.on('userDisconnected', (res) => {
+			// Post user disconnected message
+			this._postMessage(res);
+		});
+	}
+
 	/**
     @name start
     @description description
@@ -132,26 +146,14 @@ class InitSockets {
   */
 	start() {
 		this.io.on('connection', (socket) => {
-			socket.on('userConnected', (res) => {
-				// Post user connected message
-				this._postMessage(res);
-			});
-
-			socket.on('userDisconnected', (res) => {
-				// Post user disconnected message
-				this._postMessage(res);
-			});
-
-			socket.on('userJoinedGame', (res) => {
-				//console.log(`${res.username} has joined!`);
-			});
-
 			// Game Sockets
 			this._loadPlayers(socket);
 			this._setPlayerPosition(socket);
 			this._getCurrentPlayerPosition(socket);
 
 			// Chat Sockets
+			this._socketChatUserConnected(socket);
+			this._socketChatUserDisconnected(socket);
 			this._socketChatLoader(socket);
 			this._socketChatPoster(socket);
 		});

@@ -76,7 +76,7 @@ export class Player {
 		});
 	}
 
-	trackConnectedPlayers() {
+	loadConnectedPlayers() {
 
 	}
 
