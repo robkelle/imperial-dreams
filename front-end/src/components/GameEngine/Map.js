@@ -17,7 +17,6 @@ export class Map extends Component {
 		this.state = {
 			app: new PIXI.Application({ resizeTo: window }),
 			player: null,
-		
 			container: new PIXI.Container(),
 			grassRender: new PIXI.Container()
 		};
@@ -120,14 +119,16 @@ export class Map extends Component {
 
 		window.addEventListener('keydown', this.keysDown);
 		window.addEventListener('keyup', this.keysUp);
+
+		// Create tilesheets
 		let tileMap = new TileMap(this.state.container, viewport,app)
 		let tilemaps = tileMap.createTileSheet(app);
+		let tree = tilemaps.tent[2]
 
 		app.loader.load(() => {
-			this.doneLoading(app, viewport,tilemaps);
+			this.doneLoading(app, viewport,tree);
 		});
 	}
-
 	render() {
 		return <Fragment />;
 	}

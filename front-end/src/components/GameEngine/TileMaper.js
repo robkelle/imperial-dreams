@@ -10,7 +10,7 @@ import config from '../../config.json';
 /**
   @name TileMap
 
-  @description In game actions for a player
+  @description Creates new tiles
 
   @example
     new Player(this.state.container, viewport, app, 56, 84);
@@ -45,23 +45,12 @@ export class TileMap {
                 new PIXI.Texture(this.state.tsheet, new PIXI.Rectangle(12 * w, 3 * h, 1 * w, 1 * h)),
                 new PIXI.Texture(this.state.tsheet, new PIXI.Rectangle(12 * w, 4 * h, 1 * w, 1 * h))
             ];
-            return ps.tileSheet.tent[2]
+            return ps.tileSheet
 	};
 
-
-
-        loadAssets = (app) => {
-		app.loader.add('map', require('../../images/maps/Map003.png'));
-		app.loader.add('chest', require('../../images/maps/chest.png'));
-		app.loader.add('brick_wall', require('../../images/maps/brick_wall.png'));
-		app.loader.add('brick', require('../../images/maps/brick.png'));
-		app.loader.add('tough', require('../../images/maps/tough.png'));
-		app.loader.add('red_chest', require('../../images/maps/red_chest.png'));
-		app.loader.add('grass', require('../../images/maps/grass.png'));
-		app.loader.add('grounds', require('../../images/tilesets/Outside_A4.png'));
+        loadAssets = (app) => {	
 		app.loader.add('tents', require('../../images/tilesets/Outside_B.png'));
-		app.loader.add('outside', require('../../images/tilesets/Outside_B.png'));
-       
+
         }
     }
 
